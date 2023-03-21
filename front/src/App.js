@@ -1,31 +1,23 @@
-import { List } from "./components/List";
-import { Mint } from "./components/Mint";
-import { useWeb3 } from "./modules/useWeb3";
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import HeaderContainer from "./components/header/Container";
+import FooterContainer from "./components/footer/Container";
 
 function App() {
-  const { web3, chainId, account, logIn } = useWeb3();
   return (
-    <div>
-      <div>
-        {account && web3 ? (
-          <div>
-            <div>ChainId : {chainId}</div>
-            <div>Account : {account}</div>
-            <Mint account={account} web3={web3} />
-          </div>
-        ) : (
-          <div>
-            <button
-              onClick={() => {
-                logIn();
-              }}
-            >
-              MetaMask Log In
-            </button>
-          </div>
-        )}
+    <div className="App">
+      <div className="App_innerBox">
+        <Routes>
+          {/* 헤더 */}
+          <Route path="/*" element={<HeaderContainer />}></Route>
+        </Routes>
+        <Routes>{/*  */}</Routes>
+
+        <Routes>
+          {/* 푸터 */}
+          <Route path="/*" element={<FooterContainer />}></Route>
+        </Routes>
       </div>
-      <List account={account} />
     </div>
   );
 }
