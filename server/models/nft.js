@@ -38,10 +38,10 @@ export default class Nft extends Sequelize.Model {
   }
 
   static associate(db) {
-    // db.Nft.belongsTo(db.User, {
-    //   foreignKey: "userAddress",
-    //   targetKey: "nftHash",
-    // });
+    db.Nft.belongsTo(db.User, {
+      foreignKey: "userName",
+      targetKey: "userName",
+    });
     // db.Nft.belongsTo(db.TradeHistory, {
     //   foreignKey: "tradeHash",
     //   targetKey: "nftHash",
