@@ -1,23 +1,31 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { List } from "./components/List";
+import { Mint } from "./components/Mint";
+import { useWeb3 } from "./modules/useWeb3";
 
 function App() {
+  const { web3, chainId, account, logIn } = useWeb3();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        {account && web3 ? (
+          <div>
+            <div>ChainId : {chainId}</div>
+            <div>Account : {account}</div>
+            <Mint account={account} web3={web3} />
+          </div>
+        ) : (
+          <div>
+            <button
+              onClick={() => {
+                logIn();
+              }}
+            >
+              MetaMask Log In
+            </button>
+          </div>
+        )}
+      </div>
+      <List account={account} />
     </div>
   );
 }
