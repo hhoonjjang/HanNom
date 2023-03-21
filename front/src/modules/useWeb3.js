@@ -8,6 +8,7 @@ export const useWeb3 = () => {
 
   const logIn = useCallback(async () => {
     try {
+      console.log("we", window.ethereum);
       if (window.ethereum) {
         const _web3 = new Web3(window.ethereum);
         setWeb3(_web3);

@@ -2,20 +2,50 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import HeaderContainer from "./components/header/Container";
 import FooterContainer from "./components/footer/Container";
-
+import TempComp from "./temp/TempComp";
+import { useWeb3 } from "./modules/useWeb3";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function App() {
+  const { web3, chainId, account, logIn } = useWeb3();
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    logIn();
+    (async () => {
+      // console.log(
+      //   // await axios.get(
+      //   //   "https://ipfs.io/ipfs/QmYeteDyVns19F3PNi1PtYg4X8fQDf9ZGamGkwHV2epxAA"
+      //   // )
+      // );
+      // console.log(
+      //   await axios.get(
+      //     "https://gateway.pinata.cloud/ipfs/QmYeteDyVns19F3PNi1PtYg4X8fQDf9ZGamGkwHV2epxAA"
+      //   )
+      // );
+      setList(
+        (
+          await axios.post("http://localhost:8080/api/list", {
+            from: account,
+          })
+        ).data
+      );
+    })();
+  }, [account]);
+  console.log(account);
+  console.log(list);
   return (
     <div className="App">
       <div className="App_innerBox">
         <Routes>
-          {/* 헤더 */}
+          y{/* 헤더 */}
           <Route path="/*" element={<HeaderContainer />}></Route>
         </Routes>
-        <Routes>{/*  */}</Routes>
-
         <Routes>
-          {/* 푸터 */}
-          <Route path="/*" element={<FooterContainer />}></Route>
+          {/*  */}
+          <Route
+            path="/*"
+            element={<TempComp web3={web3} account={account} list={list} />}
+          ></Route>
         </Routes>
       </div>
     </div>
