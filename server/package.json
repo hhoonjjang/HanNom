@@ -5,7 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --watch routes/ src/ src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
     "@openzeppelin/contracts": "^4.8.2",
     "@pinata/sdk": "^2.1.0",
     "@remix-project/remixd": "^0.6.12",
+    "axios": "^1.3.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -24,9 +26,11 @@
     "mysql2": "^3.2.0",
     "path": "^0.12.7",
     "sequelize": "^6.29.3",
-    "truffle": "^5.8.1"
+    "truffle": "^5.8.1",
+    "web3-utils": "^1.9.0"
   },
   "devDependencies": {
+    "nodemon": "^2.0.21",
     "prettier-plugin-solidity": "^1.1.3",
     "sequelize-cli": "^6.6.0"
   }
