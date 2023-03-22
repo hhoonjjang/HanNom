@@ -9,6 +9,7 @@ import userIcon from "./images/user-regular.svg";
 const HeaderComponent = () => {
   const dispatch = useDispatch();
   const { web3, chainId, account, logIn } = useWeb3();
+  console.log(account);
   return (
     <Header>
       <div className="HeaderComponent_innerBox">
@@ -80,7 +81,7 @@ export default HeaderComponent;
 
 const Header = styled.div`
   background-color: rgb(94, 132, 158);
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
   height: 90px;
