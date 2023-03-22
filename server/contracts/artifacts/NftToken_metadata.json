@@ -792,11 +792,11 @@
 	},
 	"sources": {
 		"contracts/NftToken.sol": {
-			"keccak256": "0x5268e7fa5a6eff8cc09f36ce33d31bdeec5780005b79cb65b458614de6ca595e",
+			"keccak256": "0x31438824702a17d317e2429860ca68c4da305449cb1f62ec9b35b3b8d4d48843",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5c15eaa51d68758d5c5cb863e8d8f7ff4fb51600c67962ba58621ec458515f47",
-				"dweb:/ipfs/QmUvzopucFRfW6bCYHx9SyZ2FhYHpUXTg3NGstefzfWj1p"
+				"bzz-raw://8eb60f3860e4b01cb8cae013d5754200abf70823eef9f91206e3f811efda664f",
+				"dweb:/ipfs/QmWtdSiKxtomH8Zvd8gx1XKNRcy3J2MFHSohtqjzbrg43L"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/access/Ownable.sol": {

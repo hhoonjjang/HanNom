@@ -10,28 +10,45 @@ function App() {
   const { web3, chainId, account, logIn } = useWeb3();
   const [list, setList] = useState([]);
   useEffect(() => {
-    logIn();
-    (async () => {
-      // console.log(
-      //   // await axios.get(
-      //   //   "https://ipfs.io/ipfs/QmYeteDyVns19F3PNi1PtYg4X8fQDf9ZGamGkwHV2epxAA"
-      //   // )
-      // );
-      // console.log(
-      //   await axios.get(
-      //     "https://gateway.pinata.cloud/ipfs/QmYeteDyVns19F3PNi1PtYg4X8fQDf9ZGamGkwHV2epxAA"
-      //   )
-      // );
-      setList(
-        (
-          await axios.post("http://localhost:8080/api/list", {
-            from: account,
-          })
-        ).data
-      );
-    })();
+    // logIn();
+    console.log(account);
+    if (account) {
+      (async () => {
+        // console.log(
+        //   // await axios.get(
+        //   //   "https://ipfs.io/ipfs/QmYeteDyVns19F3PNi1PtYg4X8fQDf9ZGamGkwHV2epxAA"
+        //   // )
+        // );
+        // console.log(
+        //   await axios.get(
+        //     "https://gateway.pinata.cloud/ipfs/QmYeteDyVns19F3PNi1PtYg4X8fQDf9ZGamGkwHV2epxAA"
+        //   )
+        // );
+        setList(
+          (
+            await axios.post("http://localhost:8080/api/mylist", {
+              from: account,
+            })
+          ).data
+        );
+      })();
+    } else {
+      (async () => {
+        // console.log(
+        //   // await axios.get(
+        //   //   "https://ipfs.io/ipfs/QmYeteDyVns19F3PNi1PtYg4X8fQDf9ZGamGkwHV2epxAA"
+        //   // )
+        // );
+        // console.log(
+        //   await axios.get(
+        //     "https://gateway.pinata.cloud/ipfs/QmYeteDyVns19F3PNi1PtYg4X8fQDf9ZGamGkwHV2epxAA"
+        //   )
+        // );
+        console.log("이거걸림");
+        setList((await axios.post("http://localhost:8080/api/saleList")).data);
+      })();
+    }
   }, [account]);
-  console.log(account);
   console.log(list);
   return (
     <div className="App">

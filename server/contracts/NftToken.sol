@@ -157,7 +157,8 @@ contract NftToken is ERC721Enumerable, ERC721URIStorage, Ownable {
     }
     return list;
   }
-  function getTokenListLength() public view returns (uint){
+
+  function getTokenListLength() public view returns (uint) {
     return tokenList.length;
   }
 }
