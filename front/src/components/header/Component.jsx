@@ -80,7 +80,7 @@ export default HeaderComponent;
 
 const Header = styled.div`
   background-color: rgb(94, 132, 158);
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
   height: 90px;
