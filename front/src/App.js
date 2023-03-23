@@ -13,7 +13,9 @@ function App() {
   const [list, setList] = useState([]);
   useEffect(() => {
     logIn();
-    if (account)
+    console.log(account);
+    if (account) {
+      console.log("시험");
       (async () => {
         const result = (
           await axios.post("http://localhost:8080/api/mint/registlist", {
@@ -22,9 +24,8 @@ function App() {
         ).data;
         setList(result);
       })();
+    }
   }, [account]);
-  console.log(account);
-  console.log(list[0]);
   return (
     <div className="App">
       <div className="App_innerBox">

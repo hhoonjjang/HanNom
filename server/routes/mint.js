@@ -19,6 +19,8 @@ router.post("/registList", async (req, res) => {
 
   const tempArr = await deployed.methods.getOwnerTokens(req.body.from).call();
   let data = [];
+  console.log("시험");
+
   for (let i = 0; i < tempArr.length; i++) {
     try {
       const { name, description, image } = (
