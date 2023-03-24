@@ -198,6 +198,42 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getTokenInfo",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "tokenId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "Price",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "tokenURI",
+								"type": "string"
+							}
+						],
+						"internalType": "struct SaleToken.TokenInfo",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
@@ -250,11 +286,11 @@
 			]
 		},
 		"contracts/SaleToken.sol": {
-			"keccak256": "0x63cabafd40b611afadb718f7ae64fff84c5fcbad610663f43622204a1b5cd826",
+			"keccak256": "0xa9f93ed518e57af8b2f04d66f5e9a826f3631b79e3563be71dc229eba42118a1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://de78f7d302156f31c248df0c91662ab0dd6b8471630bc19d2f5acd3600f58ed2",
-				"dweb:/ipfs/QmVfK5XfpTwKHJfzmzJCDtqnUSJiN4wWWjy8JWRNiauiH9"
+				"bzz-raw://a05221264041e6e64c9285319bb50fda9e35a117f16be2d2d6655257c55a52bd",
+				"dweb:/ipfs/QmTvtoMFZzSurCUHBbMRjqZPYdPWSix6nk746PrWDjyL4o"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/access/Ownable.sol": {

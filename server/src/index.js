@@ -21,6 +21,7 @@ dotenv.config();
 
 const pinata = new pinataSDK(process.env.API_Key, process.env.API_Secret);
 
+app.use("/upload", express.static("upload"));
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

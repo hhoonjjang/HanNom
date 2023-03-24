@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch routes/ src/ src/index.js"
+    "start": "nodemon --watch routes/ *.js src/ src/index.js"
   },
   "keywords": [],
   "author": "",

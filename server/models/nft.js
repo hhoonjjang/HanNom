@@ -6,7 +6,6 @@ export default class Nft extends Sequelize.Model {
       {
         nftHash: {
           type: Sequelize.STRING(255),
-          allowNull: false,
         },
         type: {
           type: Sequelize.STRING(255),

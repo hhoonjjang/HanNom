@@ -5,7 +5,6 @@ import "./NftToken.sol";
 
 contract SaleToken {
   NftToken public Token;
-
   struct TokenInfo {
     uint tokenId;
     // uint Rank;
@@ -25,6 +24,7 @@ contract SaleToken {
     address tokenOwner = Token.ownerOf(_tokenId);
     require(tokenOwner == msg.sender);
     require(_price > 0);
+
     require(Token.isApprovedForAll(msg.sender, address(this)));
     tokenPrices[_tokenId] = _price;
     SaleTokenList.push(_tokenId);
@@ -62,6 +62,14 @@ contract SaleToken {
       }
     }
     return false;
+  }
+
+  function getTokenInfo(uint _tokenId) public view returns (TokenInfo memory) {
+    require(SaleTokenList.length > _tokenId);
+    uint tokenId = SaleTokenList[_tokenId];
+    uint price = tokenPrices[tokenId];
+    string memory tokenURI = Token.tokenURI(tokenId);
+    return TokenInfo(tokenId, price, tokenURI);
   }
 
   function getSaleTokenList() public view returns (TokenInfo[] memory) {
