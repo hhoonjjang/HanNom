@@ -10,7 +10,10 @@ import SaleAbi from "../contracts/artifacts/SaleToken.json" assert { type: "json
 import { Nft } from "../models/index.js";
 import fs from "fs";
 const router = Router();
-const web3 = new Web3("http://ganache.test.errorcode.help:8545");
+// const web3 = new Web3("http://ganache.test.errorcode.help:8545");
+const web3 = new Web3(
+  "wss://goerli.infura.io/ws/v3/2370d723f2b24ee69ca1d052c7a0e099"
+);
 dotenv.config();
 const pinata = new pinataSDK(process.env.API_Key, process.env.API_Secret);
 
@@ -34,23 +37,32 @@ const upload = multer({ storage: storage });
 router.post("/detail", async (req, res) => {
   console.log(req.body);
   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+  console.log("오류확인찾아라0");
   try {
+    console.log("오류확인찾아라--0");
+
     const nft = await deployed.methods.getTokenInfo(req.body.tokenId).call();
     console.log(nft);
+    console.log("오류확인찾아라1");
 
     const { name, description, image } = (
       await axios.get(
         nft.tokenURI.replace("gateway.pinata.cloud", "block7.mypinata.cloud")
       )
     ).data;
+    console.log("오류확인찾아라2");
+
     const data = {
       tokenId: nft.tokenId,
       price: web3.utils.fromWei(nft.Price),
       image: image.replace("gateway.pinata.cloud", "block7.mypinata.cloud"),
     };
+    console.log("오류확인찾아라3");
+
     console.log(data.price);
     res.send(data);
   } catch (error) {
+    console.log("오류확인찾아라4");
     console.log(error);
   }
 });
@@ -134,10 +146,7 @@ router.post("/registList", async (req, res) => {
   let data = [];
   try {
     console.log("하이");
-
     const tempArr = await deployed.methods.getOwnerTokens(req.body.from).call();
-
-    console.log(tempArr);
     if (tempArr.length > 0) {
       for (let i = 0; i < tempArr.length; i++) {
         const { name, description, image } = (
@@ -160,7 +169,7 @@ router.post("/registList", async (req, res) => {
     // console.log(error);
     res.send([]);
   }
-  res.send(data);
+  if (data.length > 0) res.send(data);
 });
 
 router.post("/mint", upload.single("file"), async (req, res) => {
@@ -237,27 +246,27 @@ router.post("/mint", upload.single("file"), async (req, res) => {
   }
 });
 
-router.post("/mylist", async (req, res) => {
-  try {
-    const data = await Nft.findAll();
-    router.get("/", async (req, res) => {
-      fs.readdir("/upload", (err, imgData) => {
-        res.send(data);
-      });
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
+// router.post("/mylist", async (req, res) => {
+//   try {
+//     const data = await Nft.findAll();
+//     router.get("/", async (req, res) => {
+//       fs.readdir("/upload", (err, imgData) => {
+//         res.send(data);
+//       });
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
-router.post("/saleList", async (req, res) => {
-  try {
-    const data = await Nft.findAll();
-    res.send(data);
-    router.get("/", async (req, res) => {
-      fs.readdir("/upload", (err, imgData) => {});
-    });
-  } catch (error) {}
-});
+// router.post("/saleList", async (req, res) => {
+//   try {
+//     const data = await Nft.findAll();
+//     res.send(data);
+//     router.get("/", async (req, res) => {
+//       fs.readdir("/upload", (err, imgData) => {});
+//     });
+//   } catch (error) {}
+// });
 
 export default router;
