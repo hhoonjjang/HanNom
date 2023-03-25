@@ -5,7 +5,8 @@ import FooterContainer from "./components/footer/Container";
 import GroupRegistContainer from "./components/groupRegist/Container";
 import MintContainer from "./components/mint/Container";
 import GroupContainer from "./components/group/Container";
-import HomeContainer from "./components/home/Container";
+// import HomeContainer from "./components/home/Container";
+import HomeComponent from "./components/Home/Component";
 import WalletContainer from "./components/wallet/Container";
 import SearchContainer from "./components/search/Container";
 import RankContainer from "./components/rank/Container";
@@ -22,7 +23,7 @@ function App() {
 
         <Routes>
           {/* 컨텐츠 */}
-          <Route path="/" element={<HomeContainer />}></Route>
+          <Route path="/" element={<HomeComponent />}></Route>
           <Route path="/groupRegist" element={<GroupRegistContainer />}></Route>
           <Route path="/group/:groupId" element={<GroupContainer />}></Route>
           <Route path="/mint" element={<MintContainer />}></Route>
