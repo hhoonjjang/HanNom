@@ -16,9 +16,16 @@ const pinata = new pinataSDK(process.env.API_Key, process.env.API_Secret);
 
 const storage = multer.diskStorage({
   destination: (req, res, cb) => {
+    const dir = "./upload";
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
     cb(null, "./upload");
   },
   filename: (req, file, cb) => {
+    file.originalname = Buffer.from(file.originalname, "latin1").toString(
+      "utf8"
+    );
     cb(null, file.originalname);
   },
 });
@@ -218,11 +225,11 @@ router.post("/mint", upload.single("file"), async (req, res) => {
     obj.to = process.env.NFT_CA;
     obj.from = req.body.from;
     obj.data = deployed.methods.safeMint(jsonResult.IpfsHash).encodeABI();
-    // await Nft.create({
-    //   nftImg: `/upload/${req.file.filename}`,
-    //   nftName: name,
-    //   nftDescription: description,
-    // });
+    await Nft.create({
+      nftImg: `/upload/${req.file.filename}`,
+      nftName: name,
+      nftDescription: description,
+    });
     res.send(obj);
   } catch (error) {
     console.log(error);

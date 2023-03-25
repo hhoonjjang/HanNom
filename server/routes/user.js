@@ -25,6 +25,18 @@ router.post("/login", async (req, res) => {
   //   where:
   // };
   // res.send(userName);
+  res.cookie(
+    "userName",
+    jwt.sign(
+      {
+        userAddress: "temp",
+        userName: "1234",
+      },
+      process.env.JWT_KEY,
+      { algorithm: "HS256", expiresIn: "300m", issuer: "킹영준" }
+    )
+  );
+  res.send({ msg: "쿠키생성완료" });
 });
 
 router.post("/regist", async (req, res) => {
