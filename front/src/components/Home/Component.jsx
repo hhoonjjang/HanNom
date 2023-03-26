@@ -7,6 +7,8 @@ import {
 } from "../../ui-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 const HomeComponent = ({}) => {
   const [saleList, setSaleList] = useState([]);
   useEffect(() => {
@@ -19,14 +21,17 @@ const HomeComponent = ({}) => {
       setSaleList(result);
     })();
   }, []);
-  console.log(saleList);
+  // console.log(saleList);
   return (
     <Home>
       <div className="Home_innerBox">
         <UserInfoCom1></UserInfoCom1>
         <MarginStyle1 />
+
         <div className="Home_innerBox_part2">
-          <UserInfoCom2></UserInfoCom2>
+          {saleList.map((item, idx) => (
+            <UserInfoCom2 item={item} key={`item-${idx}`}></UserInfoCom2>
+          ))}
           {/* <UserInfoCom2></UserInfoCom2> */}
           {/* <UserInfoCom2></UserInfoCom2> */}
         </div>

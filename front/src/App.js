@@ -12,7 +12,10 @@ import SearchContainer from "./components/search/Container";
 import RankContainer from "./components/rank/Container";
 import BadAddressContainer from "./components/badAddress/Container";
 import ActivityContainer from "./components/activity/Container";
+import NftDetailContainer from "./components/detail/Container";
+import { useWeb3 } from "./modules/useWeb3";
 function App() {
+  const { web3, account, chainId, logIn } = useWeb3();
   return (
     <div className="App">
       <div className="App_innerBox">
@@ -33,6 +36,10 @@ function App() {
           <Route
             path="/activity/:account"
             element={<ActivityContainer></ActivityContainer>}
+          ></Route>
+          <Route
+            path="/nft/*"
+            element={<NftDetailContainer account={account} web3={web3} />}
           ></Route>
           <Route
             path="/*"

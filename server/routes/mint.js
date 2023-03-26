@@ -10,7 +10,10 @@ import SaleAbi from "../contracts/artifacts/SaleToken.json" assert { type: "json
 import { Nft } from "../models/index.js";
 import fs from "fs";
 const router = Router();
-const web3 = new Web3("http://ganache.test.errorcode.help:8545");
+// const web3 = new Web3("http://ganache.test.errorcode.help:8545");
+const web3 = new Web3(
+  "wss://goerli.infura.io/ws/v3/2370d723f2b24ee69ca1d052c7a0e099"
+);
 dotenv.config();
 const pinata = new pinataSDK(process.env.API_Key, process.env.API_Secret);
 
@@ -30,6 +33,62 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+router.post("/buy", async (req, res) => {
+  console.log(req.body);
+  const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+  const price = web3.utils.toWei(req.body.price).toString(16);
+  console.log(typeof price);
+  const temp = (+price).toString(16);
+
+  // console.log(price, "가격");
+  // console.log(temp);
+  try {
+    const buy = await deployed.methods
+      .PurchaseToken(req.body.tokenId)
+      .encodeABI();
+    const obj = {
+      to: "",
+      from: "",
+      data: "",
+      value: "",
+    };
+    obj.to = process.env.SALE_CA;
+    obj.from = req.body.account;
+    obj.data = buy;
+    obj.value = "0x" + temp;
+    // obj.value =
+    console.log(obj.value);
+    res.send(obj);
+  } catch (error) {
+    console.log("에러");
+    res.end();
+  }
+});
+
+router.post("/cancel", async (req, res) => {
+  console.log(req.body);
+  const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+  try {
+    const cancel = await deployed.methods
+      .cancelSaleToken(req.body.tokenId)
+      .encodeABI();
+    const obj = {
+      to: "",
+      from: "",
+      data: "",
+    };
+    obj.to = process.env.SALE_CA;
+    obj.from = req.body.account;
+    obj.data = cancel;
+    console.log(obj);
+    res.send(obj);
+  } catch (error) {
+    console.log("에러");
+    console.log(error);
+    res.end();
+  }
+});
 
 router.post("/detail", async (req, res) => {
   console.log(req.body);
@@ -71,7 +130,7 @@ router.post("/sellList", async (req, res) => {
   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
   const deployedN = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
   console.log("하이1");
-
+  console.log(deployed.methods);
   let data = [];
   try {
     const tempArr = await deployed.methods.getSaleTokenList().call();
