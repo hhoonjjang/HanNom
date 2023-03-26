@@ -33,6 +33,7 @@ export default function HearderTop(props) {
   const navigate = useNavigate();
   const account = useSelector((state) => state.account.account.account);
   const username = useSelector((state) => state.username.username.username);
+  const [loginCookie, setLoginCookie] = React.useState("");
   const { web3, login } = useWeb3();
   const [newNickName, setNewNickName] = React.useState("");
   const inputRef = React.useRef(null);
@@ -72,6 +73,7 @@ export default function HearderTop(props) {
       alert("검색어를 입력하십시오.");
     }
   };
+
   const registNickName = async () => {
     if (!newNickName || !bgFile || !profilefile) {
       alert("빠짐없이 작성해주십시오.");
@@ -86,12 +88,15 @@ export default function HearderTop(props) {
     const data = (
       await axios.post("http://localhost:8080/api/user/regist", formData)
     ).data;
+
+    console.log("data : ", data);
+
     if (data.msg) {
       alert("사용 불가능한 데이터가 있습니다.");
       return;
     }
     navigate("/");
-    window.location.reload();
+    // window.location.reload();
   };
 
   const bgFileChange = (e) => {
@@ -153,8 +158,14 @@ export default function HearderTop(props) {
   React.useEffect(() => {
     const cookie = document.cookie.split(";");
     for (let i in cookie) {
-      if (cookie[i].search("userName") != -1)
-        cookie[i].replace("userName=", "");
+      if (cookie[i].search("username") != -1) {
+        console.log(loginCookie);
+        setLoginCookie(cookie[i].search("username"));
+        console.log(cookie[i].search("username"));
+        return;
+      }
+
+      // cookie[i].replace("username=", "");
     }
   }, []);
 
@@ -262,7 +273,7 @@ export default function HearderTop(props) {
         </Link>
         {account && web3 ? (
           // 로그인했으면
-          username != "unknown" ? (
+          username == "unknown" ? (
             // 로그인했고 기존 유저였으면
             <AfterHeader account={account} />
           ) : (

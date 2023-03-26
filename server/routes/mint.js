@@ -141,38 +141,6 @@ router.post("/sell", async (req, res) => {
   res.send({ obj, approveObj });
 });
 
-router.post("/purchase", async (req, res) => {
-  const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
-  const deployedN = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
-  const price = web3.utils.toWei(req.body.price);
-  console.log(price);
-  console.log(req.body.tokenId);
-  const nft = await deployed.methods
-    .SalesToken(req.body.tokenId, price)
-    .encodeABI();
-  const approve = await deployedN.methods
-    .setApprovalForAll(process.env.SALE_CA, true)
-    .encodeABI();
-  const approveObj = {
-    to: "",
-    from: "",
-    data: "",
-  };
-  const obj = {
-    to: "",
-    from: "",
-    data: "",
-  };
-  approveObj.to = process.env.NFT_CA;
-  approveObj.from = req.body.account;
-  approveObj.data = approve;
-  obj.to = process.env.SALE_CA;
-  obj.from = req.body.account;
-  obj.data = nft;
-  console.log(approveObj);
-  res.send({ obj, approveObj });
-});
-
 router.post("/registList", async (req, res) => {
   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
   let data = [];

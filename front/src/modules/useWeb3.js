@@ -8,13 +8,11 @@ import axios from "axios";
 export const useWeb3 = () => {
   const [web3, setWeb3] = useState();
   const dispatch = useDispatch();
-  const [username, setUsername] = useState("");
 
   const event = async () => {
     if (window.ethereum) {
-      // document.cookie = "login" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      document.cookie = "login" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
       // login은 쿠키의 이름이다. event 메서드는 새로 접속하거나 접속 중인 지갑이 바뀔 때 실행하는데, 새로운 쿠키를 만들기 위해 기존 쿠키를 제거한다.
-      console.log(document.cookie);
 
       const [_account] = await window.ethereum.request({
         method: "eth_requestAccounts",
@@ -25,13 +23,15 @@ export const useWeb3 = () => {
         await axios.post("http://localhost:8080/api/user/login", {
           account: _account,
         })
-      ).data.userName;
+      ).data.username;
 
       console.log("user : ", user);
+      // 백과 연결되면 활성화
 
       if (_account) {
         dispatch(accountThunk({ account: _account }));
         dispatch(usernameThunk({ username: user }));
+        // 로그인 모달을 위해 임시로 unknown이라 처리했다. 나중에는 user로 변경한다.
       }
     }
   };

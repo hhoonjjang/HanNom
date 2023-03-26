@@ -21,10 +21,11 @@ import {
 import { gsap } from "gsap";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function NftMint(props) {
   const inputRef = React.useRef();
-  const account = useSelector((state) => state.account.account.accept);
+  const account = useSelector((state) => state.account.account.account);
   const [NFTName, setNFTName] = React.useState("");
   const [NFTDescription, setNFTDescription] = React.useState("");
   const [file, setFile] = React.useState();
@@ -33,13 +34,17 @@ export default function NftMint(props) {
 
   React.useEffect(() => {
     const cookie = document.cookie.split(";");
+    let isTrue = false;
     for (let i in cookie) {
-      if (cookie[i].search("username") != -1) {
+      if (cookie[i].search("userName") != -1) {
+        isTrue = true;
+        navigate("/mint");
         return;
-      } else {
-        navigate("/");
-        alert("로그인이 필요합니다.");
       }
+    }
+    if (!isTrue) {
+      navigate("/");
+      alert("로그인이 필요합니다.");
     }
   }, []);
 
@@ -99,9 +104,7 @@ export default function NftMint(props) {
       alert("NFT 토큰 발행에 실패했습니다.");
       return;
     }
-    navigate("/mintResult", {
-      state: {},
-    });
+    navigate(`/wallet/${account}`);
   };
 
   return (
