@@ -19,15 +19,15 @@ export const NftDetail = ({ account, web3 }) => {
     })();
     console.log(nft);
   }, [a]);
-  const buyNft = async (tokenId, account) => {
+  const buyNft = async (tokenId, account, price) => {
     const result = (
       await axios.post("http://localhost:8080/api/mint/buy", {
         tokenId,
         account,
+        price,
       })
     ).data;
-    console.log(result);
-    console.log(web3);
+    console.log(result.value);
     await web3.eth.sendTransaction(result);
   };
   return (
@@ -40,7 +40,7 @@ export const NftDetail = ({ account, web3 }) => {
       </div>
       <button
         onClick={() => {
-          buyNft(nft.tokenId, account);
+          buyNft(nft.tokenId, account, nft.price);
         }}
       >
         구매버튼

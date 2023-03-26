@@ -37,6 +37,12 @@ const upload = multer({ storage: storage });
 router.post("/buy", async (req, res) => {
   console.log(req.body);
   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+  const price = web3.utils.toWei(req.body.price).toString(16);
+  console.log(typeof price);
+  const temp = (+price).toString(16);
+
+  // console.log(price, "가격");
+  // console.log(temp);
   try {
     const buy = await deployed.methods
       .PurchaseToken(req.body.tokenId)
@@ -45,11 +51,14 @@ router.post("/buy", async (req, res) => {
       to: "",
       from: "",
       data: "",
+      value: "",
     };
     obj.to = process.env.SALE_CA;
     obj.from = req.body.account;
     obj.data = buy;
-
+    obj.value = "0x" + temp;
+    // obj.value =
+    console.log(obj.value);
     res.send(obj);
   } catch (error) {
     console.log("에러");
