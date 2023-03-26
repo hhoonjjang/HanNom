@@ -5,8 +5,21 @@ import {
   UserInfoCom3,
   YellowButton,
 } from "../../ui-components";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 const HomeComponent = ({}) => {
+  const [saleList, setSaleList] = useState([]);
+  useEffect(() => {
+    (async () => {
+      console.log("시작");
+      const result = (
+        await axios.post("http://localhost:8080/api/mint/sellList")
+      ).data;
+      // console.log(result);
+      setSaleList(result);
+    })();
+  }, []);
+  console.log(saleList);
   return (
     <Home>
       <div className="Home_innerBox">
@@ -14,8 +27,8 @@ const HomeComponent = ({}) => {
         <MarginStyle1 />
         <div className="Home_innerBox_part2">
           <UserInfoCom2></UserInfoCom2>
-          <UserInfoCom2></UserInfoCom2>
-          <UserInfoCom2></UserInfoCom2>
+          {/* <UserInfoCom2></UserInfoCom2> */}
+          {/* <UserInfoCom2></UserInfoCom2> */}
         </div>
         <MarginStyle2 />
         <UserInfoCom3></UserInfoCom3>

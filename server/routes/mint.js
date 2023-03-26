@@ -70,10 +70,14 @@ router.post("/detail", async (req, res) => {
 router.post("/sellList", async (req, res) => {
   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
   const deployedN = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
+  console.log("하이1");
 
   let data = [];
   try {
     const tempArr = await deployed.methods.getSaleTokenList().call();
+    console.log(tempArr);
+    console.log("하이2");
+
     if (tempArr.length > 0) {
       for (let i = 0; i < tempArr.length; i++) {
         console.log(tempArr[i].Price);
