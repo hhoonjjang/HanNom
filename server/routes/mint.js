@@ -34,35 +34,78 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+router.post("/buy", async (req, res) => {
+  console.log(req.body);
+  const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+  try {
+    const buy = await deployed.methods
+      .PurchaseToken(req.body.tokenId)
+      .encodeABI();
+    const obj = {
+      to: "",
+      from: "",
+      data: "",
+    };
+    obj.to = process.env.SALE_CA;
+    obj.from = req.body.account;
+    obj.data = buy;
+
+    res.send(obj);
+  } catch (error) {
+    console.log("에러");
+    res.end();
+  }
+});
+
+router.post("/cancel", async (req, res) => {
+  console.log(req.body);
+  const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+  try {
+    const cancel = await deployed.methods
+      .cancelSaleToken(req.body.tokenId)
+      .encodeABI();
+    const obj = {
+      to: "",
+      from: "",
+      data: "",
+    };
+    obj.to = process.env.SALE_CA;
+    obj.from = req.body.account;
+    obj.data = cancel;
+    console.log(obj);
+    res.send(obj);
+  } catch (error) {
+    console.log("에러");
+    console.log(error);
+    res.end();
+  }
+});
+
 router.post("/detail", async (req, res) => {
   console.log(req.body);
   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
-  console.log("오류확인찾아라0");
   try {
-    console.log("오류확인찾아라--0");
-
-    const nft = await deployed.methods.getTokenInfo(req.body.tokenId).call();
-    console.log(nft);
-    console.log("오류확인찾아라1");
-
+    const test = await deployed.methods.getSaleTokenList().call();
+    let nft;
+    for (let i = 0; i < test.length; i++) {
+      if (test[i].tokenId == req.body.tokenId) {
+        nft = test[i];
+        break;
+      }
+    }
     const { name, description, image } = (
       await axios.get(
         nft.tokenURI.replace("gateway.pinata.cloud", "block7.mypinata.cloud")
       )
     ).data;
-    console.log("오류확인찾아라2");
-
     const data = {
       tokenId: nft.tokenId,
       price: web3.utils.fromWei(nft.Price),
       image: image.replace("gateway.pinata.cloud", "block7.mypinata.cloud"),
     };
-    console.log("오류확인찾아라3");
-
     console.log(data.price);
     res.send(data);
   } catch (error) {
-    console.log("오류확인찾아라4");
     console.log(error);
   }
 });

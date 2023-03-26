@@ -30,10 +30,23 @@ const Item = ({
         account,
       })
     ).data;
+
     console.log(result);
     await web3.eth.sendTransaction(result.approveObj);
     await web3.eth.sendTransaction(result.obj);
   };
+
+  const cancelNft = async (tokenId, account) => {
+    console.log(tokenId, account);
+    const result = (
+      await axios.post("http://localhost:8080/api/mint/cancel", {
+        tokenId,
+        account,
+      })
+    ).data;
+    await web3.eth.sendTransaction(result);
+  };
+
   return (
     <li>
       <div>{tokenId}</div>
@@ -54,6 +67,13 @@ const Item = ({
         }}
       >
         sell
+      </button>
+      <button
+        onClick={() => {
+          cancelNft(tokenId, account);
+        }}
+      >
+        판매취소하기
       </button>
     </li>
   );

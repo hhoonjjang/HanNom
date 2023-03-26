@@ -51,7 +51,11 @@ function App() {
         <Routes>{/*  */}</Routes>
         <Routes>
           <Route path="/" element={<SaleList list={saleList} />} />
-          <Route path="/nft/*" element={<NftDetail />}></Route>''
+          <Route
+            path="/nft/*"
+            element={<NftDetail account={account} web3={web3} />}
+          ></Route>
+          ''
         </Routes>
         <Mint web3={web3} account={account} />
         <List list={list} web3={web3} account={account} />
