@@ -9,6 +9,7 @@ import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
+  Flex,
   Divider,
   Icon,
   SearchField,
@@ -16,6 +17,7 @@ import {
   View,
 } from "@aws-amplify/ui-react";
 import HLogo from "./HLogo";
+import { gsap } from "gsap";
 import userIcon from "./images/user-regular.svg";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -34,7 +36,13 @@ export default function HearderTop(props) {
   const { web3, login } = useWeb3();
   const [newNickName, setNewNickName] = React.useState("");
   const inputRef = React.useRef(null);
+  const bgInputRef = React.useRef(null);
+  const profileInputRef = React.useRef(null);
   const searchButtonRef = React.useRef(null);
+  const [bgFile, setBgFile] = React.useState();
+  const [bgImg, setBgImg] = React.useState("");
+  const [profilefile, setProfileFile] = React.useState();
+  const [profileImg, setProfileImg] = React.useState("");
 
   const navigateToSearch = () => {
     navigate(`/search?searchData=${searchData}`);
@@ -48,6 +56,15 @@ export default function HearderTop(props) {
   const inputName = (e) => {
     setNewNickName(e.currentTarget.value);
   };
+
+  const onEnter = ({ currentTarget }) => {
+    gsap.to(currentTarget, { scale: 0.94 });
+  };
+
+  const onLeave = ({ currentTarget }) => {
+    gsap.to(currentTarget, { scale: 1 });
+  };
+
   const onClick = () => {
     if (searchData.match(/\S/g)) {
       navigateToSearch(searchData);
@@ -56,19 +73,73 @@ export default function HearderTop(props) {
     }
   };
   const registNickName = async () => {
-    if (!newNickName) return;
+    if (!newNickName || !bgFile || !profilefile) {
+      alert("빠짐없이 작성해주십시오.");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("background", bgFile);
+    formData.append("profile", profilefile);
+    formData.append("nickName", newNickName);
+    formData.append("account", account);
+
     const data = (
-      await axios.post("http://localhost:8080/api/user/regist", {
-        nickname: newNickName,
-        account: account,
-      })
+      await axios.post("http://localhost:8080/api/user/regist", formData)
     ).data;
-    if (!data.bool) {
-      alert("사용 불가능한 닉네임입니다.");
+    if (data.msg) {
+      alert("사용 불가능한 데이터가 있습니다.");
       return;
     }
     navigate("/");
+    window.location.reload();
   };
+
+  const bgFileChange = (e) => {
+    let selectedIMG = document.querySelector(".bgImgFile");
+    if (selectedIMG.files && selectedIMG.files.length > 0) {
+      setBgFile(selectedIMG.files[0]);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedIMG.files[0]);
+      reader.onload = () => {
+        if (reader.result) {
+          setBgImg(reader.result);
+          document.querySelector(
+            ".bgFileBackground"
+          ).style.backgroundRepeat = `no-repeat`;
+          document.querySelector(".bgFileBackground").style.backgroundSize =
+            "contain";
+          document.querySelector(".bgFileBackground").style.backgroundPosition =
+            "center";
+        }
+      };
+    }
+  };
+
+  const profileFileChange = (e) => {
+    let selectedIMG = document.querySelector(".profileImgFile");
+    if (selectedIMG.files && selectedIMG.files.length > 0) {
+      setProfileFile(selectedIMG.files[0]);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedIMG.files[0]);
+      reader.onload = () => {
+        if (reader.result) {
+          setProfileImg(reader.result);
+          document.querySelector(
+            ".profileFileBackground"
+          ).style.backgroundRepeat = `no-repeat`;
+          document.querySelector(
+            ".profileFileBackground"
+          ).style.backgroundSize = "contain";
+          document.querySelector(
+            ".profileFileBackground"
+          ).style.backgroundPosition = "center";
+        }
+      };
+    }
+  };
+
   React.useEffect(() => {
     const searchButtonRefCurrent = searchButtonRef.current;
     if (searchButtonRef && searchButtonRefCurrent) {
@@ -82,10 +153,11 @@ export default function HearderTop(props) {
   React.useEffect(() => {
     const cookie = document.cookie.split(";");
     for (let i in cookie) {
-      if (cookie[i].search("username") != -1)
-        cookie[i].replace("username=", "");
+      if (cookie[i].search("userName") != -1)
+        cookie[i].replace("userName=", "");
     }
   }, []);
+
   return (
     <>
       <View
@@ -217,7 +289,123 @@ export default function HearderTop(props) {
                   </div>
                 </div>
                 <MarginStyle2 />
+                <div className="HeaderTop_nonamedUserModal_innerBox_userBackground">
+                  <span>배경화면</span> :
+                  <div className="HeaderTop_nonamedUserModal_innerBox_userBackgroundCover">
+                    <Flex
+                      onMouseEnter={onEnter}
+                      onMouseLeave={onLeave}
+                      gap="10px"
+                      direction="column"
+                      width="225px"
+                      height="150px"
+                      justifyContent="center"
+                      alignItems="center"
+                      overflow="hidden"
+                      shrink="0"
+                      position="relative"
+                      border="3px dashed rgba(77,77,77,0.7)"
+                      borderRadius="15px"
+                      padding="71px 119px 71px 119px"
+                      {...getOverrideProps(overrides, "Frame 67")}
+                      className="bgFileBackground"
+                      onClick={() => {
+                        document.querySelector(".bgImgFile").click();
+                      }}
+                      backgroundImage={`url(${bgImg}) `}
+                    >
+                      <Icon
+                        width="48px"
+                        height="42px"
+                        viewBox={{ minX: 0, minY: 0, width: 48, height: 42 }}
+                        paths={[
+                          {
+                            d: "M42 4.5C42.825 4.5 43.5 5.175 43.5 6L43.5 35.9812L43.0312 35.3719L30.2812 18.8719C29.8594 18.3188 29.1938 18 28.5 18C27.8062 18 27.15 18.3188 26.7188 18.8719L18.9375 28.9406L16.0781 24.9375C15.6562 24.3469 14.9812 24 14.25 24C13.5188 24 12.8438 24.3469 12.4219 24.9469L4.92188 35.4469L4.5 36.0281L4.5 36L4.5 6C4.5 5.175 5.175 4.5 6 4.5L42 4.5ZM6 0C2.69063 0 0 2.69063 0 6L0 36C0 39.3094 2.69063 42 6 42L42 42C45.3094 42 48 39.3094 48 36L48 6C48 2.69063 45.3094 0 42 0L6 0ZM13.5 18C14.0909 18 14.6761 17.8836 15.2221 17.6575C15.768 17.4313 16.2641 17.0998 16.682 16.682C17.0998 16.2641 17.4313 15.768 17.6575 15.2221C17.8836 14.6761 18 14.0909 18 13.5C18 12.9091 17.8836 12.3239 17.6575 11.7779C17.4313 11.232 17.0998 10.7359 16.682 10.318C16.2641 9.90016 15.768 9.56869 15.2221 9.34254C14.6761 9.1164 14.0909 9 13.5 9C12.9091 9 12.3239 9.1164 11.7779 9.34254C11.232 9.56869 10.7359 9.90016 10.318 10.318C9.90016 10.7359 9.56869 11.232 9.34254 11.7779C9.1164 12.3239 9 12.9091 9 13.5C9 14.0909 9.1164 14.6761 9.34254 15.2221C9.56869 15.768 9.90016 16.2641 10.318 16.682C10.7359 17.0998 11.232 17.4313 11.7779 17.6575C12.3239 17.8836 12.9091 18 13.5 18Z",
+                            fill: "rgba(77,77,77,0.7)",
+                            fillRule: "nonzero",
+                          },
+                        ]}
+                        display="block"
+                        gap="unset"
+                        alignItems="unset"
+                        justifyContent="unset"
+                        shrink="0"
+                        position="relative"
+                        {...getOverrideProps(overrides, "Vector")}
+                      ></Icon>
+                    </Flex>
+                    <ImgFile
+                      type="file"
+                      accept="image/*"
+                      required
+                      className="bgImgFile"
+                      name="background"
+                      ref={bgInputRef}
+                      onChange={() => {
+                        bgFileChange();
+                      }}
+                    />
+                  </div>
+                </div>
                 <MarginStyle2 />
+                <div className="HeaderTop_nonamedUserModal_innerBox_userProfileImg">
+                  <span>내 사진</span> :
+                  <div className="HeaderTop_nonamedUserModal_innerBox_userProfileImgCover">
+                    <Flex
+                      onMouseEnter={onEnter}
+                      onMouseLeave={onLeave}
+                      gap="10px"
+                      direction="column"
+                      width="225px"
+                      height="150px"
+                      justifyContent="center"
+                      alignItems="center"
+                      overflow="hidden"
+                      shrink="0"
+                      position="relative"
+                      border="3px dashed rgba(77,77,77,0.7)"
+                      borderRadius="15px"
+                      padding="71px 119px 71px 119px"
+                      {...getOverrideProps(overrides, "Frame 67")}
+                      className="profileFileBackground"
+                      onClick={() => {
+                        document.querySelector(".profileImgFile").click();
+                      }}
+                      backgroundImage={`url(${profileImg}) `}
+                    >
+                      <Icon
+                        width="48px"
+                        height="42px"
+                        viewBox={{ minX: 0, minY: 0, width: 48, height: 42 }}
+                        paths={[
+                          {
+                            d: "M42 4.5C42.825 4.5 43.5 5.175 43.5 6L43.5 35.9812L43.0312 35.3719L30.2812 18.8719C29.8594 18.3188 29.1938 18 28.5 18C27.8062 18 27.15 18.3188 26.7188 18.8719L18.9375 28.9406L16.0781 24.9375C15.6562 24.3469 14.9812 24 14.25 24C13.5188 24 12.8438 24.3469 12.4219 24.9469L4.92188 35.4469L4.5 36.0281L4.5 36L4.5 6C4.5 5.175 5.175 4.5 6 4.5L42 4.5ZM6 0C2.69063 0 0 2.69063 0 6L0 36C0 39.3094 2.69063 42 6 42L42 42C45.3094 42 48 39.3094 48 36L48 6C48 2.69063 45.3094 0 42 0L6 0ZM13.5 18C14.0909 18 14.6761 17.8836 15.2221 17.6575C15.768 17.4313 16.2641 17.0998 16.682 16.682C17.0998 16.2641 17.4313 15.768 17.6575 15.2221C17.8836 14.6761 18 14.0909 18 13.5C18 12.9091 17.8836 12.3239 17.6575 11.7779C17.4313 11.232 17.0998 10.7359 16.682 10.318C16.2641 9.90016 15.768 9.56869 15.2221 9.34254C14.6761 9.1164 14.0909 9 13.5 9C12.9091 9 12.3239 9.1164 11.7779 9.34254C11.232 9.56869 10.7359 9.90016 10.318 10.318C9.90016 10.7359 9.56869 11.232 9.34254 11.7779C9.1164 12.3239 9 12.9091 9 13.5C9 14.0909 9.1164 14.6761 9.34254 15.2221C9.56869 15.768 9.90016 16.2641 10.318 16.682C10.7359 17.0998 11.232 17.4313 11.7779 17.6575C12.3239 17.8836 12.9091 18 13.5 18Z",
+                            fill: "rgba(77,77,77,0.7)",
+                            fillRule: "nonzero",
+                          },
+                        ]}
+                        display="block"
+                        gap="unset"
+                        alignItems="unset"
+                        justifyContent="unset"
+                        shrink="0"
+                        position="relative"
+                        {...getOverrideProps(overrides, "Vector")}
+                      ></Icon>
+                    </Flex>
+                    <ImgFile
+                      type="file"
+                      accept="image/*"
+                      required
+                      className="profileImgFile"
+                      name="profile"
+                      ref={profileInputRef}
+                      onChange={() => {
+                        profileFileChange();
+                      }}
+                    />
+                  </div>
+                </div>
                 <MarginStyle2 />
                 <MarginStyle2 />
                 <MarginStyle2 />
@@ -334,10 +522,10 @@ const HeaderTop_nonamedUserModal = styled.div`
   .HeaderTop_nonamedUserModal_innerBox {
     z-index:2;
       position: absolute;
-      top: 25%;
+      top: 37%;
       left: 50%;
       width: 800px;
-      height: 600px;
+      height: 900px;
       padding-left:20px;
       padding-right:20px;
       text-align: center;
@@ -387,6 +575,14 @@ const HeaderTop_nonamedUserModal = styled.div`
           }
         }
       }
+      .HeaderTop_nonamedUserModal_innerBox_userBackground{
+        display:flex;
+      }
+
+      .HeaderTop_nonamedUserModal_innerBox_userProfileImg{
+        display:flex;
+      }
+
       .HeaderTop_hr{
         border: 1px solid gainsboro;
         width:95%;
@@ -407,6 +603,11 @@ const HeaderTop_nonamedUserModal = styled.div`
 
 
 `;
+
+const ImgFile = styled.input`
+  display: none;
+`;
+
 const MarginStyle2 = styled.div`
   margin-top: 50px;
 `;

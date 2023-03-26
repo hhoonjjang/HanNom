@@ -35,22 +35,34 @@ router.post("/detail", async (req, res) => {
   console.log(req.body);
   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
   try {
-    const nft = await deployed.methods.getTokenInfo(req.body.tokenId).call();
-    console.log(nft);
+    const test = await deployed.methods.getSaleTokenList().call();
+    let nft;
+    for (let i = 0; i < test.length; i++) {
+      if (test[i].tokenId == req.body.tokenId) {
+        nft = test[i];
+        break;
+      }
+    }
+    console.log("오류확인찾아라1");
 
     const { name, description, image } = (
       await axios.get(
         nft.tokenURI.replace("gateway.pinata.cloud", "block7.mypinata.cloud")
       )
     ).data;
+    console.log("오류확인찾아라2");
+
     const data = {
       tokenId: nft.tokenId,
       price: web3.utils.fromWei(nft.Price),
       image: image.replace("gateway.pinata.cloud", "block7.mypinata.cloud"),
     };
+    console.log("오류확인찾아라3");
+
     console.log(data.price);
     res.send(data);
   } catch (error) {
+    console.log("오류확인찾아라4");
     console.log(error);
   }
 });
@@ -98,6 +110,38 @@ router.post("/sellList", async (req, res) => {
 });
 
 router.post("/sell", async (req, res) => {
+  const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+  const deployedN = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
+  const price = web3.utils.toWei(req.body.price);
+  console.log(price);
+  console.log(req.body.tokenId);
+  const nft = await deployed.methods
+    .SalesToken(req.body.tokenId, price)
+    .encodeABI();
+  const approve = await deployedN.methods
+    .setApprovalForAll(process.env.SALE_CA, true)
+    .encodeABI();
+  const approveObj = {
+    to: "",
+    from: "",
+    data: "",
+  };
+  const obj = {
+    to: "",
+    from: "",
+    data: "",
+  };
+  approveObj.to = process.env.NFT_CA;
+  approveObj.from = req.body.account;
+  approveObj.data = approve;
+  obj.to = process.env.SALE_CA;
+  obj.from = req.body.account;
+  obj.data = nft;
+  console.log(approveObj);
+  res.send({ obj, approveObj });
+});
+
+router.post("/purchase", async (req, res) => {
   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
   const deployedN = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
   const price = web3.utils.toWei(req.body.price);
