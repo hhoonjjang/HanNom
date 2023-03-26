@@ -20,7 +20,7 @@ function App() {
     <div className="App">
       <div className="App_innerBox">
         <Routes>
-          y{/* 헤더 */}
+          {/* 헤더 */}
           <Route path="/*" element={<HeaderContainer />}></Route>
         </Routes>
 
@@ -48,11 +48,8 @@ function App() {
         </Routes>
 
         <Routes>
-          {/*  */}
-          <Route
-            path="/*"
-            element={<TempComp web3={web3} account={account} list={list} />}
-          ></Route>
+          {/* 푸터 */}
+          <Route path="/*" element={<FooterContainer />}></Route>
         </Routes>
       </div>
     </div>

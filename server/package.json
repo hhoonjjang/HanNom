@@ -28,6 +28,7 @@
     "path": "^0.12.7",
     "sequelize": "^6.29.3",
     "truffle": "^5.8.1",
+    "web3": "^1.9.0",
     "web3-utils": "^1.9.0"
   },
   "devDependencies": {
