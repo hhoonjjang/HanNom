@@ -117,7 +117,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "MAX_TOKEN_COUNT",
+				"name": "MAX_TOEKN_COUNT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -150,19 +150,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_tokensId",
-						"type": "uint256"
-					}
-				],
-				"name": "addTokenList",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -222,95 +209,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "getTokenCount",
-				"outputs": [
-					{
-						"internalType": "uint256[4][4]",
-						"name": "",
-						"type": "uint256[4][4]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getTokenList",
-				"outputs": [
-					{
-						"components": [
-							{
-								"internalType": "uint256",
-								"name": "tokenId",
-								"type": "uint256"
-							},
-							{
-								"internalType": "string",
-								"name": "tokenURI",
-								"type": "string"
-							}
-						],
-						"internalType": "struct NftToken.TokenInfo[]",
-						"name": "",
-						"type": "tuple[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getTokenListLength",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_tokensId",
-						"type": "uint256"
-					}
-				],
-				"name": "getTokenRank",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_tokensId",
-						"type": "uint256"
-					}
-				],
-				"name": "getTokenType",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -329,39 +227,6 @@
 						"internalType": "bool",
 						"name": "",
 						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "metadataURI",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "mintToekn",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "mint_price",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -504,19 +369,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "_uri",
-						"type": "string"
-					}
-				],
-				"name": "setMetadataURI",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "bytes4",
 						"name": "interfaceId",
 						"type": "bytes4"
@@ -555,49 +407,6 @@
 					}
 				],
 				"name": "tokenByIndex",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "tokenCount",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "tokenList",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -792,11 +601,11 @@
 	},
 	"sources": {
 		"contracts/NftToken.sol": {
-			"keccak256": "0x31438824702a17d317e2429860ca68c4da305449cb1f62ec9b35b3b8d4d48843",
+			"keccak256": "0x7ae75df615c3cabf3db34d9590233d920288f40c7f9e8e5c9febd0a2de5539cb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8eb60f3860e4b01cb8cae013d5754200abf70823eef9f91206e3f811efda664f",
-				"dweb:/ipfs/QmWtdSiKxtomH8Zvd8gx1XKNRcy3J2MFHSohtqjzbrg43L"
+				"bzz-raw://35b652001e7a9f9c21cd06e758d0415fb18453d02501701a08edccb31c68462f",
+				"dweb:/ipfs/QmeAoqm5AHmo93nTzEivRfhj3EqY3yhEDmqmEpmDuxwhx8"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/access/Ownable.sol": {

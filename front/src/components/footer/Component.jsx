@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Footer1 } from "../../ui-components";
 
 const FooterComponent = () => {
   return (
     <Footer>
-      <div className="FooterComponent_innerBox">Footer자리입니다.</div>
+      <Footer1 />
     </Footer>
   );
 };
@@ -12,12 +13,13 @@ const FooterComponent = () => {
 export default FooterComponent;
 
 const Footer = styled.div`
+  padding-top: 30px;
   display: flex;
   justify-content: center;
-  background-color: #2f3238;
   width: 100%;
-  height: 220px;
+  height: 300px;
   position: absolute;
   left: 0;
-  bottom: 0;
+  background-color: gainsboro;
+  // bottom: 0;
 `;

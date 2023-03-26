@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { reducer } from "./counter.js";
-
-export const store = configureStore({
-  reducer: { count: reducer },
+import { reducer as accountReducer } from "./account.js";
+import { reducer as usernameReducer } from "./username.js";
+const store = configureStore({
+  reducer: { account: accountReducer, username: usernameReducer },
 });
+
+export default store;

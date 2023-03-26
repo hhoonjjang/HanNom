@@ -17,49 +17,39 @@
 				"type": "constructor"
 			},
 			{
-				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": false,
 						"internalType": "uint256",
-						"name": "id",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "NftAddress",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "seller",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "price",
+						"name": "_tokenId",
 						"type": "uint256"
 					}
 				],
-				"name": "sale",
-				"type": "event"
+				"name": "PurchaseToken",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
 			},
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_NFTaddress",
-						"type": "address"
-					},
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "SaleTokenList",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
 					{
 						"internalType": "uint256",
 						"name": "_tokenId",
@@ -90,26 +80,30 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "getOnMarket",
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "cancelSaleToken",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenOwner",
+						"type": "address"
+					}
+				],
+				"name": "getLatestToken",
 				"outputs": [
 					{
 						"components": [
-							{
-								"internalType": "uint256",
-								"name": "id",
-								"type": "uint256"
-							},
-							{
-								"internalType": "address payable",
-								"name": "seller",
-								"type": "address"
-							},
-							{
-								"internalType": "address",
-								"name": "NFTaddress",
-								"type": "address"
-							},
 							{
 								"internalType": "uint256",
 								"name": "tokenId",
@@ -117,23 +111,18 @@
 							},
 							{
 								"internalType": "uint256",
-								"name": "price",
+								"name": "Price",
 								"type": "uint256"
 							},
 							{
 								"internalType": "string",
 								"name": "tokenURI",
 								"type": "string"
-							},
-							{
-								"internalType": "bool",
-								"name": "sold",
-								"type": "bool"
 							}
 						],
-						"internalType": "struct SaleToken.TokenInfo[]",
+						"internalType": "struct SaleToken.TokenInfo",
 						"name": "",
-						"type": "tuple[]"
+						"type": "tuple"
 					}
 				],
 				"stateMutability": "view",
@@ -142,13 +131,8 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address payable",
-						"name": "_tokenOwner",
-						"type": "address"
-					},
-					{
 						"internalType": "address",
-						"name": "_NftAddress",
+						"name": "_tokenOwner",
 						"type": "address"
 					}
 				],
@@ -158,38 +142,18 @@
 						"components": [
 							{
 								"internalType": "uint256",
-								"name": "id",
-								"type": "uint256"
-							},
-							{
-								"internalType": "address payable",
-								"name": "seller",
-								"type": "address"
-							},
-							{
-								"internalType": "address",
-								"name": "NFTaddress",
-								"type": "address"
-							},
-							{
-								"internalType": "uint256",
 								"name": "tokenId",
 								"type": "uint256"
 							},
 							{
 								"internalType": "uint256",
-								"name": "price",
+								"name": "Price",
 								"type": "uint256"
 							},
 							{
 								"internalType": "string",
 								"name": "tokenURI",
 								"type": "string"
-							},
-							{
-								"internalType": "bool",
-								"name": "sold",
-								"type": "bool"
 							}
 						],
 						"internalType": "struct SaleToken.TokenInfo[]",
@@ -208,38 +172,18 @@
 						"components": [
 							{
 								"internalType": "uint256",
-								"name": "id",
-								"type": "uint256"
-							},
-							{
-								"internalType": "address payable",
-								"name": "seller",
-								"type": "address"
-							},
-							{
-								"internalType": "address",
-								"name": "NFTaddress",
-								"type": "address"
-							},
-							{
-								"internalType": "uint256",
 								"name": "tokenId",
 								"type": "uint256"
 							},
 							{
 								"internalType": "uint256",
-								"name": "price",
+								"name": "Price",
 								"type": "uint256"
 							},
 							{
 								"internalType": "string",
 								"name": "tokenURI",
 								"type": "string"
-							},
-							{
-								"internalType": "bool",
-								"name": "sold",
-								"type": "bool"
 							}
 						],
 						"internalType": "struct SaleToken.TokenInfo[]",
@@ -254,46 +198,33 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "_tokenId",
 						"type": "uint256"
 					}
 				],
-				"name": "onMarket",
+				"name": "getTokenInfo",
 				"outputs": [
 					{
-						"internalType": "uint256",
-						"name": "id",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address payable",
-						"name": "seller",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "NFTaddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "price",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "tokenURI",
-						"type": "string"
-					},
-					{
-						"internalType": "bool",
-						"name": "sold",
-						"type": "bool"
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "tokenId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "Price",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "tokenURI",
+								"type": "string"
+							}
+						],
+						"internalType": "struct SaleToken.TokenInfo",
+						"name": "",
+						"type": "tuple"
 					}
 				],
 				"stateMutability": "view",
@@ -347,19 +278,19 @@
 	},
 	"sources": {
 		"contracts/NftToken.sol": {
-			"keccak256": "0x31438824702a17d317e2429860ca68c4da305449cb1f62ec9b35b3b8d4d48843",
+			"keccak256": "0x7ae75df615c3cabf3db34d9590233d920288f40c7f9e8e5c9febd0a2de5539cb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8eb60f3860e4b01cb8cae013d5754200abf70823eef9f91206e3f811efda664f",
-				"dweb:/ipfs/QmWtdSiKxtomH8Zvd8gx1XKNRcy3J2MFHSohtqjzbrg43L"
+				"bzz-raw://35b652001e7a9f9c21cd06e758d0415fb18453d02501701a08edccb31c68462f",
+				"dweb:/ipfs/QmeAoqm5AHmo93nTzEivRfhj3EqY3yhEDmqmEpmDuxwhx8"
 			]
 		},
 		"contracts/SaleToken.sol": {
-			"keccak256": "0x91817b4cda1dfc527d9dcca7a9061a24b1e75c41806a28a6bab206819a1132ab",
+			"keccak256": "0xa9f93ed518e57af8b2f04d66f5e9a826f3631b79e3563be71dc229eba42118a1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8c7fb3bd9e8d81880bc9c13e58d005a0720ccbf94252ec3acff1dc8f2c0e677e",
-				"dweb:/ipfs/QmdPNdoafUvNeNkB9ax9KBLFgJEsgBjRTjB9egk6TigYWb"
+				"bzz-raw://a05221264041e6e64c9285319bb50fda9e35a117f16be2d2d6655257c55a52bd",
+				"dweb:/ipfs/QmTvtoMFZzSurCUHBbMRjqZPYdPWSix6nk746PrWDjyL4o"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/access/Ownable.sol": {

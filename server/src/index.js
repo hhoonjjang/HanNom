@@ -14,6 +14,9 @@ dotenv.config();
 
 // const web3 = new Web3("http://127.0.0.1:8080");
 
+const pinata = new pinataSDK(process.env.API_Key, process.env.API_Secret);
+
+app.use("/upload", express.static("upload"));
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
