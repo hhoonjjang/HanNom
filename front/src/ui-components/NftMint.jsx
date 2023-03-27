@@ -22,7 +22,6 @@ import { gsap } from "gsap";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
-
 export default function NftMint(props) {
   const inputRef = React.useRef();
   const account = useSelector((state) => state.account.account.account);
@@ -31,12 +30,11 @@ export default function NftMint(props) {
   const [file, setFile] = React.useState();
   const [img, setImg] = React.useState("");
   const navigate = useNavigate();
-
   React.useEffect(() => {
     const cookie = document.cookie.split(";");
     let isTrue = false;
     for (let i in cookie) {
-      if (cookie[i].search("userName") != -1) {
+      if (document.cookie) {
         isTrue = true;
         navigate("/mint");
         return;
@@ -96,17 +94,18 @@ export default function NftMint(props) {
     formData.append("file", file);
     formData.append("name", NFTName);
     formData.append("description", NFTDescription);
-    formData.append("account", account);
+    formData.append("from", account);
     const result = (
-      await axios.post("http://localhost:8080/api/contract/mint", formData)
+      await axios.post("http://localhost:8080/api/mint/mint", formData)
     ).data;
-    if (!result.name) {
-      alert("NFT 토큰 발행에 실패했습니다.");
-      return;
+    console.log(result);
+    try {
+      await props.web3.eth.sendTransaction(result);
+      navigate(`/mypage`);
+    } catch (error) {
+      console.log("에러");
     }
-    navigate(`/wallet/${account}`);
   };
-
   return (
     <View
       width="464px"
@@ -368,7 +367,7 @@ export default function NftMint(props) {
           <TextField
             width="300px"
             height="unset"
-            placeholder="User Name"
+            placeholder="NFT Name"
             shrink="0"
             size="default"
             isDisabled={false}

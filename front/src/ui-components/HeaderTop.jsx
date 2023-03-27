@@ -25,6 +25,7 @@ import AfterHeader from "./AfterHeader";
 import { useSelector } from "react-redux";
 import { useWeb3 } from "../modules/useWeb3";
 import axios from "axios";
+import UserCreate from "./UserCreate";
 
 export default function HearderTop(props) {
   const { overrides, ...rest } = props;
@@ -333,170 +334,14 @@ export default function HearderTop(props) {
             {...getOverrideProps(overrides, "HLogo")}
           ></HLogo>
         </Link>
-        {account && web3 && connect ? (
+        {connect ? (
           // 로그인했으면
-          !registBool ? (
+          document.cookie ? (
             // 로그인했고 기존 유저였으면
             <AfterHeader account={account} />
           ) : (
             // 로그인했고신규 유저이면
-            <HeaderTop_nonamedUserModal>
-              <div className="HeaderTop_nonamedUserModal_innerBox">
-                <h1>닉네임</h1>
-                <div className="HeaderTop_nonamedUserModal_innerBox_account">
-                  <span>지갑 주소</span> :
-                  <div className="HeaderTop_nonamedUserModal_innerBox_accountCover">
-                    <input type="text" value={account} disabled readOnly />
-                  </div>
-                </div>
-                <MarginStyle2 />
-                <div className="HeaderTop_nonamedUserModal_innerBox_nickname">
-                  <span>닉네임</span> :
-                  <div className="HeaderTop_nonamedUserModal_innerBox_nicknameCover">
-                    <input
-                      type="text"
-                      onInput={(e) => {
-                        inputName(e);
-                      }}
-                    />
-                  </div>
-                </div>
-                <MarginStyle2 />
-                <div className="HeaderTop_nonamedUserModal_innerBox_userBackground">
-                  <span>배경화면</span> :
-                  <div className="HeaderTop_nonamedUserModal_innerBox_userBackgroundCover">
-                    <Flex
-                      onMouseEnter={onEnter}
-                      onMouseLeave={onLeave}
-                      gap="10px"
-                      direction="column"
-                      width="225px"
-                      height="150px"
-                      justifyContent="center"
-                      alignItems="center"
-                      overflow="hidden"
-                      shrink="0"
-                      position="relative"
-                      border="3px dashed rgba(77,77,77,0.7)"
-                      borderRadius="15px"
-                      padding="71px 119px 71px 119px"
-                      {...getOverrideProps(overrides, "Frame 67")}
-                      className="bgFileBackground"
-                      onClick={() => {
-                        document.querySelector(".bgImgFile").click();
-                      }}
-                      backgroundImage={`url(${bgImg}) `}
-                    >
-                      <Icon
-                        width="48px"
-                        height="42px"
-                        viewBox={{ minX: 0, minY: 0, width: 48, height: 42 }}
-                        paths={[
-                          {
-                            d: "M42 4.5C42.825 4.5 43.5 5.175 43.5 6L43.5 35.9812L43.0312 35.3719L30.2812 18.8719C29.8594 18.3188 29.1938 18 28.5 18C27.8062 18 27.15 18.3188 26.7188 18.8719L18.9375 28.9406L16.0781 24.9375C15.6562 24.3469 14.9812 24 14.25 24C13.5188 24 12.8438 24.3469 12.4219 24.9469L4.92188 35.4469L4.5 36.0281L4.5 36L4.5 6C4.5 5.175 5.175 4.5 6 4.5L42 4.5ZM6 0C2.69063 0 0 2.69063 0 6L0 36C0 39.3094 2.69063 42 6 42L42 42C45.3094 42 48 39.3094 48 36L48 6C48 2.69063 45.3094 0 42 0L6 0ZM13.5 18C14.0909 18 14.6761 17.8836 15.2221 17.6575C15.768 17.4313 16.2641 17.0998 16.682 16.682C17.0998 16.2641 17.4313 15.768 17.6575 15.2221C17.8836 14.6761 18 14.0909 18 13.5C18 12.9091 17.8836 12.3239 17.6575 11.7779C17.4313 11.232 17.0998 10.7359 16.682 10.318C16.2641 9.90016 15.768 9.56869 15.2221 9.34254C14.6761 9.1164 14.0909 9 13.5 9C12.9091 9 12.3239 9.1164 11.7779 9.34254C11.232 9.56869 10.7359 9.90016 10.318 10.318C9.90016 10.7359 9.56869 11.232 9.34254 11.7779C9.1164 12.3239 9 12.9091 9 13.5C9 14.0909 9.1164 14.6761 9.34254 15.2221C9.56869 15.768 9.90016 16.2641 10.318 16.682C10.7359 17.0998 11.232 17.4313 11.7779 17.6575C12.3239 17.8836 12.9091 18 13.5 18Z",
-                            fill: "rgba(77,77,77,0.7)",
-                            fillRule: "nonzero",
-                          },
-                        ]}
-                        display="block"
-                        gap="unset"
-                        alignItems="unset"
-                        justifyContent="unset"
-                        shrink="0"
-                        position="relative"
-                        {...getOverrideProps(overrides, "Vector")}
-                      ></Icon>
-                    </Flex>
-                    <ImgFile
-                      type="file"
-                      accept="image/*"
-                      required
-                      className="bgImgFile"
-                      name="background"
-                      ref={bgInputRef}
-                      onChange={() => {
-                        bgFileChange();
-                      }}
-                    />
-                  </div>
-                </div>
-                <MarginStyle2 />
-                <div className="HeaderTop_nonamedUserModal_innerBox_userProfileImg">
-                  <span>내 사진</span> :
-                  <div className="HeaderTop_nonamedUserModal_innerBox_userProfileImgCover">
-                    <Flex
-                      onMouseEnter={onEnter}
-                      onMouseLeave={onLeave}
-                      gap="10px"
-                      direction="column"
-                      width="225px"
-                      height="150px"
-                      justifyContent="center"
-                      alignItems="center"
-                      overflow="hidden"
-                      shrink="0"
-                      position="relative"
-                      border="3px dashed rgba(77,77,77,0.7)"
-                      borderRadius="15px"
-                      padding="71px 119px 71px 119px"
-                      {...getOverrideProps(overrides, "Frame 67")}
-                      className="profileFileBackground"
-                      onClick={() => {
-                        document.querySelector(".profileImgFile").click();
-                      }}
-                      backgroundImage={`url(${profileImg}) `}
-                    >
-                      <Icon
-                        width="48px"
-                        height="42px"
-                        viewBox={{ minX: 0, minY: 0, width: 48, height: 42 }}
-                        paths={[
-                          {
-                            d: "M42 4.5C42.825 4.5 43.5 5.175 43.5 6L43.5 35.9812L43.0312 35.3719L30.2812 18.8719C29.8594 18.3188 29.1938 18 28.5 18C27.8062 18 27.15 18.3188 26.7188 18.8719L18.9375 28.9406L16.0781 24.9375C15.6562 24.3469 14.9812 24 14.25 24C13.5188 24 12.8438 24.3469 12.4219 24.9469L4.92188 35.4469L4.5 36.0281L4.5 36L4.5 6C4.5 5.175 5.175 4.5 6 4.5L42 4.5ZM6 0C2.69063 0 0 2.69063 0 6L0 36C0 39.3094 2.69063 42 6 42L42 42C45.3094 42 48 39.3094 48 36L48 6C48 2.69063 45.3094 0 42 0L6 0ZM13.5 18C14.0909 18 14.6761 17.8836 15.2221 17.6575C15.768 17.4313 16.2641 17.0998 16.682 16.682C17.0998 16.2641 17.4313 15.768 17.6575 15.2221C17.8836 14.6761 18 14.0909 18 13.5C18 12.9091 17.8836 12.3239 17.6575 11.7779C17.4313 11.232 17.0998 10.7359 16.682 10.318C16.2641 9.90016 15.768 9.56869 15.2221 9.34254C14.6761 9.1164 14.0909 9 13.5 9C12.9091 9 12.3239 9.1164 11.7779 9.34254C11.232 9.56869 10.7359 9.90016 10.318 10.318C9.90016 10.7359 9.56869 11.232 9.34254 11.7779C9.1164 12.3239 9 12.9091 9 13.5C9 14.0909 9.1164 14.6761 9.34254 15.2221C9.56869 15.768 9.90016 16.2641 10.318 16.682C10.7359 17.0998 11.232 17.4313 11.7779 17.6575C12.3239 17.8836 12.9091 18 13.5 18Z",
-                            fill: "rgba(77,77,77,0.7)",
-                            fillRule: "nonzero",
-                          },
-                        ]}
-                        display="block"
-                        gap="unset"
-                        alignItems="unset"
-                        justifyContent="unset"
-                        shrink="0"
-                        position="relative"
-                        {...getOverrideProps(overrides, "Vector")}
-                      ></Icon>
-                    </Flex>
-                    <ImgFile
-                      type="file"
-                      accept="image/*"
-                      required
-                      className="profileImgFile"
-                      name="profile"
-                      ref={profileInputRef}
-                      onChange={() => {
-                        profileFileChange();
-                      }}
-                    />
-                  </div>
-                </div>
-                <MarginStyle2 />
-                <MarginStyle2 />
-                <MarginStyle2 />
-                <hr className="HeaderTop_hr" />
-                <MarginStyle2 />
-                <div className="HeaderTop_nonamedUserModal_footer">
-                  <div className="HeaderTop_nonamedUserModal_footer_btn">
-                    <button
-                      onClick={() => {
-                        registNickName();
-                      }}
-                    >
-                      확인
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </HeaderTop_nonamedUserModal>
+            <UserCreate></UserCreate>
           )
         ) : (
           // 로그인 안했을 때

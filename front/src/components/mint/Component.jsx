@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { NFTCreate1, NFTCreate2, NFTMint } from "../../ui-components";
-const MintComponent = () => {
+const MintComponent = ({ web3 }) => {
   return (
     <Mint>
       <div className="Mint_innerBox">
-        <NFTMint></NFTMint>
+        <NFTMint web3={web3}></NFTMint>
       </div>
     </Mint>
   );

@@ -33,12 +33,19 @@ function App() {
         <Routes>
           {/* 헤더 */}
           <Route path="/*" element={<HeaderContainer login={login} />}></Route>
+          <Route
+            path="/regist"
+            element={<HeaderContainer login={login} />}
+          ></Route>
         </Routes>
         <div className="App_innerBox_content">
           <Routes>
             {/* 컨텐츠 */}
             <Route path="/" element={<HomeComponent />}></Route>
-            <Route path="/mint" element={<MintContainer />}></Route>
+            <Route
+              path="/mint"
+              element={<MintContainer account={account} web3={web3} />}
+            ></Route>
             <Route path="/search/*" element={<SearchContainer />}></Route>
             <Route
               path="/rank"
