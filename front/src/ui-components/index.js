@@ -49,4 +49,7 @@ export { default as NFTCreate2 } from "./NFTCreate2";
 export { default as NFTMint } from "./NftMint";
 export { default as NFTRank } from "./NftRank";
 export { default as NftUserinfo } from "./NftUserinfo";
+export { default as NftMyPage } from "./NftMyPage";
+export { default as Activity } from "./Activity";
+export { default as UserDescription } from "./UserDescription";
 export { default as studioTheme } from "./studioTheme";

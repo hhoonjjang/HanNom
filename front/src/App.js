@@ -15,8 +15,10 @@ import ActivityContainer from "./components/activity/Container";
 import NftDetailContainer from "./components/detail/Container";
 import { useWeb3 } from "./modules/useWeb3";
 import { useEffect } from "react";
+import MypageContainer from "./components/mypage/Container";
 function App() {
   const { web3, account, chainId, login } = useWeb3();
+
   useEffect(() => {
     login();
   }, []);
@@ -27,29 +29,43 @@ function App() {
           {/* 헤더 */}
           <Route path="/*" element={<HeaderContainer login={login} />}></Route>
         </Routes>
-
-        <Routes>
-          {/* 컨텐츠 */}
-          <Route path="/" element={<HomeComponent />}></Route>
-          <Route path="/groupRegist" element={<GroupRegistContainer />}></Route>
-          <Route path="/group/:groupId" element={<GroupContainer />}></Route>
-          <Route path="/mint" element={<MintContainer />}></Route>
-          <Route path="/wallet/:account" element={<WalletContainer />}></Route>
-          <Route path="/search/*" element={<SearchContainer />}></Route>
-          <Route path="/rank" element={<RankContainer></RankContainer>}></Route>
-          <Route
-            path="/activity/:account"
-            element={<ActivityContainer></ActivityContainer>}
-          ></Route>
-          <Route
-            path="/nft/*"
-            element={<NftDetailContainer account={account} web3={web3} />}
-          ></Route>
-          <Route
-            path="/*"
-            element={<BadAddressContainer></BadAddressContainer>}
-          ></Route>
-        </Routes>
+        <div className="App_innerBox_content">
+          <Routes>
+            {/* 컨텐츠 */}
+            <Route path="/" element={<HomeComponent />}></Route>
+            <Route
+              path="/groupRegist"
+              element={<GroupRegistContainer />}
+            ></Route>
+            <Route path="/group/:groupId" element={<GroupContainer />}></Route>
+            <Route path="/mint" element={<MintContainer />}></Route>
+            <Route
+              path="/wallet/:account"
+              element={<WalletContainer />}
+            ></Route>
+            <Route path="/search/*" element={<SearchContainer />}></Route>
+            <Route
+              path="/rank"
+              element={<RankContainer></RankContainer>}
+            ></Route>
+            <Route
+              path="/activity/:account"
+              element={<ActivityContainer></ActivityContainer>}
+            ></Route>
+            <Route
+              path="/nft/*"
+              element={<NftDetailContainer account={account} web3={web3} />}
+            ></Route>
+            <Route
+              path="/mypage"
+              element={<MypageContainer></MypageContainer>}
+            ></Route>
+            <Route
+              path="/*"
+              element={<BadAddressContainer></BadAddressContainer>}
+            ></Route>
+          </Routes>
+        </div>
 
         <Routes>
           {/* 푸터 */}
