@@ -1,4 +1,7 @@
+import { UserDescription } from "../../ui-components";
+
 const NftDetailComponent = () => {
-  return <div>해위</div>;
+  return <UserDescription></UserDescription>;
 };
+
 export default NftDetailComponent;

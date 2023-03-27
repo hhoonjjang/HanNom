@@ -44,7 +44,10 @@ export default function HearderTop(props) {
   const [bgImg, setBgImg] = React.useState("");
   const [profilefile, setProfileFile] = React.useState();
   const [profileImg, setProfileImg] = React.useState("");
-  console.log(username?.userName);
+  const [connect, setConnect] = React.useState(false);
+  const [count, setCount] = React.useState(0);
+  const [registBool, setRegistBool] = React.useState(true);
+  const [user, setUser] = React.useState();
   const navigateToSearch = () => {
     navigate(`/search?searchData=${searchData}`);
   };
@@ -98,7 +101,9 @@ export default function HearderTop(props) {
     navigate("/");
     // window.location.reload();
   };
-
+  function deleteCookie(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+  }
   const bgFileChange = (e) => {
     let selectedIMG = document.querySelector(".bgImgFile");
     if (selectedIMG.files && selectedIMG.files.length > 0) {
@@ -145,6 +150,45 @@ export default function HearderTop(props) {
     }
   };
 
+  const userCheck = async (account) => {
+    let userInfo;
+    if (document.cookie) {
+      userInfo = await axios.post("http://localhost:8080/api/user/login", {
+        cookie: document.cookie,
+        count: 1,
+      });
+      console.log("userInfo%%%%%%%%%%%%%%%%%%%", userInfo);
+    } else {
+      userInfo = await axios.post("http://localhost:8080/api/user/login", {
+        account: account,
+        count: 0,
+        // cookie: document.cookie,
+      });
+      console.log("userInfo%%%%%%%%%%%%%%%%%%%", userInfo);
+    }
+    console.log("count##############@@@@", userInfo.data.count);
+    setCount(userInfo.data.count);
+    console.log(userInfo.data.msg);
+    console.log(userInfo.data.user);
+    // if (userInfo.data.user) {
+    //   setUser(userInfo.data.user);
+    // }
+
+    if (userInfo.data.msg == "회원가입필요" && count != 0) {
+      setRegistBool(true);
+      console.log("hi");
+      // const data = (
+      //   await axios.post("http://localhost:8080/api/user/regist", formData)
+      // ).data;
+    } else {
+      setRegistBool(false);
+      setUser(userInfo.data.user);
+      // console.log(user.profileImg);
+      // setImg(`http://localhost:8080${user.profileImg}`);
+    }
+    console.log(user);
+  };
+
   React.useEffect(() => {
     const searchButtonRefCurrent = searchButtonRef.current;
     if (searchButtonRef && searchButtonRefCurrent) {
@@ -154,20 +198,39 @@ export default function HearderTop(props) {
       };
     }
   }, [onClick]);
-
   React.useEffect(() => {
-    const cookie = document.cookie.split(";");
-    for (let i in cookie) {
-      if (cookie[i].search("username") != -1) {
-        console.log(loginCookie);
-        setLoginCookie(cookie[i].search("username"));
-        console.log(cookie[i].search("username"));
-        return;
-      }
-
-      // cookie[i].replace("username=", "");
+    if (document.cookie) {
+      console.log("accountRasdasd", props.accountR);
+      (async () => {
+        console.log(props.accountR);
+        const user = await axios.post(
+          "http://localhost:8080/api/user/userDisplay",
+          {
+            account: props.accountR,
+          }
+        );
+        console.log(user);
+        setUser(user);
+        console.log("user223");
+      })();
+      // userDisplay();
+      setConnect(true);
+      userCheck(account);
+    } else {
+      setConnect(false);
     }
   }, []);
+  React.useEffect(() => {
+    if (account != undefined) {
+      const cookieAccount = document.cookie.split("=")[0];
+      console.log(cookieAccount);
+      if (account != undefined && account != cookieAccount) {
+        deleteCookie(cookieAccount);
+        setConnect(false);
+      }
+      userCheck();
+    }
+  }, [account]);
   return (
     <>
       <View
@@ -270,9 +333,9 @@ export default function HearderTop(props) {
             {...getOverrideProps(overrides, "HLogo")}
           ></HLogo>
         </Link>
-        {account && web3 ? (
+        {account && web3 && connect ? (
           // 로그인했으면
-          username?.userName != "unknown" ? (
+          !registBool ? (
             // 로그인했고 기존 유저였으면
             <AfterHeader account={account} />
           ) : (
@@ -452,7 +515,8 @@ export default function HearderTop(props) {
             children="Connect"
             {...getOverrideProps(overrides, "Button")}
             onClick={() => {
-              props.login();
+              setConnect(true);
+              userCheck(account);
             }}
           ></Button>
         )}

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 
-const HeaderContainer = ({ login }) => {
+const HeaderContainer = () => {
   // useEffect(() => {
   //   (async () => {
   //     const data = (await axios.post("http://localhost:8080/account", account))
@@ -12,7 +12,7 @@ const HeaderContainer = ({ login }) => {
   //   })();
   // }, [account]);
 
-  return <HeaderComponent login={login}></HeaderComponent>;
+  return <HeaderComponent></HeaderComponent>;
 };
 
 export default HeaderContainer;

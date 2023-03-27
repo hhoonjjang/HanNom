@@ -2,12 +2,9 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import HeaderContainer from "./components/header/Container";
 import FooterContainer from "./components/footer/Container";
-import GroupRegistContainer from "./components/groupRegist/Container";
 import MintContainer from "./components/mint/Container";
-import GroupContainer from "./components/group/Container";
 // import HomeContainer from "./components/home/Container";
 import HomeComponent from "./components/Home/Component";
-import WalletContainer from "./components/wallet/Container";
 import SearchContainer from "./components/search/Container";
 import RankContainer from "./components/rank/Container";
 import BadAddressContainer from "./components/badAddress/Container";
@@ -16,12 +13,20 @@ import NftDetailContainer from "./components/detail/Container";
 import { useWeb3 } from "./modules/useWeb3";
 import { useEffect } from "react";
 import MypageContainer from "./components/mypage/Container";
+import { useDispatch } from "react-redux";
+import { accountThunk } from "./modules/account";
+
 function App() {
   const { web3, account, chainId, login } = useWeb3();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     login();
-  }, []);
+
+    if (account) {
+      dispatch(accountThunk({ account: account }));
+    }
+    console.log(account);
+  }, [account]);
   return (
     <div className="App">
       <div className="App_innerBox">
@@ -33,16 +38,7 @@ function App() {
           <Routes>
             {/* 컨텐츠 */}
             <Route path="/" element={<HomeComponent />}></Route>
-            <Route
-              path="/groupRegist"
-              element={<GroupRegistContainer />}
-            ></Route>
-            <Route path="/group/:groupId" element={<GroupContainer />}></Route>
             <Route path="/mint" element={<MintContainer />}></Route>
-            <Route
-              path="/wallet/:account"
-              element={<WalletContainer />}
-            ></Route>
             <Route path="/search/*" element={<SearchContainer />}></Route>
             <Route
               path="/rank"
@@ -53,7 +49,7 @@ function App() {
               element={<ActivityContainer></ActivityContainer>}
             ></Route>
             <Route
-              path="/nft/*"
+              path="/nft/:nftId"
               element={<NftDetailContainer account={account} web3={web3} />}
             ></Route>
             <Route

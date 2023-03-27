@@ -34,13 +34,6 @@ const NftDetailContainer = ({ web3, account }) => {
   };
   return (
     <>
-      <div>하이</div>
-      <div>하이</div>
-      <div>하이</div>
-      <div>하이</div>
-      <div>하이</div>
-      <div>하이</div>
-      <div>하이</div>
       <NftDetailComponent nft={nft} />
     </>
   );
