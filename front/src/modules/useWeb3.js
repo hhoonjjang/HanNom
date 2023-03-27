@@ -23,7 +23,7 @@ export const useWeb3 = () => {
         await axios.post("http://localhost:8080/api/user/login", {
           account: _account,
         })
-      ).data.username;
+      ).data;
 
       console.log("user : ", user);
       // 백과 연결되면 활성화
@@ -38,7 +38,6 @@ export const useWeb3 = () => {
 
   const login = async () => {
     try {
-      console.log("we", window.ethereum);
       if (window.ethereum) {
         const _web3 = new Web3(window.ethereum);
         setWeb3(_web3);

@@ -14,14 +14,18 @@ import BadAddressContainer from "./components/badAddress/Container";
 import ActivityContainer from "./components/activity/Container";
 import NftDetailContainer from "./components/detail/Container";
 import { useWeb3 } from "./modules/useWeb3";
+import { useEffect } from "react";
 function App() {
-  const { web3, account, chainId, logIn } = useWeb3();
+  const { web3, account, chainId, login } = useWeb3();
+  useEffect(() => {
+    login();
+  }, []);
   return (
     <div className="App">
       <div className="App_innerBox">
         <Routes>
           {/* 헤더 */}
-          <Route path="/*" element={<HeaderContainer />}></Route>
+          <Route path="/*" element={<HeaderContainer login={login} />}></Route>
         </Routes>
 
         <Routes>

@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 export default function UserInfoCom2(props) {
   const { overrides, ...rest } = props;
   const item = Object.values(props)[0];
-  console.log(item);
+  // console.log(item);
   return (
     <Link to={`nft/${item.seller}/${item.tokenId}`}>
       <View

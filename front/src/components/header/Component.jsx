@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 import { HeaderTop } from "../../ui-components";
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ login }) => {
   return (
     <Header>
-      <HeaderTop />
+      <HeaderTop login={login} />
     </Header>
   );
 };

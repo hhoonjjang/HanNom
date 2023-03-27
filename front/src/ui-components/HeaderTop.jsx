@@ -34,7 +34,7 @@ export default function HearderTop(props) {
   const account = useSelector((state) => state.account.account.account);
   const username = useSelector((state) => state.username.username.username);
   const [loginCookie, setLoginCookie] = React.useState("");
-  const { web3, login } = useWeb3();
+  // const { web3, login } = useWeb3();
   const [newNickName, setNewNickName] = React.useState("");
   const inputRef = React.useRef(null);
   const bgInputRef = React.useRef(null);
@@ -44,7 +44,7 @@ export default function HearderTop(props) {
   const [bgImg, setBgImg] = React.useState("");
   const [profilefile, setProfileFile] = React.useState();
   const [profileImg, setProfileImg] = React.useState("");
-
+  console.log(username?.userName);
   const navigateToSearch = () => {
     navigate(`/search?searchData=${searchData}`);
   };
@@ -168,7 +168,6 @@ export default function HearderTop(props) {
       // cookie[i].replace("username=", "");
     }
   }, []);
-
   return (
     <>
       <View
@@ -273,7 +272,7 @@ export default function HearderTop(props) {
         </Link>
         {account && web3 ? (
           // 로그인했으면
-          username == "unknown" ? (
+          username?.userName != "unknown" ? (
             // 로그인했고 기존 유저였으면
             <AfterHeader account={account} />
           ) : (
@@ -453,7 +452,7 @@ export default function HearderTop(props) {
             children="Connect"
             {...getOverrideProps(overrides, "Button")}
             onClick={() => {
-              login();
+              props.login();
             }}
           ></Button>
         )}

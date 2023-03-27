@@ -54,6 +54,9 @@ router.post("/login", async (req, res) => {
     );
   }
   user = await User.findOne({ where: { userAddress: req.body.account } });
+  console.log("확인이요");
+  console.log(req.body);
+  console.log("확인이요");
 
   res.send(user);
 
@@ -65,7 +68,6 @@ router.post("/login", async (req, res) => {
   // }
 
   // res.send(userName);
-  console.log(req.body.account);
 
   // res.send({ msg: "쿠키생성완료" });
 });
