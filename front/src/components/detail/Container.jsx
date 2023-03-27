@@ -34,7 +34,7 @@ const NftDetailContainer = ({ web3, account }) => {
   };
   return (
     <>
-      <NftDetailComponent nft={nft} />
+      <NftDetailComponent nft={nft} tokenId={tokenId} />
     </>
   );
 };

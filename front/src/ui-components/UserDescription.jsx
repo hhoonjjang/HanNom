@@ -8,6 +8,7 @@
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Button, Flex, Image, Text } from "@aws-amplify/ui-react";
+
 export default function UserDescription(props) {
   const { overrides, ...rest } = props;
   return (
@@ -36,7 +37,8 @@ export default function UserDescription(props) {
         {...getOverrideProps(overrides, "Frame 131")}
       >
         <Image
-          src="https://f8n-production-collection-assets.imgix.net/0x50dC15DcA7B2c2f273ea5269F8FBeF8B291695a4/2/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+          src={props.nft.image}
+          // "https://f8n-production-collection-assets.imgix.net/0x50dC15DcA7B2c2f273ea5269F8FBeF8B291695a4/2/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
           width="450px"
           height="600px"
           display="block"
@@ -93,7 +95,8 @@ export default function UserDescription(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Celestial Portals #6"
+            children={`NFTTokenName #${props.tokenId}`}
+            // "Celestial Portals #6"
             {...getOverrideProps(overrides, "Celestial Portals #6")}
           ></Text>
           <Flex
@@ -396,7 +399,7 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children="0.25ETH"
+                children={`${props.nft.price} ETH`}
                 {...getOverrideProps(overrides, "0.25ETH")}
               ></Text>
             </Flex>
@@ -563,6 +566,7 @@ export default function UserDescription(props) {
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
             children="Rainbow Body&#xA;~&#xA;Celestial Portals is a visual journey through the spiritual space that &#xA;exists within us, around us, and beyond us, as we move through one &#xA;world and into another.&#xA;--&#xA;AI assisted imagery&#xA;1546 x 2048"
+            // back에서 description을 만들어주면 갖다 붙이는 곳. description이 아직 없다.
             {...getOverrideProps(
               overrides,
               "Rainbow Body ~ Celestial Portals is a visual journey through the spiritual space that exists within us, around us, and beyond us, as we move through one world and into another. -- AI assisted imagery 1546 x 2048"

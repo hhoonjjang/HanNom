@@ -49,7 +49,7 @@ function App() {
               element={<ActivityContainer></ActivityContainer>}
             ></Route>
             <Route
-              path="/nft/:nftId"
+              path="/nft/*"
               element={<NftDetailContainer account={account} web3={web3} />}
             ></Route>
             <Route
