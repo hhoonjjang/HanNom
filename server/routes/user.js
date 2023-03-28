@@ -129,18 +129,18 @@ router.post("/login", async (req, res) => {
     if (user == undefined) {
       res.send({ msg: "회원가입필요", count: count });
     } else {
-      // res.cookie(
-      //   // req.body.account + "=" + user.userName,
-      //   req.body.account,
-      //   jwt.sign(
-      //     {
-      //       userAddress: req.body.account,
-      //       userName: user.userName,
-      //     },
-      //     process.env.JWT_KEY,
-      //     { algorithm: "HS256", expiresIn: "300m", issuer: "킹영준" }
-      //   )
-      // );
+      res.cookie(
+        // req.body.account + "=" + user.userName,
+        req.body.account,
+        jwt.sign(
+          {
+            userAddress: req.body.account,
+            userName: user.userName,
+          },
+          process.env.JWT_KEY,
+          { algorithm: "HS256", expiresIn: "300m", issuer: "킹영준" }
+        )
+      );
       res.send({ user: user, count: count });
     }
   }

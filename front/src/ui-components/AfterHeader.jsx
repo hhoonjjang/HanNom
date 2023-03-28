@@ -45,7 +45,8 @@ export default function AfterHeader(props) {
   React.useEffect(() => {
     setView(false);
   }, [pathname]);
-  console.log(props);
+  console.log("랜더링");
+  console.log(props.user);
   return (
     <View
       width="1440px"
@@ -172,7 +173,7 @@ export default function AfterHeader(props) {
         <UserIcon
           src={
             props?.user?.profileImg
-              ? `http://localhost:8080${props.user.profileImg}`
+              ? `http://localhost:8080${props?.user?.profileImg}`
               : "#"
           }
           display="block"
