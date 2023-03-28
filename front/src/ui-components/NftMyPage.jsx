@@ -3,7 +3,7 @@
  * Please refrain from making any modifications to this file.              *
  * Any changes to this file will be overwritten when running amplify pull. *
  **************************************************************************/
-
+//nftmypage.jsx
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
@@ -19,8 +19,62 @@ import {
   TextField,
   View,
 } from "@aws-amplify/ui-react";
+import axios from "axios";
 export default function NftMyPage(props) {
+  console.log("props", props.list);
+  const [price, setPrice] = React.useState();
+  const [count, setCount] = React.useState(1);
+  const [_, render] = React.useState();
+  console.log(props.web3);
+  const sellNft = async (tokenId) => {
+    const tempAddress = document.cookie.split("=")[0];
+    console.log(tempAddress);
+    const result = (
+      await axios.post("http://localhost:8080/api/mint/sell", {
+        tokenId: tokenId.toString(),
+        price: price.toString(),
+        account: tempAddress,
+      })
+    ).data;
+    console.log(result);
+    setCount(count + 1);
+    await props.web3.eth.sendTransaction(result.approveObj);
+    await props.web3.eth.sendTransaction(result.obj);
+    sellComplete(tokenId);
+  };
+  const sellComplete = async (tokenId) => {
+    const data = await axios.post(
+      "http://localhost:8080/api/mint/sellComplete",
+      {
+        tokenId: tokenId.toString(),
+      }
+    );
+    console.log(data);
+  };
+  const mintCancel = async (tokenId) => {
+    const tempAddress = document.cookie.split("=")[0];
+    const result = await axios.post(
+      "http://localhost:8080/api/mint/saleCancel",
+      {
+        tokenId: tokenId.toString(),
+        account: tempAddress,
+      }
+    );
+    console.log(result.data);
+    await props.web3.eth.sendTransaction(result.data);
+    cancelComplete(tokenId);
+  };
   const { overrides, ...rest } = props;
+
+  const cancelComplete = async (tokenId) => {
+    const data = await axios.post(
+      "http://localhost:8080/api/mint/cancelComplete",
+      {
+        tokenId: tokenId.toString(),
+      }
+    );
+    console.log(data);
+  };
   return (
     <View
       width="1440px"
@@ -35,7 +89,11 @@ export default function NftMyPage(props) {
       {...rest}
     >
       <Image
-        src="https://f8n-production-collection-assets.imgix.net/0x50dC15DcA7B2c2f273ea5269F8FBeF8B291695a4/1/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+        src={
+          props?.userdata?.backgroundImg
+            ? `http://localhost:8080${props.userdata.backgroundImg}`
+            : "#"
+        }
         width="100%"
         height="41.03%"
         display="block"
@@ -79,7 +137,11 @@ export default function NftMyPage(props) {
           {...getOverrideProps(overrides, "Frame 100")}
         >
           <Image
-            src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/129/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+            src={
+              props?.userdata?.profileImg
+                ? `http://localhost:8080${props.userdata.profileImg}`
+                : "#"
+            }
             width="100px"
             height="100px"
             display="block"
@@ -149,7 +211,9 @@ export default function NftMyPage(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Sanha38"
+          children={
+            props?.userdata?.userName ? `${props.userdata.userName}` : ""
+          }
           {...getOverrideProps(overrides, "Sanha38")}
         ></Text>
         <Flex
@@ -168,7 +232,11 @@ export default function NftMyPage(props) {
           {...getOverrideProps(overrides, "Frame 30")}
         >
           <Image
-            src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/133/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+            src={
+              props?.userdata?.profileImg
+                ? `http://localhost:8080${props.userdata.profileImg}`
+                : "#"
+            }
             width="23px"
             height="23px"
             display="block"
@@ -200,7 +268,9 @@ export default function NftMyPage(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="sanha38"
+            children={
+              props?.userdata?.userName ? `${props.userdata.userName}` : ""
+            }
             {...getOverrideProps(overrides, "sanha38")}
           ></Text>
         </Flex>
@@ -663,699 +733,328 @@ export default function NftMyPage(props) {
         padding="0px 0px 0px 0px"
         {...getOverrideProps(overrides, "Frame 156")}
       >
-        <Flex
-          gap="16px"
-          direction="column"
-          width="unset"
-          height="unset"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          {...getOverrideProps(overrides, "Frame 153")}
-        >
-          <CheckboxField
-            width="unset"
-            height="unset"
-            shrink="0"
-            size="small"
-            defaultChecked={true}
-            isDisabled={false}
-            labelPosition="start"
-            {...getOverrideProps(overrides, "CheckboxField38403547")}
-          ></CheckboxField>
-          <Flex
-            gap="0"
-            direction="column"
-            width="325px"
-            height="387px"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            {...getOverrideProps(overrides, "Frame 11838403144")}
-          >
-            <Image
-              src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/128/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
-              width="325px"
-              height="300px"
-              display="block"
-              gap="unset"
-              alignItems="unset"
-              justifyContent="unset"
-              shrink="0"
-              position="relative"
-              borderRadius="15px 15px 0px 0px"
-              padding="0px 0px 0px 0px"
-              objectFit="cover"
-              {...getOverrideProps(overrides, "nft (1) 338403145")}
-            ></Image>
-            <Flex
-              gap="10px"
-              direction="column"
-              width="325px"
-              height="unset"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-              overflow="hidden"
-              shrink="0"
-              position="relative"
-              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-              borderRadius="0px 0px 15px 15px"
-              padding="13px 6px 13px 6px"
-              backgroundColor="rgba(252,252,252,1)"
-              {...getOverrideProps(overrides, "Frame 11638403146")}
-            >
+        // component 하나
+        {props.list ? (
+          props.list.map((item, index) => {
+            return (
               <Flex
-                gap="13px"
+                key={(`index:`, index)}
+                gap="16px"
                 direction="column"
-                width="94px"
-                height="61px"
-                justifyContent="center"
+                width="unset"
+                height="unset"
+                justifyContent="flex-start"
                 alignItems="flex-start"
                 shrink="0"
                 position="relative"
-                padding="0px 0px 0px 6px"
-                {...getOverrideProps(overrides, "Frame 11538403147")}
+                padding="0px 0px 0px 0px"
+                {...getOverrideProps(overrides, "Frame 154")}
               >
-                <Flex
-                  gap="6px"
-                  direction="row"
-                  width="81px"
-                  height="21px"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  shrink="0"
-                  position="relative"
-                  borderRadius="25px"
-                  padding="6px 9px 6px 9px"
-                  backgroundColor="rgba(217,217,217,0.5)"
-                  {...getOverrideProps(overrides, "Frame 10138403148")}
-                >
-                  <Image
-                    src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/133/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
-                    width="15px"
-                    height="15px"
-                    display="block"
-                    gap="unset"
-                    alignItems="unset"
-                    justifyContent="unset"
-                    shrink="0"
-                    position="relative"
-                    borderRadius="23px"
-                    padding="0px 0px 0px 0px"
-                    objectFit="cover"
-                    {...getOverrideProps(overrides, "ghrgclzzd 338403149")}
-                  ></Image>
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="8px"
-                    fontWeight="700"
-                    color="rgba(255,255,255,0.8)"
-                    lineHeight="12px"
-                    textAlign="center"
-                    display="block"
-                    direction="column"
-                    justifyContent="unset"
-                    width="unset"
-                    height="unset"
-                    gap="unset"
-                    alignItems="unset"
-                    shrink="0"
-                    position="relative"
-                    padding="0px 0px 0px 0px"
-                    whiteSpace="pre-wrap"
-                    children="@sanha38"
-                    {...getOverrideProps(overrides, "@sanha3838403150")}
-                  ></Text>
-                </Flex>
-                <Flex
-                  gap="1px"
-                  direction="column"
-                  width="61px"
+                <CheckboxField
+                  width="unset"
                   height="unset"
-                  justifyContent="center"
+                  shrink="0"
+                  size="small"
+                  defaultChecked={true}
+                  isDisabled={false}
+                  labelPosition="start"
+                  {...getOverrideProps(overrides, "CheckboxField38403565")}
+                ></CheckboxField>
+                <Flex
+                  gap="0"
+                  direction="column"
+                  width="325px"
+                  height="387px"
+                  justifyContent="flex-start"
                   alignItems="flex-start"
                   shrink="0"
                   position="relative"
-                  padding="0px 0px 0px 3px"
-                  {...getOverrideProps(overrides, "Frame 10538403151")}
-                >
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="7px"
-                    fontWeight="700"
-                    color="rgba(86,86,86,1)"
-                    lineHeight="10.5px"
-                    textAlign="left"
-                    display="block"
-                    direction="column"
-                    justifyContent="unset"
-                    width="unset"
-                    height="unset"
-                    gap="unset"
-                    alignItems="unset"
-                    shrink="0"
-                    position="relative"
-                    padding="0px 0px 0px 0px"
-                    whiteSpace="pre-wrap"
-                    children="Reserve"
-                    {...getOverrideProps(overrides, "Reserve38403152")}
-                  ></Text>
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="10px"
-                    fontWeight="700"
-                    color="rgba(0,0,0,1)"
-                    lineHeight="15px"
-                    textAlign="left"
-                    display="block"
-                    direction="column"
-                    justifyContent="unset"
-                    width="unset"
-                    height="unset"
-                    gap="unset"
-                    alignItems="unset"
-                    shrink="0"
-                    position="relative"
-                    padding="0px 0px 0px 0px"
-                    whiteSpace="pre-wrap"
-                    children="1.30 ETH"
-                    {...getOverrideProps(overrides, "1.30 ETH38403153")}
-                  ></Text>
-                </Flex>
-              </Flex>
-            </Flex>
-          </Flex>
-          <Flex
-            gap="9px"
-            direction="row"
-            width="306px"
-            justifyContent="flex-start"
-            alignItems="flex-end"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            {...getOverrideProps(overrides, "Frame 15238403546")}
-          >
-            <StepperField
-              width="100px"
-              height="unset"
-              shrink="0"
-              size="small"
-              isDisabled={false}
-              labelHidden={true}
-              variation="quiet"
-              {...getOverrideProps(overrides, "StepperField38403396")}
-            ></StepperField>
-            <TextField
-              width="150px"
-              placeholder="판매할 ETH 입력"
-              alignItems="center"
-              shrink="0"
-              size="small"
-              isDisabled={false}
-              labelHidden={false}
-              variation="quiet"
-              {...getOverrideProps(overrides, "TextField38403509")}
-            ></TextField>
-            <Button
-              width="unset"
-              height="unset"
-              shrink="0"
-              size="small"
-              children="Sell"
-              isDisabled={false}
-              variation="primary"
-              borderRadius="35px"
-              {...getOverrideProps(overrides, "Badge38403247")}
-            ></Button>
-          </Flex>
-        </Flex>
-        <Flex
-          gap="16px"
-          direction="column"
-          width="unset"
-          height="unset"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          {...getOverrideProps(overrides, "Frame 155")}
-        >
-          <CheckboxField
-            width="unset"
-            height="unset"
-            shrink="0"
-            size="small"
-            defaultChecked={true}
-            isDisabled={false}
-            labelPosition="start"
-            {...getOverrideProps(overrides, "CheckboxField38403611")}
-          ></CheckboxField>
-          <Flex
-            gap="0"
-            direction="column"
-            width="325px"
-            height="387px"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            {...getOverrideProps(overrides, "Frame 11838403612")}
-          >
-            <Image
-              src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/133/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
-              width="325px"
-              height="300px"
-              display="block"
-              gap="unset"
-              alignItems="unset"
-              justifyContent="unset"
-              shrink="0"
-              position="relative"
-              borderRadius="15px 15px 0px 0px"
-              padding="0px 0px 0px 0px"
-              objectFit="cover"
-              {...getOverrideProps(overrides, "nft (1) 338403613")}
-            ></Image>
-            <Flex
-              gap="10px"
-              direction="column"
-              width="325px"
-              height="unset"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-              overflow="hidden"
-              shrink="0"
-              position="relative"
-              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-              borderRadius="0px 0px 15px 15px"
-              padding="13px 6px 13px 6px"
-              backgroundColor="rgba(252,252,252,1)"
-              {...getOverrideProps(overrides, "Frame 11638403614")}
-            >
-              <Flex
-                gap="13px"
-                direction="column"
-                width="94px"
-                height="61px"
-                justifyContent="center"
-                alignItems="flex-start"
-                shrink="0"
-                position="relative"
-                padding="0px 0px 0px 6px"
-                {...getOverrideProps(overrides, "Frame 11538403615")}
-              >
-                <Flex
-                  gap="6px"
-                  direction="row"
-                  width="81px"
-                  height="21px"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  shrink="0"
-                  position="relative"
-                  borderRadius="25px"
-                  padding="6px 9px 6px 9px"
-                  backgroundColor="rgba(217,217,217,0.5)"
-                  {...getOverrideProps(overrides, "Frame 10138403616")}
+                  padding="0px 0px 0px 0px"
+                  {...getOverrideProps(overrides, "Frame 11838403566")}
                 >
                   <Image
-                    src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/128/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
-                    width="15px"
-                    height="15px"
+                    src={`http://localhost:8080${item.nftImg}`}
+                    width="325px"
+                    height="300px"
                     display="block"
                     gap="unset"
                     alignItems="unset"
                     justifyContent="unset"
                     shrink="0"
                     position="relative"
-                    borderRadius="23px"
+                    borderRadius="15px 15px 0px 0px"
                     padding="0px 0px 0px 0px"
                     objectFit="cover"
-                    {...getOverrideProps(overrides, "ghrgclzzd 338403617")}
+                    {...getOverrideProps(overrides, "nft (1) 338403567")}
                   ></Image>
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="8px"
-                    fontWeight="700"
-                    color="rgba(255,255,255,0.8)"
-                    lineHeight="12px"
-                    textAlign="center"
-                    display="block"
+                  <Flex
+                    gap="10px"
                     direction="column"
-                    justifyContent="unset"
-                    width="unset"
+                    width="325px"
                     height="unset"
-                    gap="unset"
-                    alignItems="unset"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                    overflow="hidden"
                     shrink="0"
                     position="relative"
-                    padding="0px 0px 0px 0px"
-                    whiteSpace="pre-wrap"
-                    children="@sanha38"
-                    {...getOverrideProps(overrides, "@sanha3838403618")}
-                  ></Text>
+                    boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                    borderRadius="0px 0px 15px 15px"
+                    padding="13px 6px 13px 6px"
+                    backgroundColor="rgba(252,252,252,1)"
+                    {...getOverrideProps(overrides, "Frame 11638403568")}
+                  >
+                    <Flex
+                      gap="13px"
+                      direction="column"
+                      width="94px"
+                      height="61px"
+                      justifyContent="center"
+                      alignItems="flex-start"
+                      shrink="0"
+                      position="relative"
+                      padding="0px 0px 0px 6px"
+                      {...getOverrideProps(overrides, "Frame 11538403569")}
+                    >
+                      <Flex
+                        gap="6px"
+                        direction="row"
+                        width="81px"
+                        height="21px"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                        shrink="0"
+                        position="relative"
+                        borderRadius="25px"
+                        padding="6px 9px 6px 9px"
+                        backgroundColor="rgba(217,217,217,0.5)"
+                        {...getOverrideProps(overrides, "Frame 10138403570")}
+                      >
+                        <Image
+                          src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/113/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+                          width="15px"
+                          height="15px"
+                          display="block"
+                          gap="unset"
+                          alignItems="unset"
+                          justifyContent="unset"
+                          shrink="0"
+                          position="relative"
+                          borderRadius="23px"
+                          padding="0px 0px 0px 0px"
+                          objectFit="cover"
+                          {...getOverrideProps(
+                            overrides,
+                            "ghrgclzzd 338403571"
+                          )}
+                        ></Image>
+                        <Text
+                          fontFamily="Inter"
+                          fontSize="8px"
+                          fontWeight="700"
+                          color="rgba(0,0,0,0.8)"
+                          lineHeight="12px"
+                          textAlign="center"
+                          display="block"
+                          direction="column"
+                          justifyContent="unset"
+                          width="unset"
+                          height="unset"
+                          gap="unset"
+                          alignItems="unset"
+                          shrink="0"
+                          position="relative"
+                          padding="0px 0px 0px 0px"
+                          whiteSpace="pre-wrap"
+                          children={props.userName}
+                          {...getOverrideProps(overrides, "@sanha3838403572")}
+                        ></Text>
+                      </Flex>
+                      <Flex
+                        gap="1px"
+                        direction="column"
+                        width="61px"
+                        height="unset"
+                        justifyContent="center"
+                        alignItems="flex-start"
+                        shrink="0"
+                        position="relative"
+                        padding="0px 0px 0px 3px"
+                        {...getOverrideProps(overrides, "Frame 10538403573")}
+                      >
+                        <Text
+                          fontFamily="Inter"
+                          fontSize="7px"
+                          fontWeight="700"
+                          color="rgba(86,86,86,1)"
+                          lineHeight="10.5px"
+                          textAlign="left"
+                          display="block"
+                          direction="column"
+                          justifyContent="unset"
+                          width="unset"
+                          height="unset"
+                          gap="unset"
+                          alignItems="unset"
+                          shrink="0"
+                          position="relative"
+                          padding="0px 0px 0px 0px"
+                          whiteSpace="pre-wrap"
+                          children={item.nftDescription}
+                          {...getOverrideProps(overrides, "Reserve38403574")}
+                        ></Text>
+                        <Text
+                          fontFamily="Inter"
+                          fontSize="10px"
+                          fontWeight="700"
+                          color="rgba(0,0,0,1)"
+                          lineHeight="15px"
+                          textAlign="left"
+                          display="block"
+                          direction="column"
+                          justifyContent="unset"
+                          width="unset"
+                          height="unset"
+                          gap="unset"
+                          alignItems="unset"
+                          shrink="0"
+                          position="relative"
+                          padding="0px 0px 0px 0px"
+                          whiteSpace="pre-wrap"
+                          children={item.nftName}
+                          {...getOverrideProps(overrides, "1.30 ETH38403575")}
+                        ></Text>
+                        <Text
+                          fontFamily="Inter"
+                          fontSize="10px"
+                          fontWeight="700"
+                          color="rgba(0,0,0,1)"
+                          lineHeight="15px"
+                          textAlign="left"
+                          display="block"
+                          direction="column"
+                          justifyContent="unset"
+                          width="unset"
+                          height="unset"
+                          gap="unset"
+                          alignItems="unset"
+                          shrink="0"
+                          position="relative"
+                          padding="0px 0px 0px 0px"
+                          whiteSpace="pre-wrap"
+                          children={"tokenid: " + item.tokenId}
+                          {...getOverrideProps(overrides, "1.30 ETH38403575")}
+                        ></Text>
+                        <Text
+                          fontFamily="Inter"
+                          fontSize="10px"
+                          fontWeight="700"
+                          color="rgba(0,0,0,1)"
+                          lineHeight="15px"
+                          textAlign="left"
+                          display="block"
+                          direction="column"
+                          justifyContent="unset"
+                          width="unset"
+                          height="unset"
+                          gap="unset"
+                          alignItems="unset"
+                          shrink="0"
+                          position="relative"
+                          padding="0px 0px 0px 0px"
+                          whiteSpace="pre-wrap"
+                          children={item.state}
+                          {...getOverrideProps(overrides, "1.30 ETH38403575")}
+                        ></Text>
+                      </Flex>
+                    </Flex>
+                  </Flex>
                 </Flex>
                 <Flex
-                  gap="1px"
-                  direction="column"
-                  width="61px"
-                  height="unset"
-                  justifyContent="center"
-                  alignItems="flex-start"
-                  shrink="0"
-                  position="relative"
-                  padding="0px 0px 0px 3px"
-                  {...getOverrideProps(overrides, "Frame 10538403619")}
-                >
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="7px"
-                    fontWeight="700"
-                    color="rgba(86,86,86,1)"
-                    lineHeight="10.5px"
-                    textAlign="left"
-                    display="block"
-                    direction="column"
-                    justifyContent="unset"
-                    width="unset"
-                    height="unset"
-                    gap="unset"
-                    alignItems="unset"
-                    shrink="0"
-                    position="relative"
-                    padding="0px 0px 0px 0px"
-                    whiteSpace="pre-wrap"
-                    children="Reserve"
-                    {...getOverrideProps(overrides, "Reserve38403620")}
-                  ></Text>
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="10px"
-                    fontWeight="700"
-                    color="rgba(0,0,0,1)"
-                    lineHeight="15px"
-                    textAlign="left"
-                    display="block"
-                    direction="column"
-                    justifyContent="unset"
-                    width="unset"
-                    height="unset"
-                    gap="unset"
-                    alignItems="unset"
-                    shrink="0"
-                    position="relative"
-                    padding="0px 0px 0px 0px"
-                    whiteSpace="pre-wrap"
-                    children="1.30 ETH"
-                    {...getOverrideProps(overrides, "1.30 ETH38403621")}
-                  ></Text>
-                </Flex>
-              </Flex>
-            </Flex>
-          </Flex>
-          <Flex
-            gap="9px"
-            direction="row"
-            width="306px"
-            justifyContent="flex-start"
-            alignItems="flex-end"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            {...getOverrideProps(overrides, "Frame 15238403622")}
-          >
-            <StepperField
-              width="100px"
-              height="unset"
-              shrink="0"
-              size="small"
-              isDisabled={false}
-              labelHidden={true}
-              variation="quiet"
-              {...getOverrideProps(overrides, "StepperField38403623")}
-            ></StepperField>
-            <TextField
-              width="150px"
-              placeholder="판매할 ETH 입력"
-              alignItems="center"
-              shrink="0"
-              size="small"
-              isDisabled={false}
-              labelHidden={false}
-              variation="quiet"
-              {...getOverrideProps(overrides, "TextField38403624")}
-            ></TextField>
-            <Button
-              width="unset"
-              height="unset"
-              shrink="0"
-              size="small"
-              children="Sell"
-              isDisabled={false}
-              variation="primary"
-              borderRadius="35px"
-              {...getOverrideProps(overrides, "Badge38403247")}
-            ></Button>
-          </Flex>
-        </Flex>
-        <Flex
-          gap="16px"
-          direction="column"
-          width="unset"
-          height="unset"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          {...getOverrideProps(overrides, "Frame 154")}
-        >
-          <CheckboxField
-            width="unset"
-            height="unset"
-            shrink="0"
-            size="small"
-            defaultChecked={true}
-            isDisabled={false}
-            labelPosition="start"
-            {...getOverrideProps(overrides, "CheckboxField38403565")}
-          ></CheckboxField>
-          <Flex
-            gap="0"
-            direction="column"
-            width="325px"
-            height="387px"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            {...getOverrideProps(overrides, "Frame 11838403566")}
-          >
-            <Image
-              src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/113/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
-              width="325px"
-              height="300px"
-              display="block"
-              gap="unset"
-              alignItems="unset"
-              justifyContent="unset"
-              shrink="0"
-              position="relative"
-              borderRadius="15px 15px 0px 0px"
-              padding="0px 0px 0px 0px"
-              objectFit="cover"
-              {...getOverrideProps(overrides, "nft (1) 338403567")}
-            ></Image>
-            <Flex
-              gap="10px"
-              direction="column"
-              width="325px"
-              height="unset"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-              overflow="hidden"
-              shrink="0"
-              position="relative"
-              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-              borderRadius="0px 0px 15px 15px"
-              padding="13px 6px 13px 6px"
-              backgroundColor="rgba(252,252,252,1)"
-              {...getOverrideProps(overrides, "Frame 11638403568")}
-            >
-              <Flex
-                gap="13px"
-                direction="column"
-                width="94px"
-                height="61px"
-                justifyContent="center"
-                alignItems="flex-start"
-                shrink="0"
-                position="relative"
-                padding="0px 0px 0px 6px"
-                {...getOverrideProps(overrides, "Frame 11538403569")}
-              >
-                <Flex
-                  gap="6px"
+                  gap="9px"
                   direction="row"
-                  width="81px"
-                  height="21px"
+                  width="306px"
                   justifyContent="flex-start"
-                  alignItems="center"
+                  alignItems="flex-end"
                   shrink="0"
                   position="relative"
-                  borderRadius="25px"
-                  padding="6px 9px 6px 9px"
-                  backgroundColor="rgba(217,217,217,0.5)"
-                  {...getOverrideProps(overrides, "Frame 10138403570")}
+                  padding="0px 0px 0px 0px"
+                  {...getOverrideProps(overrides, "Frame 15238403576")}
                 >
-                  <Image
-                    src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/113/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
-                    width="15px"
-                    height="15px"
-                    display="block"
-                    gap="unset"
-                    alignItems="unset"
-                    justifyContent="unset"
-                    shrink="0"
-                    position="relative"
-                    borderRadius="23px"
-                    padding="0px 0px 0px 0px"
-                    objectFit="cover"
-                    {...getOverrideProps(overrides, "ghrgclzzd 338403571")}
-                  ></Image>
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="8px"
-                    fontWeight="700"
-                    color="rgba(255,255,255,0.8)"
-                    lineHeight="12px"
-                    textAlign="center"
-                    display="block"
-                    direction="column"
-                    justifyContent="unset"
-                    width="unset"
+                  {/* <StepperField
+                    width="25px"
                     height="unset"
-                    gap="unset"
-                    alignItems="unset"
                     shrink="0"
-                    position="relative"
-                    padding="0px 0px 0px 0px"
-                    whiteSpace="pre-wrap"
-                    children="@sanha38"
-                    {...getOverrideProps(overrides, "@sanha3838403572")}
-                  ></Text>
-                </Flex>
-                <Flex
-                  gap="1px"
-                  direction="column"
-                  width="61px"
-                  height="unset"
-                  justifyContent="center"
-                  alignItems="flex-start"
-                  shrink="0"
-                  position="relative"
-                  padding="0px 0px 0px 3px"
-                  {...getOverrideProps(overrides, "Frame 10538403573")}
-                >
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="7px"
-                    fontWeight="700"
-                    color="rgba(86,86,86,1)"
-                    lineHeight="10.5px"
-                    textAlign="left"
-                    display="block"
-                    direction="column"
-                    justifyContent="unset"
-                    width="unset"
-                    height="unset"
-                    gap="unset"
-                    alignItems="unset"
-                    shrink="0"
-                    position="relative"
-                    padding="0px 0px 0px 0px"
-                    whiteSpace="pre-wrap"
-                    children="Reserve"
-                    {...getOverrideProps(overrides, "Reserve38403574")}
-                  ></Text>
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="10px"
-                    fontWeight="700"
-                    color="rgba(0,0,0,1)"
-                    lineHeight="15px"
-                    textAlign="left"
-                    display="block"
-                    direction="column"
-                    justifyContent="unset"
-                    width="unset"
-                    height="unset"
-                    gap="unset"
-                    alignItems="unset"
-                    shrink="0"
-                    position="relative"
-                    padding="0px 0px 0px 0px"
-                    whiteSpace="pre-wrap"
-                    children="1.30 ETH"
-                    {...getOverrideProps(overrides, "1.30 ETH38403575")}
-                  ></Text>
+                    size="small"
+                    isDisabled={false}
+                    labelHidden={true}
+                    variation="quiet"
+                    {...getOverrideProps(overrides, "StepperField38403577")}
+                  ></StepperField> */}
+                  {item.state == "mint" ? (
+                    <>
+                      <TextField
+                        width="150px"
+                        placeholder="판매할 ETH 입력"
+                        alignItems="center"
+                        shrink="0"
+                        size="small"
+                        isDisabled={false}
+                        labelHidden={false}
+                        variation="quiet"
+                        onChange={(e) => {
+                          setPrice(e.target.value);
+                          console.log(price);
+                        }}
+                        {...getOverrideProps(overrides, "TextField38403578")}
+                      ></TextField>
+                      <Button
+                        width="unset"
+                        height="unset"
+                        shrink="0"
+                        size="small"
+                        children="Sell"
+                        isDisabled={false}
+                        variation="primary"
+                        borderRadius="35px"
+                        {...getOverrideProps(overrides, "Badge38403247")}
+                        onClick={() => {
+                          sellNft(item.tokenId);
+                          console.log("hi");
+                          render();
+                        }}
+                      ></Button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {item.state == "mint" ? (
+                    <></>
+                  ) : (
+                    <Button
+                      width="unset"
+                      height="unset"
+                      shrink="0"
+                      size="small"
+                      children="Cancel"
+                      isDisabled={false}
+                      variation="primary"
+                      backgroundColor="red"
+                      borderRadius="35px"
+                      {...getOverrideProps(overrides, "Badge38403247")}
+                      onClick={() => {
+                        mintCancel(item.tokenId);
+                        render();
+                      }}
+                    ></Button>
+                  )}
                 </Flex>
               </Flex>
-            </Flex>
-          </Flex>
-          <Flex
-            gap="9px"
-            direction="row"
-            width="306px"
-            justifyContent="flex-start"
-            alignItems="flex-end"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            {...getOverrideProps(overrides, "Frame 15238403576")}
-          >
-            <StepperField
-              width="100px"
-              height="unset"
-              shrink="0"
-              size="small"
-              isDisabled={false}
-              labelHidden={true}
-              variation="quiet"
-              {...getOverrideProps(overrides, "StepperField38403577")}
-            ></StepperField>
-            <TextField
-              width="150px"
-              placeholder="판매할 ETH 입력"
-              alignItems="center"
-              shrink="0"
-              size="small"
-              isDisabled={false}
-              labelHidden={false}
-              variation="quiet"
-              {...getOverrideProps(overrides, "TextField38403578")}
-            ></TextField>
-            <Button
-              width="unset"
-              height="unset"
-              shrink="0"
-              size="small"
-              children="Sell"
-              isDisabled={false}
-              variation="primary"
-              borderRadius="35px"
-              {...getOverrideProps(overrides, "Badge38403247")}
-            ></Button>
-          </Flex>
-        </Flex>
+            );
+          })
+        ) : (
+          <></>
+        )}
       </Flex>
     </View>
   );

@@ -32,6 +32,7 @@ root.render(
   <ThemeProvider theme={studioTheme}>
     <BrowserRouter>
       <Provider store={store}>
+        <ScrollToTop />
         <App />
       </Provider>
     </BrowserRouter>

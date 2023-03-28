@@ -101,7 +101,7 @@ export default function NftMint(props) {
     console.log(result);
     try {
       await props.web3.eth.sendTransaction(result);
-      navigate(`/mypage`);
+      navigate(`/`);
     } catch (error) {
       console.log("에러");
     }

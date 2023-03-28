@@ -222,13 +222,7 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_tokenOwner",
-						"type": "address"
-					}
-				],
+				"inputs": [],
 				"name": "getTokenList",
 				"outputs": [
 					{
@@ -690,11 +684,11 @@
 	},
 	"sources": {
 		"contracts/NftToken.sol": {
-			"keccak256": "0xc328c9c9f1bf81e372d1eed8c67f7b33e946b76d4028dfd4b6c9e72f5cd39683",
+			"keccak256": "0x5b2fdf6322196ec4c53c6b695ff3dbdb7fb0cad075cb51862589c2a5c1d0dcb8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://dd23c54a7a62e410a6e4664fb7f6015df4499095411925a3c3bd765fb815e36e",
-				"dweb:/ipfs/QmWKtFFZnq5NkCE3gB5ziA4ca9vy5K8puiRwYc6DKmxNrB"
+				"bzz-raw://427b733faa6d19c9adf4c5c14b43cbfbbb897403cd800c579b1a2727096dc9a4",
+				"dweb:/ipfs/QmYjfqJT9KHLSfhVuxZbaUkftpsapEXLAmSVzPmWcqXLa5"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/access/Ownable.sol": {

@@ -6,10 +6,12 @@ import axios from "axios";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import { Readable } from "stream";
-const web3 = new Web3("http://ganache.test.errorcode.help:8545");
-// const web3 = new Web3(
-//   "wss://goerli.infura.io/ws/v3/2370d723f2b24ee69ca1d052c7a0e099"
-// );
+import dotenv from "dotenv";
+dotenv.config();
+// const web3 = new Web3("http://ganache.test.errorcode.help:8545");
+const web3 = new Web3(
+  "wss://goerli.infura.io/ws/v3/2370d723f2b24ee69ca1d052c7a0e099"
+);
 const router = Router();
 const storage = multer.diskStorage({
   destination: (req, res, cb) => {
@@ -71,6 +73,12 @@ const upload = multer({ storage: storage });
 
 //   // res.send({ msg: "쿠키생성완료" });
 // });
+router.post("/cookieInfo", async (req, res) => {
+  console.log("cookie", req.body.cookie);
+  // const cookieInfo = jwt.verify(req.body.cookie, process.env.JWT_KEY);
+  console.log("req.cookie", req.cookies);
+});
+
 router.post("/userDisplay", async (req, res) => {
   console.log("유저디스플레이: ", req.body.cookie);
   // const address = req.body.cookie
@@ -85,6 +93,19 @@ router.post("/userDisplay", async (req, res) => {
   }
 });
 
+router.post("/getUser", async (req, res) => {
+  // const address = req.body.cookie
+  if (!req.body.from) {
+    res.end();
+  } else {
+    const user = await User.findOne({
+      where: { userAddress: req.body.from },
+    });
+    console.log(user);
+    res.send(user);
+  }
+});
+
 router.post("/login", async (req, res) => {
   // db에서 nickname 있는지 없는지 판별
   // 쿠키 발급.
@@ -92,32 +113,34 @@ router.post("/login", async (req, res) => {
     req.body.account = req.body.cookie.split("=")[0];
   }
 
+  console.log(req.body.account);
   let count = req.body.count;
-  console.log("req.body.count", count);
-  console.log("asd");
-  console.log("req.body.account", req.body.account);
+  // console.log("req.body.count", count);
+  // console.log("asd");
+  // console.log("req.body.account", req.body.account);
   if (req.body.account == undefined) {
     count++;
     console.log(count);
     res.send({ count: count });
   } else {
-    console.log("else 도는중");
+    // console.log("else 도는중");
     let user = await User.findOne({ where: { userAddress: req.body.account } });
     console.log(user);
     if (user == undefined) {
       res.send({ msg: "회원가입필요", count: count });
     } else {
-      res.cookie(
-        req.body.account,
-        jwt.sign(
-          {
-            userAddress: req.body.account,
-            userName: user.userName,
-          },
-          process.env.JWT_KEY,
-          { algorithm: "HS256", expiresIn: "300m", issuer: "킹영준" }
-        )
-      );
+      // res.cookie(
+      //   // req.body.account + "=" + user.userName,
+      //   req.body.account,
+      //   jwt.sign(
+      //     {
+      //       userAddress: req.body.account,
+      //       userName: user.userName,
+      //     },
+      //     process.env.JWT_KEY,
+      //     { algorithm: "HS256", expiresIn: "300m", issuer: "킹영준" }
+      //   )
+      // );
       res.send({ user: user, count: count });
     }
   }
@@ -151,9 +174,11 @@ router.post(
     { name: "background", limits: 1 },
   ]),
   async (req, res) => {
-    console.log(req.files.profile);
-    console.log(req.files.background);
+    console.log(req.files.profile[0]);
+    console.log(req.files.background[0]);
     console.log(req.body.account);
+    console.log(req.body.nickName);
+
     const userAccount = req.body.account;
     const userName = req.body.nickName;
     if (!(userName.length >= 2 || userName.length < 10)) {
@@ -174,9 +199,25 @@ router.post(
       //   { where: { userAddress: userAccount } }
       // );
     }
+
+    console.log("여기는지난다.");
     const user = await User.findOne({
       where: { userAddress: userAccount },
     });
+    console.log(user);
+    res.cookie(
+      // "cookie",
+      req.body.account,
+      jwt.sign(
+        {
+          userAddress: user.userAccount,
+          userName: user.userName,
+        },
+        process.env.JWT_KEY,
+        { algorithm: "HS256", expiresIn: "300m", issuer: "킹영준" }
+      )
+    );
+    console.log("여긴 못지난다.");
     res.send({ user: user });
   }
 );

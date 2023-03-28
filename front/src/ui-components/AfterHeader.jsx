@@ -16,11 +16,36 @@ import {
   View,
 } from "@aws-amplify/ui-react";
 import HLogo from "./HLogo";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
 export default function AfterHeader(props) {
   const { overrides, ...rest } = props;
+  const [view, setView] = React.useState(false);
+  const account = useSelector((state) => state.account.account.account);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
+  const logoutMethod = () => {
+    document.cookie = account + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT";
+    props.setConnect(false);
+    navigate("/");
+  };
+  const logout = () => {
+    logoutMethod();
+  };
+
+  window.ethereum.on("accountsChanged", (accounts) => {
+    if (!accounts.length) {
+      logoutMethod();
+    }
+  });
+
+  React.useEffect(() => {
+    setView(false);
+  }, [pathname]);
+  console.log(props);
   return (
     <View
       width="1440px"
@@ -144,31 +169,68 @@ export default function AfterHeader(props) {
         padding="0px 0px 0px 0px"
         {...getOverrideProps(overrides, "Frame 36")}
       >
-        <Icon
-          width="28px"
-          height="28px"
-          viewBox={{ minX: 0, minY: 0, width: 28, height: 28 }}
-          paths={[
-            {
-              d: "M26.5 14C26.5 20.9036 20.9036 26.5 14 26.5L14 29.5C22.5604 29.5 29.5 22.5604 29.5 14L26.5 14ZM14 26.5C7.09644 26.5 1.5 20.9036 1.5 14L-1.5 14C-1.5 22.5604 5.43959 29.5 14 29.5L14 26.5ZM1.5 14C1.5 7.09644 7.09644 1.5 14 1.5L14 -1.5C5.43959 -1.5 -1.5 5.43959 -1.5 14L1.5 14ZM14 1.5C20.9036 1.5 26.5 7.09644 26.5 14L29.5 14C29.5 5.43959 22.5604 -1.5 14 -1.5L14 1.5Z",
-              stroke: "rgba(0,0,0,1)",
-              fillRule: "nonzero",
-              strokeWidth: 1,
-            },
-            {
-              d: "M28 14C28 21.732 21.732 28 14 28C6.26801 28 0 21.732 0 14C0 6.26801 6.26801 0 14 0C21.732 0 28 6.26801 28 14Z",
-              fill: "rgba(246,247,248,1)",
-              fillRule: "nonzero",
-            },
-          ]}
+        <UserIcon
+          src={
+            props?.user?.profileImg
+              ? `http://localhost:8080${props.user.profileImg}`
+              : "#"
+          }
           display="block"
           gap="unset"
           alignItems="unset"
           justifyContent="unset"
           shrink="0"
           position="relative"
+          onClick={() => {
+            setView(!view);
+          }}
           {...getOverrideProps(overrides, "Ellipse 3")}
-        ></Icon>
+        ></UserIcon>
+        {view ? (
+          <DropDownButton
+            onClick={() => {
+              setView(!view);
+            }}
+          >
+            ⌃
+          </DropDownButton>
+        ) : (
+          <DropDownButton
+            onClick={() => {
+              setView(!view);
+            }}
+          >
+            ⌄
+          </DropDownButton>
+        )}
+        {view && (
+          <AfterHeader_dropdown className="afterheader_dropdown">
+            <ul>
+              <li>
+                <div className="afterheader_dropdown_account">{account}</div>
+              </li>
+              <li>
+                <Link to="/mypage">Wallet</Link>
+              </li>
+              {/* <li>
+                <hrLine></hrLine>
+              </li> */}
+              <MarginStyle3 />
+              <hr />
+
+              <li>
+                <button
+                  className="logoutButton"
+                  onClick={() => {
+                    logout();
+                  }}
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </AfterHeader_dropdown>
+        )}
         <Link to="/mint">
           <Button
             width="unset"
@@ -187,3 +249,70 @@ export default function AfterHeader(props) {
     </View>
   );
 }
+
+const AfterHeader_dropdown = styled.div`
+  border: 1px solid gainsboro;
+  border-radius: 10px;
+  position: absolute;
+  top: 50px;
+  right: 150px;
+  width: 200px;
+  background: white;
+
+  ul {
+    list-style: none;
+    padding-inline-start: 0px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    li {
+      font-size: 20px;
+      padding-bottom: 7px;
+
+      .afterheader_dropdown_account {
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+        background: gainsboro;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        border-radius: 15px;
+      }
+
+      a {
+        color: black;
+        text-decoration: none;
+      }
+
+      .logoutButton {
+        margin-top: 10px;
+        border-radius: 30px;
+        width: 100%;
+        background: black;
+        color: white;
+      }
+    }
+  }
+`;
+
+const UserIcon = styled.img`
+  width: 35px;
+  height: 35px;
+  border: 2px solid black;
+`;
+
+const DropDownButton = styled.button`
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 20px;
+  padding: 0px;
+`;
+
+const MarginStyle3 = styled.div`
+  margin-top: 25px;
+`;

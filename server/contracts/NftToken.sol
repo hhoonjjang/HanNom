@@ -64,20 +64,22 @@ contract NftToken is ERC721Enumerable, ERC721URIStorage, Ownable {
     _tokenId.increment();
     _safeMint(msg.sender, tokenId);
     _setTokenURI(tokenId, uri);
-    // tokenList.push(tokenId);
+    tokenList.push(tokenId);
   }
 
-  function getTokenList(
-    address _tokenOwner
-  ) public view returns (TokenInfo[] memory) {
-    uint balance = balanceOf(_tokenOwner);
-    require(balance > 0);
-    TokenInfo[] memory list = new TokenInfo[](tokenList.length);
-    for (uint i = 0; i < tokenList.length; i++) {
-      uint tokenId = tokenList[i];
-      string memory tokenURI1 = tokenURI(tokenId);
-      list[i] = TokenInfo(tokenId, tokenURI1);
+  function getTokenList() public view returns (TokenInfo[] memory) {
+    if (tokenList.length == 0) {
+      TokenInfo[] memory list = new TokenInfo[](tokenList.length);
+      return list;
+    } else {
+      TokenInfo[] memory list = new TokenInfo[](tokenList.length);
+      for (uint i = 0; i < tokenList.length; i++) {
+        uint tokenId = tokenList[i];
+        string memory tokenURI1 = tokenURI(tokenId);
+        list[i] = TokenInfo(tokenId, tokenURI1);
+      }
+
+      return list;
     }
-    return list;
   }
 }

@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import MypageContainer from "./components/mypage/Container";
 import { useDispatch } from "react-redux";
 import { accountThunk } from "./modules/account";
-
+import axios from "axios";
 function App() {
   const { web3, account, chainId, login } = useWeb3();
   const dispatch = useDispatch();
@@ -27,6 +27,15 @@ function App() {
     }
     console.log(account);
   }, [account]);
+  useEffect(() => {
+    (async () => {
+      console.log("시작");
+      const result = (
+        await axios.post("http://localhost:8080/api/mint/comparedb")
+      ).data;
+      console.log(result);
+    })();
+  }, []);
   return (
     <div className="App">
       <div className="App_innerBox">
@@ -61,7 +70,7 @@ function App() {
             ></Route>
             <Route
               path="/mypage"
-              element={<MypageContainer></MypageContainer>}
+              element={<MypageContainer web3={web3}></MypageContainer>}
             ></Route>
             <Route
               path="/*"
