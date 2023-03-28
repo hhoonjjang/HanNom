@@ -95,7 +95,7 @@ export default function UserDescription(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={`NFTTokenName #${props.tokenId}`}
+            children={`NFTTokenName #${props.idx}`}
             // "Celestial Portals #6"
             {...getOverrideProps(overrides, "Celestial Portals #6")}
           ></Text>
