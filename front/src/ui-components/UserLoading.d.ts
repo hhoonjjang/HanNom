@@ -1,0 +1,95 @@
+/***************************************************************************
+ * The contents of this file were generated with Amplify Studio.           *
+ * Please refrain from making any modifications to this file.              *
+ * Any changes to this file will be overwritten when running amplify pull. *
+ **************************************************************************/
+
+import * as React from "react";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { IconProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
+export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type UserLoadingOverridesProps = {
+    UserLoading?: PrimitiveOverrideProps<ViewProps>;
+    Device?: PrimitiveOverrideProps<ViewProps>;
+    Illustration?: PrimitiveOverrideProps<ViewProps>;
+    Group?: PrimitiveOverrideProps<ViewProps>;
+    Blob?: PrimitiveOverrideProps<IconProps>;
+    Shape38503347?: PrimitiveOverrideProps<IconProps>;
+    Path38503348?: PrimitiveOverrideProps<IconProps>;
+    Path38503349?: PrimitiveOverrideProps<IconProps>;
+    Path38503350?: PrimitiveOverrideProps<IconProps>;
+    Path38503351?: PrimitiveOverrideProps<IconProps>;
+    Path38503352?: PrimitiveOverrideProps<IconProps>;
+    Path38503353?: PrimitiveOverrideProps<IconProps>;
+    Path38503354?: PrimitiveOverrideProps<IconProps>;
+    Path38503355?: PrimitiveOverrideProps<IconProps>;
+    Path38503356?: PrimitiveOverrideProps<IconProps>;
+    Path38503357?: PrimitiveOverrideProps<IconProps>;
+    Path38503358?: PrimitiveOverrideProps<IconProps>;
+    Path38503359?: PrimitiveOverrideProps<IconProps>;
+    Path38503360?: PrimitiveOverrideProps<IconProps>;
+    Path38503361?: PrimitiveOverrideProps<IconProps>;
+    Path38503362?: PrimitiveOverrideProps<IconProps>;
+    Path38503363?: PrimitiveOverrideProps<IconProps>;
+    Path38503364?: PrimitiveOverrideProps<IconProps>;
+    Path38503365?: PrimitiveOverrideProps<IconProps>;
+    Path38503366?: PrimitiveOverrideProps<IconProps>;
+    Path38503367?: PrimitiveOverrideProps<IconProps>;
+    Path38503368?: PrimitiveOverrideProps<IconProps>;
+    Path38503369?: PrimitiveOverrideProps<IconProps>;
+    Path38503370?: PrimitiveOverrideProps<IconProps>;
+    Path38503371?: PrimitiveOverrideProps<IconProps>;
+    Path38503372?: PrimitiveOverrideProps<IconProps>;
+    Path38503373?: PrimitiveOverrideProps<IconProps>;
+    Path38503374?: PrimitiveOverrideProps<IconProps>;
+    Path38503375?: PrimitiveOverrideProps<IconProps>;
+    Path38503376?: PrimitiveOverrideProps<IconProps>;
+    Shape38503377?: PrimitiveOverrideProps<IconProps>;
+    Food38503378?: PrimitiveOverrideProps<ViewProps>;
+    "Combined Shape"?: PrimitiveOverrideProps<IconProps>;
+    Path38503380?: PrimitiveOverrideProps<IconProps>;
+    Path38503381?: PrimitiveOverrideProps<IconProps>;
+    Path38503382?: PrimitiveOverrideProps<IconProps>;
+    Path38503383?: PrimitiveOverrideProps<IconProps>;
+    Shape38503384?: PrimitiveOverrideProps<IconProps>;
+    Path38503385?: PrimitiveOverrideProps<IconProps>;
+    Path38503386?: PrimitiveOverrideProps<IconProps>;
+    Path38503387?: PrimitiveOverrideProps<IconProps>;
+    Path38503388?: PrimitiveOverrideProps<IconProps>;
+    Path38503389?: PrimitiveOverrideProps<IconProps>;
+    Path38503390?: PrimitiveOverrideProps<IconProps>;
+    Path38503391?: PrimitiveOverrideProps<IconProps>;
+    Path38503392?: PrimitiveOverrideProps<IconProps>;
+    Path38503393?: PrimitiveOverrideProps<IconProps>;
+    Path38503394?: PrimitiveOverrideProps<IconProps>;
+    Path38503395?: PrimitiveOverrideProps<IconProps>;
+    Path38503396?: PrimitiveOverrideProps<IconProps>;
+    Path38503397?: PrimitiveOverrideProps<IconProps>;
+    Path38503398?: PrimitiveOverrideProps<IconProps>;
+    Path38503399?: PrimitiveOverrideProps<IconProps>;
+    Path38503400?: PrimitiveOverrideProps<IconProps>;
+    Path38503401?: PrimitiveOverrideProps<IconProps>;
+    Path38503402?: PrimitiveOverrideProps<IconProps>;
+    Path38503403?: PrimitiveOverrideProps<IconProps>;
+    Path38503404?: PrimitiveOverrideProps<IconProps>;
+    Path38503405?: PrimitiveOverrideProps<IconProps>;
+    Path38503406?: PrimitiveOverrideProps<IconProps>;
+    Path38503407?: PrimitiveOverrideProps<IconProps>;
+    Path38503408?: PrimitiveOverrideProps<IconProps>;
+    Path38503409?: PrimitiveOverrideProps<IconProps>;
+    Path38503410?: PrimitiveOverrideProps<IconProps>;
+    Path38503411?: PrimitiveOverrideProps<IconProps>;
+    Path38503412?: PrimitiveOverrideProps<IconProps>;
+    Path38503413?: PrimitiveOverrideProps<IconProps>;
+    Path38503414?: PrimitiveOverrideProps<IconProps>;
+    Path38503415?: PrimitiveOverrideProps<IconProps>;
+    Path38503416?: PrimitiveOverrideProps<IconProps>;
+    Path38503417?: PrimitiveOverrideProps<IconProps>;
+    Path38503418?: PrimitiveOverrideProps<IconProps>;
+    Path38503419?: PrimitiveOverrideProps<IconProps>;
+    Food38503420?: PrimitiveOverrideProps<TextProps>;
+} & EscapeHatchProps;
+export declare type UserLoadingProps = React.PropsWithChildren<Partial<ViewProps> & {
+    overrides?: UserLoadingOverridesProps | undefined | null;
+}>;
+export default function UserLoading(props: UserLoadingProps): React.ReactElement;

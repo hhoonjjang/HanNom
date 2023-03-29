@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import HeaderContainer from "./components/header/Container";
 import FooterContainer from "./components/footer/Container";
 import MintContainer from "./components/mint/Container";
@@ -13,20 +13,26 @@ import NftDetailContainer from "./components/detail/Container";
 import { useWeb3 } from "./modules/useWeb3";
 import { useEffect } from "react";
 import MypageContainer from "./components/mypage/Container";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { accountThunk } from "./modules/account";
 import axios from "axios";
+import styled from "styled-components";
+import { UserLoading } from "./ui-components";
+
 function App() {
   const { web3, account, chainId, login } = useWeb3();
+  const location = useLocation();
+  const isLoading = useSelector((state) => state.isLoading.isLoading.isLoading);
   const dispatch = useDispatch();
+
   useEffect(() => {
     login();
-
     if (account) {
       dispatch(accountThunk({ account: account }));
     }
     console.log(account);
   }, [account]);
+
   useEffect(() => {
     (async () => {
       console.log("시작");
@@ -36,6 +42,7 @@ function App() {
       console.log(result);
     })();
   }, []);
+
   return (
     <div className="App">
       <div className="App_innerBox">
@@ -78,14 +85,30 @@ function App() {
             ></Route>
           </Routes>
         </div>
-
-        <Routes>
-          {/* 푸터 */}
-          <Route path="/*" element={<FooterContainer />}></Route>
-        </Routes>
       </div>
+      {location.pathname == "/mypage" ? <></> : <FooterContainer />}
+      {isLoading ? (
+        <LoadingModal>
+          <UserLoading />
+        </LoadingModal>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
 
 export default App;
+
+const LoadingModal = styled.div`
+  width: 100vmaxx;
+  height: 100vmax;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  right: 0%;
+  justify-content: center;
+  z-index: 999999999;
+`;

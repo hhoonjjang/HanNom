@@ -1,5 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { isLoadingThunk } from "../modules/isLoading.js";
+
 export const List = ({ list, account, web3 }) => {
   // const [list, setList] = useState<Array<nftData>>([]);
   console.log(list);
@@ -21,8 +24,11 @@ const Item = ({
   web3,
 }) => {
   const [price, setPrice] = useState("");
+  const dispatch = useDispatch();
+
   console.log(account);
   const sellNft = async (tokenId, price, account) => {
+    dispatch(isLoadingThunk({ isLoading: true }));
     const result = (
       await axios.post("http://localhost:8080/api/mint/sell", {
         tokenId,
@@ -33,6 +39,7 @@ const Item = ({
     console.log(result);
     await web3.eth.sendTransaction(result.approveObj);
     await web3.eth.sendTransaction(result.obj);
+    dispatch(isLoadingThunk({ isLoading: false }));
   };
   return (
     <li>

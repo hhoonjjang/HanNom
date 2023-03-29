@@ -22,14 +22,19 @@ import { gsap } from "gsap";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { isLoadingThunk } from "../modules/isLoading.js";
 export default function NftMint(props) {
   const inputRef = React.useRef();
   const account = useSelector((state) => state.account.account.account);
+  const isLoading = useSelector((state) => state.isLoading.isLoading);
   const [NFTName, setNFTName] = React.useState("");
   const [NFTDescription, setNFTDescription] = React.useState("");
   const [file, setFile] = React.useState();
   const [img, setImg] = React.useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   React.useEffect(() => {
     const cookie = document.cookie.split(";");
     let isTrue = false;
@@ -95,6 +100,7 @@ export default function NftMint(props) {
     formData.append("name", NFTName);
     formData.append("description", NFTDescription);
     formData.append("from", account);
+    dispatch(isLoadingThunk({ isLoading: true }));
     const result = (
       await axios.post("http://localhost:8080/api/mint/mint", formData)
     ).data;
@@ -104,7 +110,9 @@ export default function NftMint(props) {
       await props.web3.eth.sendTransaction(result);
       // console.log(test);
       result.account = account;
+
       await axios.post("http://localhost:8080/api/mint/mintComplete", result);
+      dispatch(isLoadingThunk({ isLoading: false }));
       navigate(`/`);
     } catch (error) {
       console.log("에러");

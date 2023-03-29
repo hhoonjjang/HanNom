@@ -27,6 +27,7 @@ export default function AfterHeader(props) {
   const [user, setUser] = React.useState();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const isLoading = useSelector((state) => state.isLoading.isLoading.isLoading);
 
   const logoutMethod = () => {
     document.cookie = account + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT";
@@ -57,9 +58,28 @@ export default function AfterHeader(props) {
           from: account,
         })
       ).data;
+      console.log("data.profileImg : ", data.profileImg);
+      document.querySelector(
+        ".afterHeader_userIcon"
+      ).src = `http://localhost:8080${data.profileImg}`;
       setUser(data);
     })();
   }, [account]);
+
+  // React.useEffect(() => {
+  //   console.log("애프터헤드의 이즈로딩");
+  //   (async () => {
+  //     if (!account) return;
+  //     const data = (
+  //       await axios.post("http://localhost:8080/api/user/getUser", {
+  //         from: account,
+  //       })
+  //     ).data;
+  //     console.log("애프터헤드의 data : ", data);
+  //     setUser(data);
+  //   })();
+  // }, [isLoading]);
+
   return (
     <View
       width="1440px"
@@ -195,6 +215,7 @@ export default function AfterHeader(props) {
           justifyContent="unset"
           shrink="0"
           position="relative"
+          className="afterHeader_userIcon"
           onClick={() => {
             setView(!view);
           }}

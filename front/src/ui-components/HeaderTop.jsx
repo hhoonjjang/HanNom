@@ -338,7 +338,11 @@ export default function HearderTop(props) {
           // 로그인했으면
           document.cookie ? (
             // 로그인했고 기존 유저였으면
-            <AfterHeader account={account} user={user} />
+            <AfterHeader
+              account={account}
+              user={user}
+              setConnect={setConnect}
+            />
           ) : (
             // 로그인했고신규 유저이면
             <UserCreate></UserCreate>

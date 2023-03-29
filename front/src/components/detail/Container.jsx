@@ -2,12 +2,16 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import NftDetailComponent from "./Component.jsx";
+import { useDispatch } from "react-redux";
+import { isLoadingThunk } from "../../modules/isLoading.js";
 
 const NftDetailContainer = ({ web3, account }) => {
   const a = useParams();
   const seller = Object.values(a)[0].split("/")[0];
   const tokenId = Object.values(a)[0].split("/")[1];
   const [nft, setNft] = useState([]);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     (async () => {
       const result = (
@@ -22,6 +26,7 @@ const NftDetailContainer = ({ web3, account }) => {
     console.log(nft);
   }, [a]);
   const buyNft = async (tokenId, account, price) => {
+    dispatch(isLoadingThunk({ isLoading: true }));
     const result = (
       await axios.post("http://localhost:8080/api/mint/buy", {
         tokenId,
@@ -31,6 +36,7 @@ const NftDetailContainer = ({ web3, account }) => {
     ).data;
     console.log(result.value);
     await web3.eth.sendTransaction(result);
+    dispatch(isLoadingThunk({ isLoading: false }));
   };
   return (
     <>
