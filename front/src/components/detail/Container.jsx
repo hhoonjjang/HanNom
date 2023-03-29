@@ -15,7 +15,7 @@ const NftDetailContainer = ({ web3, account }) => {
   useEffect(() => {
     (async () => {
       const result = (
-        await axios.post("http://localhost:8080/api/mint/detail", {
+        await axios.post("http://localhost:8080/api/mint/nftDetail", {
           seller,
           tokenId,
         })
@@ -40,7 +40,7 @@ const NftDetailContainer = ({ web3, account }) => {
   };
   return (
     <>
-      <NftDetailComponent nft={nft} tokenId={tokenId} />
+      <NftDetailComponent nft={nft} tokenId={tokenId} web3={web3} />
     </>
   );
 };

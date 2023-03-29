@@ -31,7 +31,7 @@ export default function AfterHeader(props) {
 
   const logoutMethod = () => {
     document.cookie = account + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT";
-    props.setConnect(false);
+    props?.setconnect(false);
     navigate("/");
   };
   const logout = () => {

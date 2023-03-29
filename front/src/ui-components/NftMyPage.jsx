@@ -51,6 +51,7 @@ export default function NftMyPage(props) {
     sellComplete(tokenId);
     dispatch(isLoadingThunk({ isLoading: false }));
   };
+
   const sellComplete = async (tokenId) => {
     const tempAddress = document.cookie.split("=")[0];
     const data = await axios.post(
@@ -62,6 +63,7 @@ export default function NftMyPage(props) {
       }
     );
     console.log(data);
+    props.setStateMethod();
   };
   const mintCancel = async (tokenId) => {
     const tempAddress = document.cookie.split("=")[0];
@@ -76,7 +78,7 @@ export default function NftMyPage(props) {
     console.log(result.data);
     await props.web3.eth.sendTransaction(result.data);
     cancelComplete(tokenId);
-    dispatch(isLoadingThunk({ isLoading: true }));
+    dispatch(isLoadingThunk({ isLoading: false }));
   };
   const { overrides, ...rest } = props;
 
@@ -1039,12 +1041,6 @@ export default function NftMyPage(props) {
                         ></Button>
                       </>
                     ) : (
-                      <></>
-                    )}
-
-                    {item.state == "mint" ? (
-                      <></>
-                    ) : (
                       <Button
                         width="unset"
                         height="unset"
@@ -1069,6 +1065,18 @@ export default function NftMyPage(props) {
           ) : (
             <></>
           )}
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
         </ListCover>
       </Flex>
     </View>

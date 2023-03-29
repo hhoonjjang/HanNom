@@ -116,6 +116,7 @@ export default function NftMint(props) {
       navigate(`/`);
     } catch (error) {
       console.log("에러");
+      dispatch(isLoadingThunk({ isLoading: false }));
     }
   };
   return (

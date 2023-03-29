@@ -341,7 +341,7 @@ export default function HearderTop(props) {
             <AfterHeader
               account={account}
               user={user}
-              setConnect={setConnect}
+              setconnect={setConnect}
             />
           ) : (
             // 로그인했고신규 유저이면

@@ -5,7 +5,7 @@ export default class Nft extends Sequelize.Model {
     return super.init(
       {
         tokenId: {
-          type: Sequelize.STRING(255),
+          type: Sequelize.INTEGER,
           unique: true,
         },
         nftName: {

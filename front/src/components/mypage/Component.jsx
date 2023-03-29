@@ -7,7 +7,7 @@ const MypageComponent = ({ web3 }) => {
   const [myList, setMyList] = useState();
   const [userName, setUserName] = useState({});
   const [userData, setUserData] = useState();
-  useEffect(() => {
+  const setStateMethod = () => {
     const from = document.cookie.split("=")[0];
 
     console.log("from", from);
@@ -35,7 +35,12 @@ const MypageComponent = ({ web3 }) => {
       setUserData(name);
       setMyList(data);
     })();
+  };
+
+  useEffect(() => {
+    setStateMethod();
   }, []);
+
   console.log(myList);
   return (
     <Mypage>
@@ -44,6 +49,7 @@ const MypageComponent = ({ web3 }) => {
         web3={web3}
         userName={userName}
         userdata={userData}
+        setStateMethod={setStateMethod}
       ></NftMyPage>
     </Mypage>
   );

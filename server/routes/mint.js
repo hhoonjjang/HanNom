@@ -289,6 +289,29 @@ router.post("/detail", async (req, res) => {
   }
 });
 
+router.post("/nftDetail", async (req, res) => {
+  try {
+    const data = await TradeHistory.findOne({
+      where: { tokenId: req.body.tokenId, currency: "거래대기" },
+      include: [
+        {
+          model: Nft,
+
+          include: [
+            {
+              model: User,
+            },
+          ],
+        },
+      ],
+    });
+    console.log("data화기이이이이이인", data);
+    res.send(data);
+  } catch (error) {
+    res.send({ msg: "data 확인 오류" });
+  }
+});
+
 // router.post("/sellList", async (req, res) => {
 //   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
 //   const deployedN = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
@@ -337,6 +360,7 @@ router.post("/detail", async (req, res) => {
 router.post("/sellList", async (req, res) => {
   try {
     const list = await TradeHistory.findAll({
+      where: { currency: "거래대기" },
       include: [
         {
           model: Nft,
@@ -465,6 +489,28 @@ router.post("/buy", async (req, res) => {
   }
 });
 
+router.post("/buyComplete", async (req, res) => {
+  try {
+    console.log(req.body.tokenId);
+    const data = await Nft.update(
+      { state: "mint", userAddress: req.body.account },
+      { where: { tokenId: req.body.tokenId } }
+    );
+
+    await TradeHistory.update(
+      {
+        buyerAddress: req.body.account,
+        currency: "거래완료",
+      },
+      { where: { tokenId: req.body.tokenId, buyerAddress: null } }
+    );
+    console.log("butcomdadlhwd");
+    res.send({ data: data, msg: "sell 취소완료" });
+  } catch (error) {
+    res.end();
+  }
+});
+
 router.post("/mylist", async (req, res) => {
   console.log("지나갑니다아아아");
   try {
@@ -495,6 +541,7 @@ router.post("/sellComplete", async (req, res) => {
     const tempTrade = await TradeHistory.create({
       sellerAddress: req.body.account,
       price: req.body.price,
+      currency: "거래대기",
     });
     console.log("skljfhakjasebfkljsjdf", tempTrade);
     tempNft.addTradeHistory(tempTrade);

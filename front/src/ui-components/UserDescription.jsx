@@ -1,3 +1,4 @@
+//백업
 /***************************************************************************
  * The contents of this file were generated with Amplify Studio.           *
  * Please refrain from making any modifications to this file.              *
@@ -8,10 +9,50 @@
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Button, Flex, Image, Text } from "@aws-amplify/ui-react";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { isLoadingThunk } from "../modules/isLoading.js";
 export default function UserDescription(props) {
+  const [user, setUser] = React.useState(document.cookie.split("=")[0]);
+  console.log("dasdasdawd", user);
+  const navigate = useNavigate();
+  console.log("props.nft화긴", props.nft);
+  const dispatch = useDispatch();
+
+  const buyFunc = async () => {
+    try {
+      dispatch(isLoadingThunk({ isLoading: true }));
+      console.log(user);
+      const data = (
+        await axios.post("http://localhost:8080/api/mint/buy", {
+          tokenId: props.nft.tokenId,
+          account: user,
+          price: props.nft.price.toString(),
+          owner: props.nft.buyerAddress ? props.nft.buyerAddress : null,
+        })
+      ).data;
+      console.log(data);
+      console.log(await props.web3);
+      console.log("1123", data.data);
+      await props.web3.eth.sendTransaction(data);
+      // console.log(test);
+      // result.account = account;
+      console.log("넌 못지나간다");
+      await axios.post("http://localhost:8080/api/mint/buyComplete", {
+        tokenId: props.nft.tokenId,
+        account: user,
+      });
+      dispatch(isLoadingThunk({ isLoading: false }));
+      navigate(`/`);
+    } catch (error) {
+      dispatch(isLoadingThunk({ isLoading: false }));
+      console.error(error);
+    }
+  };
+
   const { overrides, ...rest } = props;
-  return (
+  return props.nft.length != 0 ? (
     <Flex
       gap="32px"
       direction="column"
@@ -37,7 +78,7 @@ export default function UserDescription(props) {
         {...getOverrideProps(overrides, "Frame 131")}
       >
         <Image
-          src={props.nft.image}
+          src={`http://localhost:8080${props.nft.Nft.nftImg}`}
           // "https://f8n-production-collection-assets.imgix.net/0x50dC15DcA7B2c2f273ea5269F8FBeF8B291695a4/2/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
           width="450px"
           height="600px"
@@ -95,7 +136,7 @@ export default function UserDescription(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={`NFTTokenName #${props.idx}`}
+            children={`${props.nft.Nft.nftName} #${props.nft.tokenId}`}
             // "Celestial Portals #6"
             {...getOverrideProps(overrides, "Celestial Portals #6")}
           ></Text>
@@ -172,7 +213,7 @@ export default function UserDescription(props) {
                   {...getOverrideProps(overrides, "Frame 8")}
                 >
                   <Image
-                    src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/108/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+                    src={`http://localhost:8080${props.nft.Nft.User.profileImg}`}
                     width="25px"
                     height="25px"
                     display="block"
@@ -204,7 +245,7 @@ export default function UserDescription(props) {
                     position="relative"
                     padding="0px 0px 0px 0px"
                     whiteSpace="pre-wrap"
-                    children="@Sanha38"
+                    children={props.nft.Nft.User.userName}
                     {...getOverrideProps(overrides, "@Sanha38")}
                   ></Text>
                 </Flex>
@@ -271,7 +312,7 @@ export default function UserDescription(props) {
                   {...getOverrideProps(overrides, "Frame 938242969")}
                 >
                   <Image
-                    src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/108/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+                    src={`http://localhost:8080${props.nft.Nft.User.backgroundImg}`}
                     width="25px"
                     height="25px"
                     display="block"
@@ -303,7 +344,9 @@ export default function UserDescription(props) {
                     position="relative"
                     padding="0px 0px 0px 0px"
                     whiteSpace="pre-wrap"
-                    children="@Colorful Imagination"
+                    children={
+                      props.nft.Nft.User.userAddress.slice(0, 15) + "..."
+                    }
                     {...getOverrideProps(overrides, "@Colorful Imagination")}
                   ></Text>
                 </Flex>
@@ -404,19 +447,40 @@ export default function UserDescription(props) {
               ></Text>
             </Flex>
           </Flex>
-          <Button
-            width="191px"
-            height="33px"
-            borderRadius="35px"
-            shrink="0"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            backgroundColor="rgba(0,136,153,0.55)"
-            size="small"
-            isDisabled={false}
-            variation="primary"
-            children="Buy"
-            {...getOverrideProps(overrides, "Button")}
-          ></Button>
+          {props.nft.Nft.userAddress != user ? (
+            <Button
+              width="191px"
+              height="33px"
+              borderRadius="35px"
+              shrink="0"
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              backgroundColor="rgba(0,136,153,0.55)"
+              size="small"
+              isDisabled={false}
+              variation="primary"
+              children="Buy"
+              onClick={() => {
+                console.log("안녕하세요");
+                buyFunc();
+              }}
+              {...getOverrideProps(overrides, "Button")}
+            ></Button>
+          ) : (
+            <Button
+              width="191px"
+              height="33px"
+              borderRadius="35px"
+              shrink="0"
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              backgroundColor="rgba(0,0,0,0.85)"
+              color="white"
+              size="small"
+              isDisabled={false}
+              variation="primary"
+              children="나의 토큰"
+              {...getOverrideProps(overrides, "Button")}
+            ></Button>
+          )}
           <Flex
             gap="-3px"
             direction="column"
@@ -565,8 +629,7 @@ export default function UserDescription(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Rainbow Body&#xA;~&#xA;Celestial Portals is a visual journey through the spiritual space that &#xA;exists within us, around us, and beyond us, as we move through one &#xA;world and into another.&#xA;--&#xA;AI assisted imagery&#xA;1546 x 2048"
-            // back에서 description을 만들어주면 갖다 붙이는 곳. description이 아직 없다.
+            children={props.nft.Nft.nftDescription}
             {...getOverrideProps(
               overrides,
               "Rainbow Body ~ Celestial Portals is a visual journey through the spiritual space that exists within us, around us, and beyond us, as we move through one world and into another. -- AI assisted imagery 1546 x 2048"
@@ -662,7 +725,7 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children="By @sanha38"
+                children={`By @${props.nft.Nft.User.userName}`}
                 {...getOverrideProps(overrides, "By @sanha38")}
               ></Text>
               <Flex
@@ -681,7 +744,7 @@ export default function UserDescription(props) {
                 {...getOverrideProps(overrides, "Frame 938243011")}
               >
                 <Image
-                  src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/108/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+                  src={`http://localhost:8080${props.nft.Nft.User.backgroundImg}`}
                   width="25px"
                   height="25px"
                   display="block"
@@ -713,7 +776,9 @@ export default function UserDescription(props) {
                   position="relative"
                   padding="0px 0px 0px 0px"
                   whiteSpace="pre-wrap"
-                  children="@sanha38"
+                  children={`@${
+                    props.nft.Nft.User.userAddress.slice(0, 16) + "..."
+                  }`}
                   {...getOverrideProps(overrides, "@sanha38")}
                 ></Text>
               </Flex>
@@ -748,28 +813,7 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children="Sold for 0.15 ETH"
-                {...getOverrideProps(overrides, "Sold for 0.15 ETH")}
-              ></Text>
-              <Text
-                fontFamily="Inter"
-                fontSize="15px"
-                fontWeight="500"
-                color="rgba(124,124,124,1)"
-                lineHeight="22.5px"
-                textAlign="left"
-                display="block"
-                direction="column"
-                justifyContent="unset"
-                width="unset"
-                height="unset"
-                gap="unset"
-                alignItems="unset"
-                shrink="0"
-                position="relative"
-                padding="0px 0px 0px 0px"
-                whiteSpace="pre-wrap"
-                children="Mar 26, 2023 at 10:10am"
+                children={props.nft.Nft.createdAt}
                 {...getOverrideProps(overrides, "Mar 26, 2023 at 10:10am")}
               ></Text>
             </Flex>
@@ -777,5 +821,7 @@ export default function UserDescription(props) {
         </Flex>
       </Flex>
     </Flex>
+  ) : (
+    <></>
   );
 }
