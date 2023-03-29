@@ -11,6 +11,7 @@ import { Nft, User, TradeHistory } from "../models/index.js";
 import fs from "fs";
 const router = Router();
 const web3 = new Web3("http://ganache.test.errorcode.help:8545");
+import { Sequelize } from "sequelize";
 // const web3 = new Web3(
 //   "wss://goerli.infura.io/ws/v3/2370d723f2b24ee69ca1d052c7a0e099"
 // );
@@ -567,6 +568,24 @@ router.post("/cancelComplete", async (req, res) => {
     res.send({ data: data, msg: "sell 취소완료" });
   } catch (error) {
     res.end();
+  }
+});
+
+router.post("/lastToken", async (req, res) => {
+  try {
+    console.log("아오");
+    const data = await Nft.findOne({
+      order: [["tokenId", "DESC"]],
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
+    console.log("최근 데이터는?", data);
+    res.send(data);
+  } catch (error) {
+    res.send(error);
   }
 });
 

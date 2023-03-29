@@ -1,12 +1,13 @@
 import { Router } from "express";
 import multer from "multer";
 import Web3 from "web3";
-import { Nft, User } from "../models/index.js";
+import { Nft, User, TradeHistory } from "../models/index.js";
 import axios from "axios";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import { Readable } from "stream";
 import dotenv from "dotenv";
+import { Sequelize } from "sequelize";
 dotenv.config();
 const web3 = new Web3("http://ganache.test.errorcode.help:8545");
 // const web3 = new Web3(
@@ -182,47 +183,44 @@ router.post("/ownedBy", async (req, res) => {
 });
 
 router.post("/latestUser", async (req, res) => {
-  // const address = req.body.cookie
-  console.log("광광우럭따", req.body.address);
-
   const Op = Sequelize.Op;
+  console.log("여긴지나");
+  const tradeList = await TradeHistory.findAll({
+    where: { currency: "거래대기" },
+    order: [["createdAt", "DESC"]],
+  });
+  console.log("여긴지날까");
 
-  console.log("광광우럭따", req.body.address);
-
-  const ownedBy = [];
-  const tempArr = [];
-  if (!req.body.address) {
-    res.end();
-  } else {
-    console.log("나도 일단 받았음");
-    const saleList = await TradeHistory.findAll({
-      where: {
-        [Op.and]: [
-          { currency: "거래완료" },
-          { sellerAddress: req.body.address },
-        ],
-        // sellerAddress: req.body.address,
-      },
-    });
-
-    for (let i = 0; i < saleList.length; i++) {
-      const buyer = saleList[i].buyerAddress;
-      if (!tempArr.includes(saleList[i].buyerAddress)) {
-        tempArr.push(buyer);
+  const tempTrade = [];
+  for (let i = 0; i < tradeList.length; i++) {
+    if (!tradeList.includes(tradeList[i].sellerAddress)) {
+      if (tempTrade.length < 3) {
+        tempTrade.push(tradeList[i].sellerAddress);
+      } else {
+        break;
       }
     }
-    console.log("asdawdasda응ㄴㅁ아ㅓ마ㅓㅇ", tempArr);
-    // res.send(totalPrice);
-    const tempUserNum = tempArr.length > 3 ? 3 : tempArr.length;
-    for (let i = 1; i <= tempUserNum; i++) {
-      const tempUser = await User.findOne({
-        where: { userAddress: tempArr[i] },
-      });
-      ownedBy.push(tempUser.profileImg);
-    }
-    console.log("asad아ㅓ마ㅓㅇ", ownedBy);
   }
-  res.send({ length: tempArr.length, ownedBy: ownedBy });
+
+  console.log("tempTrade", tempTrade);
+  const tempNft = [];
+  for (let i = 0; i < tempTrade.length; i++) {
+    const list = await Nft.findAll({
+      limit: 3,
+      where: { userAddress: tempTrade[i] },
+      order: [["createdAt", "DESC"]],
+    });
+    tempNft.push(list);
+  }
+  console.log("tempNft", tempNft);
+  // const list = await User.findAll({
+  //   limit:3,
+  //   order
+  // })
+  // const nftList = await Nft.findAll({
+  //   limit:
+  // })
+  res.send({ userArr: tempTrade, nftArr: tempNft });
 });
 
 router.post("/login", async (req, res) => {

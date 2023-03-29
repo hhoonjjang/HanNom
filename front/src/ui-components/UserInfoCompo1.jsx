@@ -9,9 +9,11 @@ import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Button, Flex, Image, Text } from "@aws-amplify/ui-react";
 import { gsap } from "gsap";
+import { timeStamp } from "../api/time.js";
 const { useEffect, useState } = React;
 
 export default function UserInfoCompo1(props) {
+  console.log("웰하우스", props);
   const onEnter = ({ currentTarget }) => {
     gsap.to(currentTarget, { scale: 1.03 });
   };
@@ -64,8 +66,50 @@ export default function UserInfoCompo1(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="“It Will Never End”"
+          children={props.token ? "“" + props.token.nftName + "”" : ""}
           {...getOverrideProps(overrides, "\u201CIt Will Never End\u201D")}
+        ></Text>
+        <Text
+          fontFamily="Inter"
+          fontSize="15px"
+          fontWeight="500"
+          color="rgba(192,192,192,1)"
+          lineHeight="22.5px"
+          textAlign="left"
+          display="block"
+          direction="column"
+          justifyContent="unset"
+          width="unset"
+          height="unset"
+          gap="unset"
+          alignItems="unset"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          whiteSpace="pre-wrap"
+          children="Nft description"
+          {...getOverrideProps(overrides, "Current bid")}
+        ></Text>
+        <Text
+          fontFamily="Inter"
+          fontSize="20px"
+          fontWeight="600"
+          color="rgba(0,0,0,1)"
+          lineHeight="30px"
+          textAlign="left"
+          display="block"
+          direction="column"
+          justifyContent="unset"
+          width="unset"
+          height="unset"
+          gap="unset"
+          alignItems="unset"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          whiteSpace="pre-wrap"
+          children={props.token ? props.token.nftDescription : ""}
+          {...getOverrideProps(overrides, "0.25ETH")}
         ></Text>
         <Flex
           gap="1px"
@@ -117,7 +161,11 @@ export default function UserInfoCompo1(props) {
             {...getOverrideProps(overrides, "Frame 8")}
           >
             <Image
-              src="https://f8n-production.imgix.net/collections/sk2u4icun.jpg?auto=format%2Ccompress&q=50&w=128&h=128&fit=crop&dpr=2"
+              src={
+                props.token
+                  ? `http://localhost:8080${props.token.User.profileImg}`
+                  : ""
+              }
               width="25px"
               height="25px"
               display="block"
@@ -149,7 +197,7 @@ export default function UserInfoCompo1(props) {
               position="relative"
               padding="0px 0px 0px 0px"
               whiteSpace="pre-wrap"
-              children="@Aaaaart"
+              children={props.token ? `@${props.token.User.userName}` : ""}
               {...getOverrideProps(overrides, "@Aaaaart")}
             ></Text>
           </Flex>
@@ -204,7 +252,11 @@ export default function UserInfoCompo1(props) {
             {...getOverrideProps(overrides, "Frame 9")}
           >
             <Image
-              src="https://f8n-production.imgix.net/collections/sk2u4icun.jpg?auto=format%2Ccompress&q=50&w=128&h=128&fit=crop&dpr=2"
+              src={
+                props.token
+                  ? `http://localhost:8080${props.token.User.backgroundImg}`
+                  : ""
+              }
               width="25px"
               height="25px"
               display="block"
@@ -236,7 +288,11 @@ export default function UserInfoCompo1(props) {
               position="relative"
               padding="0px 0px 0px 0px"
               whiteSpace="pre-wrap"
-              children="@Colorful Imagination"
+              children={
+                props.token
+                  ? `@${props.token.User.userAddress.slice(0, 16) + "..."}`
+                  : ""
+              }
               {...getOverrideProps(overrides, "@Colorful Imagination")}
             ></Text>
           </Flex>
@@ -264,50 +320,7 @@ export default function UserInfoCompo1(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             {...getOverrideProps(overrides, "Frame 1037512760")}
-          >
-            <Text
-              fontFamily="Inter"
-              fontSize="15px"
-              fontWeight="500"
-              color="rgba(192,192,192,1)"
-              lineHeight="22.5px"
-              textAlign="left"
-              display="block"
-              direction="column"
-              justifyContent="unset"
-              width="unset"
-              height="unset"
-              gap="unset"
-              alignItems="unset"
-              shrink="0"
-              position="relative"
-              padding="0px 0px 0px 0px"
-              whiteSpace="pre-wrap"
-              children="Current bid"
-              {...getOverrideProps(overrides, "Current bid")}
-            ></Text>
-          </Flex>
-          <Text
-            fontFamily="Inter"
-            fontSize="20px"
-            fontWeight="600"
-            color="rgba(0,0,0,1)"
-            lineHeight="30px"
-            textAlign="left"
-            display="block"
-            direction="column"
-            justifyContent="unset"
-            width="unset"
-            height="unset"
-            gap="unset"
-            alignItems="unset"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            whiteSpace="pre-wrap"
-            children="0.25ETH"
-            {...getOverrideProps(overrides, "0.25ETH")}
-          ></Text>
+          ></Flex>
         </Flex>
         <Flex
           gap="1px"
@@ -339,7 +352,7 @@ export default function UserInfoCompo1(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Auction ends in"
+            children="Provenance"
             {...getOverrideProps(overrides, "Auction ends in")}
           ></Text>
           <Text
@@ -360,7 +373,7 @@ export default function UserInfoCompo1(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="12h 53m 56s"
+            children={props.token ? timeStamp(props.token.createdAt) : ""}
             {...getOverrideProps(overrides, "12h 53m 56s")}
           ></Text>
         </Flex>

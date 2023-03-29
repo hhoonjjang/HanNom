@@ -10,6 +10,9 @@ import axios from "axios";
 
 const HomeComponent = ({}) => {
   const [saleList, setSaleList] = useState([]);
+  const [lastTokenData, setLastToken] = useState();
+  const [latestUserData, setLatestUser] = useState();
+  const [latestUserTokenData, setLatestUserToken] = useState();
   useEffect(() => {
     (async () => {
       console.log("시작");
@@ -18,13 +21,25 @@ const HomeComponent = ({}) => {
       ).data;
       console.log(result);
       setSaleList(result);
+      const lastToken = (
+        await axios.post("http://localhost:8080/api/mint/lastToken")
+      ).data;
+      // console.log("웨헤헤헤", lastToken);
+      setLastToken(lastToken);
+
+      const latestUser = (
+        await axios.post("http://localhost:8080/api/user/latestUser")
+      ).data;
+      console.log("웨헤헤헤", latestUser);
+      setLatestUser(latestUser.userArr);
+      setLatestUserToken(latestUser.nftArr);
     })();
   }, []);
   console.log(saleList);
   return (
     <Home>
       <div className="Home_innerBox">
-        <UserInfoCom1></UserInfoCom1>
+        <UserInfoCom1 token={lastTokenData}></UserInfoCom1>
         <MarginStyle1 />
 
         <div className="Home_innerBox_part2">
@@ -35,12 +50,24 @@ const HomeComponent = ({}) => {
           {/* <UserInfoCom2></UserInfoCom2> */}
         </div>
         <MarginStyle2 />
-        <UserInfoCom3></UserInfoCom3>
-        <MarginStyle1 />
-        <UserInfoCom3></UserInfoCom3>
-        <MarginStyle1 />
-        <UserInfoCom3></UserInfoCom3>
-        <MarginStyle1 />
+        {latestUserData ? (
+          latestUserData.map((item, index) => {
+            console.log("item 한개다", item);
+            return (
+              <>
+                {" "}
+                <UserInfoCom3
+                  address={item}
+                  addressToken={latestUserTokenData[index]}
+                ></UserInfoCom3>
+                <MarginStyle1 />
+              </>
+            );
+          })
+        ) : (
+          <></>
+        )}
+
         <YellowButton />
       </div>
     </Home>

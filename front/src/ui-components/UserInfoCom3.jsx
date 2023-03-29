@@ -13,6 +13,7 @@ import { gsap } from "gsap";
 const { useEffect, useState } = React;
 
 export default function UserInfoCom3(props) {
+  console.log("대망의 마무리", props);
   const onEnter = ({ currentTarget }) => {
     gsap.to(currentTarget, { scale: 1.03 });
   };

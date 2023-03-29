@@ -14,6 +14,7 @@ import { gsap } from "gsap";
 const { useEffect, useState } = React;
 
 export default function UserInfoCom1(props) {
+  console.log(props);
   const onEnter = ({ currentTarget }) => {
     gsap.to(currentTarget, { scale: 1.03 });
   };
@@ -37,7 +38,7 @@ export default function UserInfoCom1(props) {
       {...rest}
     >
       <Image
-        src="https://f8n-production-collection-assets.imgix.net/0xE1353314687F7a680d00BE81Db940141f1056d0F/4/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+        src={props.token ? `http://localhost:8080${props.token.nftImg}` : ""}
         width="274.32px"
         height="360px"
         display="block"
@@ -55,6 +56,7 @@ export default function UserInfoCom1(props) {
         {...getOverrideProps(overrides, "nft (5) 1")}
       ></Image>
       <UserInfoCompo1
+        token={props.token}
         display="flex"
         gap="58px"
         direction="row"
