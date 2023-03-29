@@ -30,8 +30,40 @@ export default function NftMyPage(props) {
   const [price, setPrice] = React.useState();
   const [count, setCount] = React.useState(1);
   const [_, render] = React.useState();
+  const [totalPrice, setTotalPrice] = React.useState();
+  const [totalNum, setTotalNum] = React.useState();
+  const [ownNum, setOwnNum] = React.useState();
+  const [ownedImg, setOwnedImg] = React.useState([]);
   const dispatch = useDispatch();
+  const totalSale = async (address) => {
+    const data = (
+      await axios.post("http://localhost:8080/api/user/totalPrice", {
+        address: document.cookie.split("=")[0],
+      })
+    ).data;
+    console.log("나는 통신 보냈음322251");
+    console.log(data);
+    setTotalPrice(data.totalPrice);
+    setTotalNum(data.totalNum);
+    console.log(totalPrice);
+  };
+  const ownedBy = async (address) => {
+    const data = (
+      await axios.post("http://localhost:8080/api/user/ownedBy", {
+        address: document.cookie.split("=")[0],
+      })
+    ).data;
+    console.log("나는 통신 보냈음32212312312251");
+    console.log(data);
+    setOwnNum(data.length);
+    setOwnedImg(data.ownedBy);
+    console.log("이미지리123123시트", ownNum);
+  };
 
+  React.useEffect(() => {
+    totalSale();
+    ownedBy();
+  }, []);
   console.log(props.web3);
   const sellNft = async (tokenId) => {
     const tempAddress = document.cookie.split("=")[0];
@@ -385,7 +417,7 @@ export default function NftMyPage(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children="4"
+                children={props.list ? props.list.length : ""}
                 {...getOverrideProps(overrides, "4")}
               ></Text>
             </Flex>
@@ -452,7 +484,7 @@ export default function NftMyPage(props) {
                   position="relative"
                   padding="0px 0px 0px 0px"
                   whiteSpace="pre-wrap"
-                  children="3"
+                  children={ownNum}
                   {...getOverrideProps(overrides, "3")}
                 ></Text>
                 <Flex
@@ -467,51 +499,27 @@ export default function NftMyPage(props) {
                   padding="0px 0px 0px 0px"
                   {...getOverrideProps(overrides, "Frame 10438403107")}
                 >
-                  <Image
-                    src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/133/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
-                    width="15px"
-                    height="15px"
-                    display="block"
-                    gap="unset"
-                    alignItems="unset"
-                    justifyContent="unset"
-                    shrink="0"
-                    position="relative"
-                    borderRadius="15px"
-                    padding="0px 0px 0px 0px"
-                    objectFit="cover"
-                    {...getOverrideProps(overrides, "ghrgclzzd 6")}
-                  ></Image>
-                  <Image
-                    src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/133/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
-                    width="15px"
-                    height="15px"
-                    display="block"
-                    gap="unset"
-                    alignItems="unset"
-                    justifyContent="unset"
-                    shrink="0"
-                    position="relative"
-                    borderRadius="15px"
-                    padding="0px 0px 0px 0px"
-                    objectFit="cover"
-                    {...getOverrideProps(overrides, "ghrgclzzd 7")}
-                  ></Image>
-                  <Image
-                    src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/133/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
-                    width="15px"
-                    height="15px"
-                    display="block"
-                    gap="unset"
-                    alignItems="unset"
-                    justifyContent="unset"
-                    shrink="0"
-                    position="relative"
-                    borderRadius="15px"
-                    padding="0px 0px 0px 0px"
-                    objectFit="cover"
-                    {...getOverrideProps(overrides, "ghrgclzzd 8")}
-                  ></Image>
+                  {ownedImg ? (
+                    ownedImg.map((item, index) => (
+                      <Image
+                        src={`http://localhost:8080${item}`}
+                        width="15px"
+                        height="15px"
+                        display="block"
+                        gap="unset"
+                        alignItems="unset"
+                        justifyContent="unset"
+                        shrink="0"
+                        position="relative"
+                        borderRadius="15px"
+                        padding="0px 0px 0px 0px"
+                        objectFit="cover"
+                        {...getOverrideProps(overrides, "ghrgclzzd 6")}
+                      ></Image>
+                    ))
+                  ) : (
+                    <></>
+                  )}
                 </Flex>
               </Flex>
             </Flex>
@@ -566,7 +574,11 @@ export default function NftMyPage(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children="1.30 ETH"
+                children={
+                  totalPrice
+                    ? (totalPrice / totalNum).toFixed(2) + " ETH"
+                    : " 0 ETH"
+                }
                 {...getOverrideProps(overrides, "1.30 ETH38403113")}
               ></Text>
             </Flex>
@@ -621,7 +633,7 @@ export default function NftMyPage(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children="1.30 ETH"
+                children={totalPrice ? totalPrice : 0}
                 {...getOverrideProps(overrides, "1.30 ETH38403116")}
               ></Text>
             </Flex>
@@ -1065,7 +1077,7 @@ export default function NftMyPage(props) {
           ) : (
             <></>
           )}
-          <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+          <div>거래기록</div>
           <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
           <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
           <div>하이ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
