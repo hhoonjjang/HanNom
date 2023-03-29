@@ -100,7 +100,11 @@ export default function NftMint(props) {
     ).data;
     console.log(result);
     try {
+      // console.log("jaksfdlksedhfklashfkljshaf", formData);
       await props.web3.eth.sendTransaction(result);
+      // console.log(test);
+      result.account = account;
+      await axios.post("http://localhost:8080/api/mint/mintComplete", result);
       navigate(`/`);
     } catch (error) {
       console.log("에러");

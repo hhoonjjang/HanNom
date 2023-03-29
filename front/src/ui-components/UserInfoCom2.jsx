@@ -16,7 +16,7 @@ export default function UserInfoCom2(props) {
   const item = Object.values(props)[0];
   // console.log(item);
   return (
-    <Link to={`nft/${item.seller}/${item.tokenId}`}>
+    <Link to={`nft/${item.sellerAddress}/${item.tokenId}`}>
       <View
         width="275px"
         height="360px"
@@ -33,7 +33,7 @@ export default function UserInfoCom2(props) {
       >
         <div>
           <Image
-            src={item.image}
+            src={`http://localhost:8080${item.Nft.nftImg}`}
             width="100%"
             height="100%"
             display="block"
@@ -91,7 +91,7 @@ export default function UserInfoCom2(props) {
                 {...getOverrideProps(overrides, "Frame 18")}
               >
                 <Image
-                  src="https://f8n-production.imgix.net/collections/sk2u4icun.jpg?auto=format%2Ccompress&q=50&w=128&h=128&fit=crop&dpr=2"
+                  src={`http://localhost:8080${item.Nft.User.profileImg}`}
                   width="79px"
                   height="79px"
                   display="block"
@@ -139,7 +139,7 @@ export default function UserInfoCom2(props) {
                   position="relative"
                   padding="0px 0px 0px 0px"
                   whiteSpace="pre-wrap"
-                  children={item.name}
+                  children={item.Nft.nftName}
                   {...getOverrideProps(overrides, "title name")}
                 ></Text>
               </Flex>
@@ -176,7 +176,7 @@ export default function UserInfoCom2(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children={item.name}
+                children={item.Nft.nftName}
                 {...getOverrideProps(overrides, "Title Name")}
               ></Text>
             </Flex>
@@ -195,7 +195,7 @@ export default function UserInfoCom2(props) {
               {...getOverrideProps(overrides, "Frame 8")}
             >
               <Image
-                src="https://f8n-production.imgix.net/collections/sk2u4icun.jpg?auto=format%2Ccompress&q=50&w=128&h=128&fit=crop&dpr=2"
+                src={`http://localhost:8080${item.Nft.User.profileImg}`}
                 width="25px"
                 height="25px"
                 display="block"
@@ -227,7 +227,7 @@ export default function UserInfoCom2(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children={item.seller}
+                children={item.Nft.User.userName}
                 {...getOverrideProps(overrides, "@Aaaaart")}
               ></Text>
             </Flex>

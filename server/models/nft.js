@@ -6,6 +6,7 @@ export default class Nft extends Sequelize.Model {
       {
         tokenId: {
           type: Sequelize.STRING(255),
+          unique: true,
         },
         nftName: {
           type: Sequelize.STRING(255),
@@ -44,9 +45,9 @@ export default class Nft extends Sequelize.Model {
       foreignKey: "userAddress",
       targetKey: "userAddress",
     });
-    // db.Nft.belongsTo(db.TradeHistory, {
-    //   foreignKey: "tradeHash",
-    //   targetKey: "nftHash",
-    // });
+    db.Nft.hasMany(db.TradeHistory, {
+      foreignKey: "tokenId",
+      sourceKey: "tokenId",
+    });
   }
 }

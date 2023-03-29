@@ -278,11 +278,11 @@
 	},
 	"sources": {
 		"contracts/NftToken.sol": {
-			"keccak256": "0x11c5f988a14152fb6992c3f7890c078ea243601ead1ccfc644d490fcb37ce50c",
+			"keccak256": "0x5b2fdf6322196ec4c53c6b695ff3dbdb7fb0cad075cb51862589c2a5c1d0dcb8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2d3fd40051023a87a66276a67c7f12c542b37216dfd825e7f398693585d90bf8",
-				"dweb:/ipfs/QmYe9BKtqC9R1hGSnxTytVqaaovqr3URiYC1H91PXJ5bMP"
+				"bzz-raw://427b733faa6d19c9adf4c5c14b43cbfbbb897403cd800c579b1a2727096dc9a4",
+				"dweb:/ipfs/QmYjfqJT9KHLSfhVuxZbaUkftpsapEXLAmSVzPmWcqXLa5"
 			]
 		},
 		"contracts/SaleToken.sol": {

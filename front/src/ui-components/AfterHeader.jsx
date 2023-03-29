@@ -24,6 +24,7 @@ export default function AfterHeader(props) {
   const { overrides, ...rest } = props;
   const [view, setView] = React.useState(false);
   const account = useSelector((state) => state.account.account.account);
+  const [user, setUser] = React.useState();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -47,6 +48,18 @@ export default function AfterHeader(props) {
   }, [pathname]);
   console.log("랜더링");
   console.log(props.user);
+
+  React.useEffect(() => {
+    (async () => {
+      if (!account) return;
+      const data = (
+        await axios.post("http://localhost:8080/api/user/getUser", {
+          from: account,
+        })
+      ).data;
+      setUser(data);
+    })();
+  }, [account]);
   return (
     <View
       width="1440px"
@@ -187,6 +200,13 @@ export default function AfterHeader(props) {
           }}
           {...getOverrideProps(overrides, "Ellipse 3")}
         ></UserIcon>
+        <div
+          onClick={() => {
+            setView(!view);
+          }}
+        >
+          {user?.userName}
+        </div>
         {view ? (
           <DropDownButton
             onClick={() => {

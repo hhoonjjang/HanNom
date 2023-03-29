@@ -7,7 +7,7 @@ import Web3 from "web3";
 import axios from "axios";
 import NftAbi from "../contracts/artifacts/NftToken.json" assert { type: "json" };
 import SaleAbi from "../contracts/artifacts/SaleToken.json" assert { type: "json" };
-import { Nft, User } from "../models/index.js";
+import { Nft, User, TradeHistory } from "../models/index.js";
 import fs from "fs";
 const router = Router();
 const web3 = new Web3("http://ganache.test.errorcode.help:8545");
@@ -66,8 +66,10 @@ router.post("/mint", upload.single("file"), async (req, res) => {
       {
         name,
         description,
+
         //   image: "https://getway.pinata.cloud/ipfs/" + imgResult.IpfsHash,
         image: `https://gateway.pinata.cloud/ipfs/${imgResult.IpfsHash}`,
+        upload: `${req.file.filename}`,
       },
       {
         pinataMetadata: {
@@ -89,6 +91,7 @@ router.post("/mint", upload.single("file"), async (req, res) => {
       to: "",
       from: "",
       data: "",
+      tokenId: "",
     };
     console.log(req.body.from);
     obj.nonce = await web3.eth.getTransactionCount(req.body.from);
@@ -96,27 +99,6 @@ router.post("/mint", upload.single("file"), async (req, res) => {
     obj.to = process.env.NFT_CA;
     obj.from = req.body.from;
     obj.data = deployed.methods.safeMint(jsonResult.IpfsHash).encodeABI();
-    const tempUser = await User.findOne({
-      where: { userAddress: req.body.from },
-    });
-    console.log("시험", "11");
-    const tempArr = await deployed.methods.getTokenList().call();
-    console.log("시험", "12");
-
-    let tokenIdx;
-    if (tempArr.length > 0) {
-      tokenIdx = tempArr.length;
-    } else tokenIdx = 0;
-    const tempToken = await Nft.create({
-      tokenId: tokenIdx,
-      nftImg: `/upload/${req.file.filename}`,
-      nftName: name,
-      nftDescription: description,
-      state: "mint",
-      // userName: req.body.from,
-    });
-
-    tempUser.addNfts(tempToken);
     res.send(obj);
   } catch (error) {
     console.log(error);
@@ -307,49 +289,116 @@ router.post("/detail", async (req, res) => {
   }
 });
 
+// router.post("/sellList", async (req, res) => {
+//   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+//   const deployedN = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
+//   console.log(deployed.methods);
+//   let data = [];
+//   try {
+//     const tempArr = await deployed.methods.getSaleTokenList().call();
+//     console.log(tempArr);
+//     console.log("하이2");
+
+//     if (tempArr.length > 0) {
+//       for (let i = 0; i < tempArr.length; i++) {
+//         console.log(tempArr[i].Price);
+//         const price = web3.utils.fromWei(tempArr[i].Price);
+//         console.log(price);
+//         const seller = await deployedN.methods
+//           .ownerOf(tempArr[i].tokenId)
+//           .call();
+//         console.log(seller);
+//         const { name, description, image } = (
+//           await axios.get(
+//             tempArr[i].tokenURI.replace(
+//               "gateway.pinata.cloud",
+//               "block7.mypinata.cloud"
+//             )
+//           )
+//         ).data;
+//         data.push({
+//           seller: seller,
+//           tokenId: tempArr[i].tokenId,
+//           name,
+//           description,
+//           price: price,
+//           image: image.replace("gateway.pinata.cloud", "block7.mypinata.cloud"),
+//         });
+//       }
+//     }
+//     res.send(data);
+//   } catch (error) {
+//     console.log("셀리스트에러");
+
+//     res.send([]);
+//   }
+// });
+
 router.post("/sellList", async (req, res) => {
-  const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
-  const deployedN = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
-  console.log(deployed.methods);
-  let data = [];
   try {
-    const tempArr = await deployed.methods.getSaleTokenList().call();
-    console.log(tempArr);
-    console.log("하이2");
-
-    if (tempArr.length > 0) {
-      for (let i = 0; i < tempArr.length; i++) {
-        console.log(tempArr[i].Price);
-        const price = web3.utils.fromWei(tempArr[i].Price);
-        console.log(price);
-        const seller = await deployedN.methods
-          .ownerOf(tempArr[i].tokenId)
-          .call();
-        console.log(seller);
-        const { name, description, image } = (
-          await axios.get(
-            tempArr[i].tokenURI.replace(
-              "gateway.pinata.cloud",
-              "block7.mypinata.cloud"
-            )
-          )
-        ).data;
-        data.push({
-          seller: seller,
-          tokenId: tempArr[i].tokenId,
-          name,
-          description,
-          price: price,
-          image: image.replace("gateway.pinata.cloud", "block7.mypinata.cloud"),
-        });
-      }
-    }
-    res.send(data);
+    const list = await TradeHistory.findAll({
+      include: [
+        {
+          model: Nft,
+          attributes: ["tokenId", "nftName", "nftDescription", "nftImg"],
+          include: [
+            {
+              model: User,
+            },
+          ],
+        },
+      ],
+    });
+    console.log("셀리스트 테스트", list);
+    res.send(list);
   } catch (error) {
-    console.log("셀리스트에러");
-
     res.send([]);
   }
+  // const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+  // const deployedN = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
+  // console.log(deployed.methods);
+  // let data = [];
+  // try {
+  //   const tempArr = await deployed.methods.getSaleTokenList().call();
+  //   console.log(tempArr);
+  //   console.log("하이2");
+
+  //   if (tempArr.length > 0) {
+  //     for (let i = 0; i < tempArr.length; i++) {
+  //       console.log(tempArr[i].Price);
+  //       const price = web3.utils.fromWei(tempArr[i].Price);
+  //       console.log(price);
+  //       const seller = await deployedN.methods
+  //         .ownerOf(tempArr[i].tokenId)
+  //         .call();
+  //       console.log(seller);
+  //       const { name, description, image } = (
+  //         await axios.get(
+  //           tempArr[i].tokenURI.replace(
+  //             "gateway.pinata.cloud",
+  //             "block7.mypinata.cloud"
+  //           )
+  //         )
+  //       ).data;
+  //       const imageRoute = await Nft.findOne({
+  //         where: { tokenId: tempArr[i].tokenId },
+  //       });
+  //       data.push({
+  //         seller: seller,
+  //         tokenId: tempArr[i].tokenId,
+  //         name,
+  //         description,
+  //         price: price,
+  //         image: `http://localhost:8080${imageRoute.nftImg}`,
+  //       });
+  //     }
+  //   }
+  //   res.send(data);
+  // } catch (error) {
+  //   console.log("셀리스트에러");
+
+  //   res.send([]);
+  // }
 });
 
 router.post("/sell", async (req, res) => {
@@ -441,6 +490,14 @@ router.post("/saleList", async (req, res) => {
 router.post("/sellComplete", async (req, res) => {
   try {
     console.log(req.body.tokenId);
+    console.log("찍혔어?");
+    const tempNft = await Nft.findOne({ where: { tokenId: req.body.tokenId } });
+    const tempTrade = await TradeHistory.create({
+      sellerAddress: req.body.account,
+      price: req.body.price,
+    });
+    console.log("skljfhakjasebfkljsjdf", tempTrade);
+    tempNft.addTradeHistory(tempTrade);
     const data = await Nft.update(
       { state: "selling" },
       { where: { tokenId: req.body.tokenId } }
@@ -459,7 +516,73 @@ router.post("/cancelComplete", async (req, res) => {
       { state: "mint" },
       { where: { tokenId: req.body.tokenId } }
     );
+    await TradeHistory.destroy({ where: { tokenId: req.body.tokenId } });
     res.send({ data: data, msg: "sell 취소완료" });
+  } catch (error) {
+    res.end();
+  }
+});
+
+router.post("/saleCancel", async (req, res) => {
+  const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
+  try {
+    const cancel = await deployed.methods
+      .cancelSaleToken(req.body.tokenId)
+      .encodeABI();
+    const obj = {
+      to: "",
+      from: "",
+      data: "",
+    };
+    obj.to = process.env.SALE_CA;
+    obj.from = req.body.account;
+    obj.data = cancel;
+    res.send(obj);
+  } catch (error) {
+    console.log("에러");
+    res.end();
+  }
+});
+
+router.post("/mintComplete", async (req, res) => {
+  const deployed = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
+  console.log("여기는 지나버립니다.", req.body);
+
+  try {
+    const tempUser = await User.findOne({
+      where: { userAddress: req.body.account },
+    });
+    console.log("시험", "11");
+    const tempArr = await deployed.methods.getTokenList().call();
+    console.log("시험", "12");
+    console.log("tempArr 화기이이이이인", tempArr);
+
+    let tokenIdx;
+    const { name, description, image, upload } = (
+      await axios.get(
+        tempArr[tempArr.length - 1].tokenURI.replace(
+          "gateway.pinata.cloud",
+          "block7.mypinata.cloud"
+        )
+      )
+    ).data;
+    console.log("name, description, image", name, description, image);
+
+    if (tempArr.length > 0) {
+      tokenIdx = tempArr.length - 1;
+    } else tokenIdx = 0;
+    const tempToken = await Nft.create({
+      tokenId: tokenIdx,
+      nftImg: `/upload/${upload}`,
+      nftName: name,
+      nftDescription: description,
+      state: "mint",
+      // userName: req.body.from,
+    });
+
+    tempUser.addNfts(tempToken);
+
+    res.send({ data: data, msg: "mint완료" });
   } catch (error) {
     res.end();
   }

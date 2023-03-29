@@ -4,23 +4,16 @@ export default class TradeHistory extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        tradeHash: {
-          type: Sequelize.STRING(255),
-          allowNull: false,
-        },
-        BuyerAddress: {
+        buyerAddress: {
           type: Sequelize.STRING(255),
         },
-        SellerAddress: {
+        sellerAddress: {
           type: Sequelize.STRING(255),
         },
-        Price: {
+        price: {
           type: Sequelize.INTEGER,
         },
-        Currency: {
-          type: Sequelize.STRING(255),
-        },
-        fee: {
+        currency: {
           type: Sequelize.STRING(255),
         },
         transactionHash: {
@@ -45,9 +38,9 @@ export default class TradeHistory extends Sequelize.Model {
     //   through: "userHistory",
     //   foreignKey: "tradeHash",
     // });
-    // db.TradeHistory.hasMany(db.Nft, {
-    //   foreignKey: "tradeHash",
-    //   sourceKey: "nftHash",
-    // });
+    db.TradeHistory.belongsTo(db.Nft, {
+      foreignKey: "tokenId",
+      targetKey: "tokenId",
+    });
   }
 }
