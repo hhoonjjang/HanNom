@@ -105,6 +105,125 @@ router.post("/getUser", async (req, res) => {
     res.send(user);
   }
 });
+router.post("/totalPrice", async (req, res) => {
+  // const address = req.body.cookie
+  console.log("광광우럭따", req.body.address);
+
+  const Op = Sequelize.Op;
+
+  console.log("광광우럭따", req.body.address);
+  let totalPrice = 0;
+  let totalNum;
+  if (!req.body.address) {
+    res.end();
+  } else {
+    console.log("나도 일단 받았음");
+    const saleList = await TradeHistory.findAll({
+      where: {
+        [Op.and]: [
+          { currency: "거래완료" },
+          { sellerAddress: req.body.address },
+        ],
+        // sellerAddress: req.body.address,
+      },
+    });
+    totalNum = saleList.length;
+    for (let i = 0; i < saleList.length; i++) {
+      totalPrice += saleList[i].price;
+    }
+    console.log(totalPrice);
+    // res.send(totalPrice);
+  }
+  res.send({ totalPrice: totalPrice, totalNum: totalNum });
+});
+
+router.post("/ownedBy", async (req, res) => {
+  // const address = req.body.cookie
+  console.log("광광우럭따", req.body.address);
+
+  const Op = Sequelize.Op;
+
+  console.log("광광우럭따", req.body.address);
+
+  const ownedBy = [];
+  const tempArr = [];
+  if (!req.body.address) {
+    res.end();
+  } else {
+    console.log("나도 일단 받았음");
+    const saleList = await TradeHistory.findAll({
+      where: {
+        [Op.and]: [
+          { currency: "거래완료" },
+          { sellerAddress: req.body.address },
+        ],
+        // sellerAddress: req.body.address,
+      },
+    });
+
+    for (let i = 0; i < saleList.length; i++) {
+      const buyer = saleList[i].buyerAddress;
+      if (!tempArr.includes(saleList[i].buyerAddress)) {
+        tempArr.push(buyer);
+      }
+    }
+    console.log("asdawdasda응ㄴㅁ아ㅓ마ㅓㅇ", tempArr);
+    // res.send(totalPrice);
+    const tempUserNum = tempArr.length > 3 ? 3 : tempArr.length;
+    for (let i = 1; i <= tempUserNum; i++) {
+      const tempUser = await User.findOne({
+        where: { userAddress: tempArr },
+      });
+      ownedBy.push(tempUser.profileImg);
+    }
+    console.log("asad아ㅓ마ㅓㅇ", ownedBy);
+  }
+  res.send({ length: tempArr.length, ownedBy: ownedBy });
+});
+
+router.post("/latestUser", async (req, res) => {
+  // const address = req.body.cookie
+  console.log("광광우럭따", req.body.address);
+
+  const Op = Sequelize.Op;
+
+  console.log("광광우럭따", req.body.address);
+
+  const ownedBy = [];
+  const tempArr = [];
+  if (!req.body.address) {
+    res.end();
+  } else {
+    console.log("나도 일단 받았음");
+    const saleList = await TradeHistory.findAll({
+      where: {
+        [Op.and]: [
+          { currency: "거래완료" },
+          { sellerAddress: req.body.address },
+        ],
+        // sellerAddress: req.body.address,
+      },
+    });
+
+    for (let i = 0; i < saleList.length; i++) {
+      const buyer = saleList[i].buyerAddress;
+      if (!tempArr.includes(saleList[i].buyerAddress)) {
+        tempArr.push(buyer);
+      }
+    }
+    console.log("asdawdasda응ㄴㅁ아ㅓ마ㅓㅇ", tempArr);
+    // res.send(totalPrice);
+    const tempUserNum = tempArr.length > 3 ? 3 : tempArr.length;
+    for (let i = 1; i <= tempUserNum; i++) {
+      const tempUser = await User.findOne({
+        where: { userAddress: tempArr[i] },
+      });
+      ownedBy.push(tempUser.profileImg);
+    }
+    console.log("asad아ㅓ마ㅓㅇ", ownedBy);
+  }
+  res.send({ length: tempArr.length, ownedBy: ownedBy });
+});
 
 router.post("/login", async (req, res) => {
   // db에서 nickname 있는지 없는지 판별
