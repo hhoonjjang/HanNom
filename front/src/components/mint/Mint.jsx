@@ -1,11 +1,15 @@
 import axios from "axios";
 import { useState, useCallback, FormEvent, ChangeEvent } from "react";
 import Web3 from "web3";
+import { useDispatch } from "react-redux";
+import { isLoadingThunk } from "../modules/isLoading.js";
+
 export const Mint = ({ web3, account }) => {
   const [NftName, setName] = useState("");
   const [NftDescription, setDescription] = useState("");
   const [file, setFile] = useState();
   const [img, setImg] = useState("");
+  const dispatch = useDispatch();
 
   const nameInput = useCallback((e) => {
     setName(e.currentTarget.value);
@@ -35,6 +39,7 @@ export const Mint = ({ web3, account }) => {
     // console.log(file);
     // console.log(img);
     if (!NftName || !NftDescription || !file) return;
+    dispatch(isLoadingThunk({ isLoading: true }));
     const formData = new FormData();
     formData.append("file", file);
     formData.append("name", NftName);
@@ -45,6 +50,7 @@ export const Mint = ({ web3, account }) => {
     ).data;
     console.log(result);
     web3.eth.sendTransaction(result);
+    dispatch(isLoadingThunk({ isLoading: false }));
   };
   return (
     <div>

@@ -21,6 +21,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { isLoadingThunk } from "../modules/isLoading.js";
+
 const { useEffect, useState } = React;
 
 export default function UserCreate(props) {
@@ -36,6 +39,7 @@ export default function UserCreate(props) {
   const [profilefile, setProfileFile] = React.useState();
   const [profileImg, setProfileImg] = React.useState("");
   const [connect, setConnect] = React.useState(false);
+  const dispatch = useDispatch();
 
   const inputName = (e) => {
     setNewNickName(e.currentTarget.value);
@@ -105,7 +109,7 @@ export default function UserCreate(props) {
     formData.append("profile", profilefile);
     formData.append("nickName", newNickName);
     formData.append("account", account);
-
+    dispatch(isLoadingThunk({ isLoading: true }));
     const data = (
       await axios.post("http://localhost:8080/api/user/regist", formData)
     ).data;
@@ -120,6 +124,7 @@ export default function UserCreate(props) {
       account: account,
       count: 0,
     });
+    dispatch(isLoadingThunk({ isLoading: false }));
     navigate("/");
     document.querySelector(".NoNamedModal").style.display = "none";
     // window.location.reload();

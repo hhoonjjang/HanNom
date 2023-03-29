@@ -22,16 +22,21 @@ import {
 } from "@aws-amplify/ui-react";
 import axios from "axios";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { isLoadingThunk } from "../modules/isLoading.js";
 
 export default function NftMyPage(props) {
   console.log("props", props.list);
   const [price, setPrice] = React.useState();
   const [count, setCount] = React.useState(1);
   const [_, render] = React.useState();
+  const dispatch = useDispatch();
+
   console.log(props.web3);
   const sellNft = async (tokenId) => {
     const tempAddress = document.cookie.split("=")[0];
     console.log(tempAddress);
+    dispatch(isLoadingThunk({ isLoading: true }));
     const result = (
       await axios.post("http://localhost:8080/api/mint/sell", {
         tokenId: tokenId,
@@ -44,6 +49,7 @@ export default function NftMyPage(props) {
     await props.web3.eth.sendTransaction(result.approveObj);
     await props.web3.eth.sendTransaction(result.obj);
     sellComplete(tokenId);
+    dispatch(isLoadingThunk({ isLoading: false }));
   };
   const sellComplete = async (tokenId) => {
     const tempAddress = document.cookie.split("=")[0];
@@ -59,6 +65,7 @@ export default function NftMyPage(props) {
   };
   const mintCancel = async (tokenId) => {
     const tempAddress = document.cookie.split("=")[0];
+    dispatch(isLoadingThunk({ isLoading: true }));
     const result = await axios.post(
       "http://localhost:8080/api/mint/saleCancel",
       {
@@ -69,6 +76,7 @@ export default function NftMyPage(props) {
     console.log(result.data);
     await props.web3.eth.sendTransaction(result.data);
     cancelComplete(tokenId);
+    dispatch(isLoadingThunk({ isLoading: true }));
   };
   const { overrides, ...rest } = props;
 

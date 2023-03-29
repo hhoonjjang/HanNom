@@ -52,4 +52,5 @@ export { default as NftUserinfo } from "./NftUserinfo";
 export { default as NftMyPage } from "./NftMyPage";
 export { default as Activity } from "./Activity";
 export { default as UserDescription } from "./UserDescription";
+export { default as UserLoading } from "./UserLoading";
 export { default as studioTheme } from "./studioTheme";
