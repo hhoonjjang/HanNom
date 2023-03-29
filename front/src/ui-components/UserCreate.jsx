@@ -40,6 +40,7 @@ export default function UserCreate(props) {
   const [profileImg, setProfileImg] = React.useState("");
   const [connect, setConnect] = React.useState(false);
   const dispatch = useDispatch();
+  const [user, setUser] = React.useState();
 
   const inputName = (e) => {
     setNewNickName(e.currentTarget.value);

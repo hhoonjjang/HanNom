@@ -613,7 +613,9 @@ router.post("/mintComplete", async (req, res) => {
         )
       )
     ).data;
+    console.log("============================");
     console.log("name, description, image", name, description, image);
+    console.log("============================");
 
     if (tempArr.length > 0) {
       tokenIdx = tempArr.length - 1;
