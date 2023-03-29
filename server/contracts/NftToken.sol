@@ -49,10 +49,18 @@ contract NftToken is ERC721Enumerable, ERC721URIStorage, Ownable {
     return super.supportsInterface(interfaceId);
   }
 
+  // function tokenURI(
+  //   uint256 tokenId
+  // ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
+  //   return super.tokenURI(tokenId);
+  // }
+
   function tokenURI(
-    uint256 tokenId
+    uint _tokenId
   ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
-    return super.tokenURI(tokenId);
+    string memory Rank = Strings.toString(TokenDatas[_tokenId].Rank);
+    string memory Type = Strings.toString(TokenDatas[_tokenId].Type);
+    return string(abi.encodePacked(metadataURI, "/", Rank, "/", Type, ".json"));
   }
 
   function _baseURI() internal pure override returns (string memory) {

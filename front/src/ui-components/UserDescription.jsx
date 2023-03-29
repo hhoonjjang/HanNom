@@ -13,12 +13,20 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { isLoadingThunk } from "../modules/isLoading.js";
+import { timeStamp } from "../api/time.js";
 export default function UserDescription(props) {
   const [user, setUser] = React.useState(document.cookie.split("=")[0]);
   console.log("dasdasdawd", user);
   const navigate = useNavigate();
   console.log("props.nft화긴", props.nft);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (!document.cookie) {
+      alert("NFT의 상세한 정보를 확인하기 위해선 로그인해야 합니다.");
+      navigate("/");
+    }
+  }, []);
 
   const buyFunc = async () => {
     try {
@@ -293,7 +301,7 @@ export default function UserDescription(props) {
                   position="relative"
                   padding="0px 0px 0px 0px"
                   whiteSpace="pre-wrap"
-                  children="Collection"
+                  children="NFT 판매자"
                   {...getOverrideProps(overrides, "Collection")}
                 ></Text>
                 <Flex
@@ -524,7 +532,7 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children="Time Remaining"
+                children="Created Mint"
                 {...getOverrideProps(overrides, "Time Remaining")}
               ></Text>
               <Text
@@ -545,7 +553,7 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children="12h 53m 56s"
+                children={timeStamp(props.nft.Nft.createdAt)}
                 {...getOverrideProps(overrides, "12h 53m 56s")}
               ></Text>
             </Flex>
@@ -627,7 +635,7 @@ export default function UserDescription(props) {
             alignItems="unset"
             shrink="0"
             position="relative"
-            padding="0px 0px 0px 0px"
+            padding="0px 0px 0px 10px"
             whiteSpace="pre-wrap"
             children={props.nft.Nft.nftDescription}
             {...getOverrideProps(
@@ -813,7 +821,7 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children={props.nft.Nft.createdAt}
+                children={timeStamp(props.nft.Nft.createdAt)}
                 {...getOverrideProps(overrides, "Mar 26, 2023 at 10:10am")}
               ></Text>
             </Flex>

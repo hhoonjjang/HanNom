@@ -635,4 +635,52 @@ router.post("/mintComplete", async (req, res) => {
   }
 });
 
+router.post("/tradeList", async (req, res) => {
+  const Op = Sequelize.Op;
+  try {
+    console.log("999999999999999999999");
+    console.log("8888888888", req.body.address);
+    const list = await TradeHistory.findAll({
+      where: {
+        currency: "거래완료",
+        [Op.or]: [
+          { buyerAddress: req.body.address },
+          { sellerAddress: req.body.address },
+        ],
+      },
+      include: [
+        {
+          model: Nft,
+        },
+      ],
+    });
+    console.log("list 전체", list.length);
+    const tempArr = [];
+    // console.log(list)
+    for (let i = 0; i < list.length; i++) {
+      // const seller = list[i].sellerAddress;
+      const seller = await User.findOne({
+        where: { userAddress: list[i].sellerAddress },
+      });
+      const buyer = await User.findOne({
+        where: { userAddress: list[i].buyerAddress },
+      });
+
+      tempArr.push([buyer, seller]);
+    }
+    console.log("as꾸어어억ㅁ아ㅓ마ㅓㅇ", tempArr);
+    // for (let i = 0; i < tempArr.length; i++) {
+    //   console.log("i번째출동", tempArr[i]);
+    //   const tempUser = await User.findOne({
+    //     where: { userAddress: tempArr[i] },
+    //   });
+    //   console.log("temp코끼리", tempUser);
+    //   buyerArr.push(tempUser);
+    // }
+    // console.log("리스트를 무너뜨려라", buyerArr);
+    res.send({ list: list, msg: "전송완료", user: tempArr });
+  } catch (error) {
+    res.end();
+  }
+});
 export default router;

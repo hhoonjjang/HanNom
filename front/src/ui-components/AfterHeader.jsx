@@ -39,9 +39,7 @@ export default function AfterHeader(props) {
   };
 
   window.ethereum.on("accountsChanged", (accounts) => {
-    if (!accounts.length) {
-      logoutMethod();
-    }
+    logoutMethod();
   });
 
   React.useEffect(() => {
