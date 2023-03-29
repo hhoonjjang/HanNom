@@ -579,7 +579,6 @@ const NoNamedModal = styled.div`
   // bottom: 0%;
   justify-content: center;
   z-index: 999999;
-
   .NoNamedModal_innerBox {
     display: flex;
     justify-content: center;

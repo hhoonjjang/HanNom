@@ -14,17 +14,20 @@ const NftDetailContainer = ({ web3, account }) => {
 
   useEffect(() => {
     (async () => {
+      dispatch(isLoadingThunk({ isLoading: true }));
       const result = (
-        await axios.post("http://localhost:8080/api/mint/nftDetail", {
+        await axios.post("http://localhost:8080/api/mint/detail", {
           seller,
           tokenId,
         })
       ).data;
       console.log(result);
       setNft(result);
+      console.log("result");
+      dispatch(isLoadingThunk({ isLoading: false }));
     })();
     console.log(nft);
-  }, [a]);
+  }, []);
   const buyNft = async (tokenId, account, price) => {
     dispatch(isLoadingThunk({ isLoading: true }));
     const result = (

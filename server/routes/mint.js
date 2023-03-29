@@ -9,6 +9,7 @@ import NftAbi from "../contracts/artifacts/NftToken.json" assert { type: "json" 
 import SaleAbi from "../contracts/artifacts/SaleToken.json" assert { type: "json" };
 import { Nft, User, TradeHistory } from "../models/index.js";
 import fs from "fs";
+import { Sequelize } from "sequelize";
 const router = Router();
 const web3 = new Web3("http://ganache.test.errorcode.help:8545");
 // const web3 = new Web3(

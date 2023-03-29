@@ -148,7 +148,6 @@ export default function NftMyPage(props) {
         gap="unset"
         alignItems="unset"
         justifyContent="unset"
-        position="absolute"
         top="0%"
         bottom="58.97%"
         left="0%"
@@ -666,7 +665,6 @@ export default function NftMyPage(props) {
             gap="unset"
             alignItems="unset"
             justifyContent="unset"
-            position="absolute"
             top="0px"
             left="0px"
             {...getOverrideProps(overrides, "Ellipse 7")}
@@ -685,7 +683,6 @@ export default function NftMyPage(props) {
             height="15px"
             gap="unset"
             alignItems="unset"
-            position="absolute"
             top="2px"
             left="7px"
             padding="0px 0px 0px 0px"
@@ -702,7 +699,6 @@ export default function NftMyPage(props) {
         height="unset"
         justifyContent="flex-start"
         alignItems="flex-start"
-        position="absolute"
         top="46.77%"
         bottom="50.46%"
         left="20.97%"
@@ -724,7 +720,6 @@ export default function NftMyPage(props) {
         height="unset"
         gap="unset"
         alignItems="unset"
-        position="absolute"
         top="455px"
         left="202px"
         padding="0px 0px 0px 0px"
@@ -739,7 +734,6 @@ export default function NftMyPage(props) {
         gap="unset"
         alignItems="unset"
         justifyContent="unset"
-        position="absolute"
         top="50.72%"
         bottom="49.13%"
         left="13.89%"
@@ -755,7 +749,6 @@ export default function NftMyPage(props) {
         height="unset"
         justifyContent="flex-start"
         alignItems="flex-start"
-        position="absolute"
         top="509px"
         left="200px"
         padding="0px 0px 0px 0px"
@@ -1094,13 +1087,65 @@ export default function NftMyPage(props) {
     </View>
   );
 }
+const NoNft = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  display: flex;
+  justify-content: center;
+
+  div {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    width: 1040px;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+  }
+`;
+
 const ListCover = styled.div`
   flex-wrap: wrap;
-  width: 1074px;
-
+  display: flex;
+  justify-content: center;
   & > div {
-    float: left;
     margin-right: 30px;
     margin-bottom: 50px;
   }
+`;
+
+const LineBreakBox = styled.div`
+  height: 10px;
+  flex-basis: 100%;
+`;
+
+const SellingText = styled.div`
+  padding-top: 5px;
+  padding-right: 15px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  border-radius: 20px;
+  margin-left: 15px;
+  color: white;
+  width: 100%;
+  background: #0122fb;
+`;
+
+const TextBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const HrBox = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
+
+const TempBox = styled.div`
+  width: 325px;
+`;
+
+const ActivityBox = styled.div`
+  display: flex;
+  justify-content: center;
 `;

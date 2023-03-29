@@ -1,12 +1,13 @@
 import { Router } from "express";
 import multer from "multer";
 import Web3 from "web3";
-import { Nft, User } from "../models/index.js";
+import { Nft, User, TradeHistory } from "../models/index.js";
 import axios from "axios";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import { Readable } from "stream";
 import dotenv from "dotenv";
+import { Sequelize } from "sequelize";
 dotenv.config();
 const web3 = new Web3("http://ganache.test.errorcode.help:8545");
 // const web3 = new Web3(
