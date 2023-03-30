@@ -749,4 +749,20 @@ router.post("/tradeList", async (req, res) => {
     res.end();
   }
 });
+
+router.post("/search", async (req, res) => {
+  const searchData = req.body.searchData;
+  try {
+    const tokenName = await Nft.findOne({
+      where: { nftName: searchData, state: "selling" },
+      order: [["createdAt", "DESC"]],
+    });
+    console.log("searchData : ", searchData);
+    console.log("tokenName : ", tokenName);
+    res.send({ tokenName: tokenName });
+  } catch (error) {
+    console.error(error);
+    res.end();
+  }
+});
 export default router;

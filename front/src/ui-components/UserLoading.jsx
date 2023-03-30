@@ -16,6 +16,8 @@ import {
   useTheme,
 } from "@aws-amplify/ui-react";
 import { gsap } from "gsap";
+import { Tween, SplitChars, Reveal } from "react-gsap";
+import styled from "styled-components";
 const { useEffect, useState } = React;
 
 export default function UserLoading(props) {
@@ -1870,33 +1872,35 @@ export default function UserLoading(props) {
           </View>
         </View>
       </View>
-      <Text
-        onMouseEnter={onEnter}
-        onMouseLeave={onLeave}
-        fontFamily="Inter"
-        fontSize="24px"
-        fontWeight="700"
-        color="rgba(6,0,22,1)"
-        lineHeight="29.045454025268555px"
-        textAlign="center"
-        display="block"
-        direction="column"
-        justifyContent="unset"
-        letterSpacing="0.18px"
-        width="300.71px"
-        height="unset"
-        gap="unset"
-        alignItems="unset"
-        position="absolute"
-        top="56.01%"
-        bottom="40.6%"
-        left="14.03%"
-        right="19.76%"
-        padding="0px 0px 0px 0px"
-        whiteSpace="pre-wrap"
-        children="Metamask Loading..."
-        {...getOverrideProps(overrides, "Food38503420")}
-      ></Text>
+      <TestT>
+        <Reveal repeat>
+          <Tween from={{ x: "50px", y: "30px" }} stagger={0.1} duration={1.27}>
+            <SplitChars
+              wrapper={
+                <Text
+                  onMouseEnter={onEnter}
+                  onMouseLeave={onLeave}
+                  className="testMan"
+                  fontFamily="Inter"
+                  fontSize="24px"
+                  fontWeight="700"
+                  style={{
+                    display: "inline-block",
+                  }}
+                  top="505px"
+                  left="-15px"
+                  padding="0px 0px 0px 0px"
+                  whiteSpace="pre-wrap"
+                  position="relative"
+                />
+              }
+            >
+              Metamask Loading...
+            </SplitChars>
+          </Tween>
+        </Reveal>
+      </TestT>
+
       <Flex
         onMouseEnter={onEnter}
         onMouseLeave={onLeave}
@@ -1914,10 +1918,24 @@ export default function UserLoading(props) {
         <Loader
           width="5rem"
           height="5rem"
-          emptyColor={tokens.colors.black}
-          filledColor={tokens.colors.orange[40]}
+          emptyColor={tokens.colors.red}
+          filledColor={tokens.colors.red[40]}
         />
       </Flex>
     </View>
   );
 }
+``;
+
+const TestT = styled.div`
+  .testMan {
+    &:hover {
+      font-size: 36px;
+      align-self: center;
+      padding-left: 4.8px;
+      cursor: pointer;
+      color: rgb(255, 86, 94);
+      font-size: 55px !important;
+    }
+  }
+`;
