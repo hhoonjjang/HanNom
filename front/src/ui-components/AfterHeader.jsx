@@ -160,29 +160,8 @@ export default function AfterHeader(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Feed"
+            children="HanNom"
             {...getOverrideProps(overrides, "Feed")}
-          ></Text>
-          <Text
-            fontFamily="Inter"
-            fontSize="21px"
-            fontWeight="800"
-            color="rgba(0,0,0,1)"
-            lineHeight="25.414772033691406px"
-            textAlign="center"
-            display="block"
-            direction="column"
-            justifyContent="unset"
-            width="unset"
-            height="unset"
-            gap="unset"
-            alignItems="unset"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            whiteSpace="pre-wrap"
-            children="Explore"
-            {...getOverrideProps(overrides, "Explore")}
           ></Text>
         </Flex>
       </Link>

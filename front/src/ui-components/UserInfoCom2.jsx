@@ -118,14 +118,14 @@ export default function UserInfoCom2(props) {
                 position="relative"
                 borderRadius="25px"
                 padding="7px 18px 7px 18px"
-                backgroundColor="rgba(217,217,217,0.32)"
+                backgroundColor="rgba(217,217,217,0.8)"
                 {...getOverrideProps(overrides, "Frame 19")}
               >
                 <Text
                   fontFamily="Inter"
                   fontSize="10px"
                   fontWeight="700"
-                  color="rgba(255,255,253,1)"
+                  color="rgba(3,3,3,1)"
                   lineHeight="15px"
                   textAlign="left"
                   display="block"
@@ -242,7 +242,7 @@ export default function UserInfoCom2(props) {
               position="relative"
               borderRadius="5px"
               padding="0px 0px 0px 0px"
-              backgroundColor="rgba(255,255,255,0.1)"
+              backgroundColor="rgba(255,255,255,0.8)"
               {...getOverrideProps(overrides, "Frame 24")}
             >
               <Flex
@@ -268,14 +268,13 @@ export default function UserInfoCom2(props) {
                   position="relative"
                   borderRadius="10px"
                   padding="0px 0px 0px 0px"
-                  backgroundColor="rgba(175,175,175,0.2)"
                   {...getOverrideProps(overrides, "Frame 20")}
                 >
                   <Text
                     fontFamily="Inria Serif"
                     fontSize="15px"
                     fontWeight="700"
-                    color="rgba(255,255,253,1)"
+                    color="rgba(3,5,3,1)"
                     lineHeight="22.5px"
                     textAlign="left"
                     display="block"
@@ -296,7 +295,7 @@ export default function UserInfoCom2(props) {
                     fontFamily="Inria Serif"
                     fontSize="17px"
                     fontWeight="300"
-                    color="rgba(255,255,253,1)"
+                    color="rgba(3,5,3,1)"
                     fontStyle="italic"
                     lineHeight="25.5px"
                     textAlign="center"
@@ -333,7 +332,7 @@ export default function UserInfoCom2(props) {
                     fontFamily="Inria Serif"
                     fontSize="15px"
                     fontWeight="700"
-                    color="rgba(255,255,253,1)"
+                    color="rgba(3,5,3,1)"
                     lineHeight="22.5px"
                     textAlign="left"
                     display="block"
@@ -354,7 +353,7 @@ export default function UserInfoCom2(props) {
                     fontFamily="Inria Serif"
                     fontSize="17px"
                     fontWeight="300"
-                    color="rgba(255,255,253,1)"
+                    color="rgba(3,5,3,1)"
                     fontStyle="italic"
                     lineHeight="25.5px"
                     textAlign="left"

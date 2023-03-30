@@ -241,7 +241,7 @@ export default function UserInfoCom3(props) {
             fontFamily="Inter"
             fontSize="10px"
             fontWeight="700"
-            color="rgba(255,255,255,0.8)"
+            color="rgba(3,3,3,0.8)"
             lineHeight="15px"
             textAlign="left"
             display="block"
