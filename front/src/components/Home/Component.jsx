@@ -53,7 +53,7 @@ const HomeComponent = ({}) => {
         {latestUserData ? (
           latestUserData.map((item, index) => {
             return (
-              <Link to={`${item.userAddress}`}>
+              <Link to={`/userAddress/${item.userAddress}`}>
                 <Blank key={`blank-${index}`}>
                   <UserInfoCom3
                     key={`latestkeyassds-${index}`}

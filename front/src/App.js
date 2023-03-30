@@ -70,7 +70,7 @@ function App() {
               element={<ActivityContainer></ActivityContainer>}
             ></Route>
             <Route
-              path="/:userAddress"
+              path="/userAddress/*"
               element={<UserCollectionContainer c={account} web3={web3} />}
             ></Route>
             <Route

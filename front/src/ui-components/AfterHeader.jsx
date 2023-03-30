@@ -225,7 +225,7 @@ export default function AfterHeader(props) {
                 <div className="afterheader_dropdown_account">{account}</div>
               </li>
               <li>
-                <Link to="/mypage">Wallet</Link>
+                <Link to={`/userAddress/${user?.userAddress}`}>Wallet</Link>
               </li>
               {/* <li>
                 <hrLine></hrLine>

@@ -12,7 +12,7 @@ import fs from "fs";
 import { Sequelize } from "sequelize";
 const router = Router();
 const web3 = new Web3("http://ganache.test.errorcode.help:8545");
-import { Sequelize } from "sequelize";
+
 // const web3 = new Web3(
 //   "wss://goerli.infura.io/ws/v3/2370d723f2b24ee69ca1d052c7a0e099"
 // );
