@@ -35,11 +35,15 @@ const HomeComponent = ({}) => {
       setLatestUserToken(latestUser.nftArr);
     })();
   }, []);
-  console.log(saleList);
   return (
     <Home>
       <div className="Home_innerBox">
-        <UserInfoCom1 token={lastTokenData}></UserInfoCom1>
+        {lastTokenData ? (
+          <UserInfoCom1 token={lastTokenData}></UserInfoCom1>
+        ) : (
+          <></>
+        )}
+
         <MarginStyle1 />
 
         <div className="Home_innerBox_part2">
@@ -67,8 +71,6 @@ const HomeComponent = ({}) => {
         ) : (
           <></>
         )}
-
-        <YellowButton />
       </div>
     </Home>
   );

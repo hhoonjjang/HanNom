@@ -576,6 +576,7 @@ router.post("/lastToken", async (req, res) => {
     console.log("아오");
     const data = await Nft.findOne({
       order: [["tokenId", "DESC"]],
+      where: { state: "selling" },
       include: [
         {
           model: User,
