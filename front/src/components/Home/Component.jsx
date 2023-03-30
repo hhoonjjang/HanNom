@@ -56,20 +56,19 @@ const HomeComponent = ({}) => {
         <MarginStyle2 />
         {latestUserData ? (
           latestUserData.map((item, index) => {
-            console.log("item 한개다", item);
             return (
-              <>
-                {" "}
+              <Blank key={`blank-${index}`}>
                 <UserInfoCom3
+                  key={`latestkeyassds-${index}`}
                   address={item}
-                  addressToken={latestUserTokenData[index]}
+                  addresstoken={latestUserTokenData[index]}
                 ></UserInfoCom3>
-                <MarginStyle1 />
-              </>
+                <MarginStyle1 key={`latestkey1-${index}`} />
+              </Blank>
             );
           })
         ) : (
-          <></>
+          <Blank></Blank>
         )}
       </div>
     </Home>
@@ -101,3 +100,4 @@ const MarginStyle1 = styled.div`
 const MarginStyle2 = styled.div`
   margin-top: 50px;
 `;
+const Blank = styled.div``;

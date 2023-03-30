@@ -39,7 +39,7 @@ export default function UserCreate(props) {
   const [profilefile, setProfileFile] = React.useState();
   const [profileImg, setProfileImg] = React.useState("");
   const [count, setCount] = React.useState("");
-  const [connect, setConnect] = React.useState(false);
+  const [connect, setConnect] = React.useState(0);
   const dispatch = useDispatch();
 
   const inputName = (e) => {
@@ -193,10 +193,10 @@ export default function UserCreate(props) {
         console.log("user223");
       })();
       // userDisplay();
-      setConnect(true);
+      setConnect(1);
       userCheck(account);
     } else {
-      setConnect(false);
+      setConnect(0);
     }
   }, []);
 
@@ -208,7 +208,7 @@ export default function UserCreate(props) {
         display="block"
         gap="unset"
         alignItems="unset"
-        justifyContent="unset"
+        justifycontent="unset"
         position="relative"
         top="80px"
         padding="0px 0px 0px 0px"
@@ -225,7 +225,7 @@ export default function UserCreate(props) {
           display="block"
           gap="unset"
           alignItems="unset"
-          justifyContent="unset"
+          justifycontent="unset"
           position="absolute"
           top="0%"
           bottom="-4.73%"
@@ -242,7 +242,7 @@ export default function UserCreate(props) {
             direction="column"
             width="unset"
             height="unset"
-            justifyContent="flex-start"
+            justifycontent="flex-start"
             alignItems="center"
             position="absolute"
             top="calc(50% - 492px - 0px)"
@@ -256,7 +256,7 @@ export default function UserCreate(props) {
               direction="column"
               width="unset"
               height="unset"
-              justifyContent="flex-start"
+              justifycontent="flex-start"
               alignItems="center"
               shrink="0"
               position="relative"
@@ -268,7 +268,7 @@ export default function UserCreate(props) {
                 direction="column"
                 width="unset"
                 height="unset"
-                justifyContent="flex-start"
+                justifycontent="flex-start"
                 alignItems="center"
                 shrink="0"
                 position="relative"
@@ -280,7 +280,7 @@ export default function UserCreate(props) {
                   direction="column"
                   width="unset"
                   height="unset"
-                  justifyContent="flex-start"
+                  justifycontent="flex-start"
                   alignItems="flex-start"
                   shrink="0"
                   position="relative"
@@ -294,7 +294,7 @@ export default function UserCreate(props) {
                     direction="column"
                     width="300px"
                     height="200px"
-                    justifyContent="center"
+                    justifycontent="center"
                     alignItems="center"
                     overflow="hidden"
                     shrink="0"
@@ -317,7 +317,7 @@ export default function UserCreate(props) {
                       direction="column"
                       width="unset"
                       height="unset"
-                      justifyContent="flex-start"
+                      justifycontent="flex-start"
                       alignItems="center"
                       shrink="0"
                       position="relative"
@@ -338,7 +338,7 @@ export default function UserCreate(props) {
                         display="block"
                         gap="unset"
                         alignItems="unset"
-                        justifyContent="unset"
+                        justifycontent="unset"
                         shrink="0"
                         position="relative"
                         {...getOverrideProps(overrides, "Vector38473039")}
@@ -348,7 +348,7 @@ export default function UserCreate(props) {
                         direction="column"
                         width="unset"
                         height="46px"
-                        justifyContent="center"
+                        justifycontent="center"
                         alignItems="center"
                         shrink="0"
                         position="relative"
@@ -364,7 +364,7 @@ export default function UserCreate(props) {
                           textAlign="center"
                           display="block"
                           direction="column"
-                          justifyContent="unset"
+                          justifycontent="unset"
                           width="172px"
                           height="unset"
                           gap="unset"
@@ -400,7 +400,7 @@ export default function UserCreate(props) {
                     direction="column"
                     width="300px"
                     height="200px"
-                    justifyContent="center"
+                    justifycontent="center"
                     alignItems="center"
                     overflow="hidden"
                     shrink="0"
@@ -423,7 +423,7 @@ export default function UserCreate(props) {
                       direction="column"
                       width="unset"
                       height="unset"
-                      justifyContent="flex-start"
+                      justifycontent="flex-start"
                       alignItems="center"
                       shrink="0"
                       position="relative"
@@ -444,7 +444,7 @@ export default function UserCreate(props) {
                         display="block"
                         gap="unset"
                         alignItems="unset"
-                        justifyContent="unset"
+                        justifycontent="unset"
                         shrink="0"
                         position="relative"
                         {...getOverrideProps(overrides, "Vector38473047")}
@@ -454,7 +454,7 @@ export default function UserCreate(props) {
                         direction="column"
                         width="unset"
                         height="46px"
-                        justifyContent="center"
+                        justifycontent="center"
                         alignItems="center"
                         shrink="0"
                         position="relative"
@@ -470,7 +470,7 @@ export default function UserCreate(props) {
                           textAlign="center"
                           display="block"
                           direction="column"
-                          justifyContent="unset"
+                          justifycontent="unset"
                           width="172px"
                           height="unset"
                           gap="unset"
@@ -505,7 +505,7 @@ export default function UserCreate(props) {
                   direction="column"
                   width="unset"
                   height="unset"
-                  justifyContent="center"
+                  justifycontent="center"
                   alignItems="center"
                   shrink="0"
                   position="relative"

@@ -47,7 +47,7 @@ export default function HearderTop(props) {
   const [bgImg, setBgImg] = React.useState("");
   const [profilefile, setProfileFile] = React.useState();
   const [profileImg, setProfileImg] = React.useState("");
-  const [connect, setConnect] = React.useState(false);
+  const [connect, setConnect] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [registBool, setRegistBool] = React.useState(true);
   const [user, setUser] = React.useState();
@@ -245,10 +245,10 @@ export default function HearderTop(props) {
         console.log("user223");
       })();
       // userDisplay();
-      setConnect(true);
+      setConnect(1);
       userCheck(account);
     } else {
-      setConnect(false);
+      setConnect(0);
     }
   }, []);
   React.useEffect(() => {
@@ -257,7 +257,7 @@ export default function HearderTop(props) {
       console.log(cookieAccount);
       if (account != undefined && account != cookieAccount) {
         deleteCookie(cookieAccount);
-        setConnect(false);
+        setConnect(0);
       }
       userCheck();
     }
@@ -270,7 +270,7 @@ export default function HearderTop(props) {
         display="block"
         gap="unset"
         alignItems="unset"
-        justifyContent="unset"
+        justifycontent="unset"
         position="relative"
         padding="0px 0px 0px 0px"
         {...getOverrideProps(overrides, "HearderTop")}
@@ -290,7 +290,7 @@ export default function HearderTop(props) {
           display="block"
           gap="unset"
           alignItems="unset"
-          justifyContent="unset"
+          justifycontent="unset"
           position="absolute"
           top="0%"
           bottom="0%"
@@ -308,7 +308,7 @@ export default function HearderTop(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -320,40 +320,17 @@ export default function HearderTop(props) {
             right="76.81%"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Feed"
+            children="HanNom"
             {...getOverrideProps(overrides, "Feed")}
           ></Text>
-          <Text
-            fontFamily="Inter"
-            fontSize="21px"
-            fontWeight="800"
-            color="rgba(0,0,0,1)"
-            lineHeight="25.414772033691406px"
-            textAlign="center"
-            display="block"
-            direction="column"
-            justifyContent="unset"
-            width="unset"
-            height="unset"
-            gap="unset"
-            alignItems="unset"
-            position="absolute"
-            top="27.03%"
-            bottom="39.19%"
-            left="23.82%"
-            right="70.69%"
-            padding="0px 0px 0px 0px"
-            whiteSpace="pre-wrap"
-            children="Explore"
-            {...getOverrideProps(overrides, "Explore")}
-          ></Text>
+
           <HLogo
             display="flex"
             gap="2px"
             direction="row"
             width="unset"
             height="21px"
-            justifyContent="flex-start"
+            justifycontent="flex-start"
             alignItems="flex-start"
             position="absolute"
             top="27.03%"
@@ -394,7 +371,7 @@ export default function HearderTop(props) {
             children="Connect"
             {...getOverrideProps(overrides, "Button")}
             onClick={() => {
-              setConnect(true);
+              setConnect(1);
               userCheck(account);
             }}
           ></Button>

@@ -12,7 +12,7 @@ export default createTheme({
     components: {
       alert: {
         alignItems: { value: "center" },
-        justifyContent: { value: "space-between" },
+        justifycontent: { value: "space-between" },
         color: { value: "{colors.font.primary.value}" },
         backgroundColor: { value: "{colors.background.tertiary.value}" },
         paddingBlock: { value: "{space.small.value}" },
@@ -197,7 +197,7 @@ export default createTheme({
         menu: {
           borderWidth: { value: "0" },
           backgroundColor: { value: "transparent" },
-          justifyContent: { value: "start" },
+          justifycontent: { value: "start" },
           _hover: {
             color: { value: "{colors.font.inverse.value}" },
             backgroundColor: { value: "{colors.brand.primary.80.value}" },
@@ -313,7 +313,7 @@ export default createTheme({
         button: {
           position: { value: "relative" },
           alignItems: { value: "center" },
-          justifyContent: { value: "center" },
+          justifycontent: { value: "center" },
           color: { value: "{colors.white.value}" },
           before: {
             width: { value: "100%" },
@@ -382,7 +382,7 @@ export default createTheme({
         alignItems: { value: "flex-start" },
         alignContent: { value: "center" },
         flexDirection: { value: "column" },
-        justifyContent: { value: "center" },
+        justifycontent: { value: "center" },
       },
       copy: {
         fontSize: { value: "{fontSizes.xs}" },
@@ -453,7 +453,7 @@ export default createTheme({
           paddingInlineStart: { value: "{space.large.value}" },
           paddingInlineEnd: { value: "{space.large.value}" },
           alignItems: { value: "center" },
-          justifyContent: { value: "space-between" },
+          justifycontent: { value: "space-between" },
           _hover: { backgroundColor: { value: "{colors.overlay.10.value}" } },
         },
         content: {
@@ -610,7 +610,7 @@ export default createTheme({
       },
       flex: {
         gap: { value: "{space.medium.value}" },
-        justifyContent: { value: "normal" },
+        justifycontent: { value: "normal" },
         alignItems: { value: "stretch" },
         alignContent: { value: "normal" },
         flexWrap: { value: "nowrap" },
@@ -725,7 +725,7 @@ export default createTheme({
       pagination: {
         current: {
           alignItems: { value: "center" },
-          justifyContent: { value: "center" },
+          justifycontent: { value: "center" },
           color: { value: "{colors.white.value}" },
           fontSize: { value: "{fontSizes.small.value}" },
           backgroundColor: { value: "{colors.overlay.40.value}" },
@@ -744,7 +744,7 @@ export default createTheme({
         },
         ellipsis: {
           alignItems: { value: "baseline" },
-          justifyContent: { value: "center" },
+          justifycontent: { value: "center" },
           paddingInlineStart: { value: "{space.xs.value}" },
           paddingInlineEnd: { value: "{space.xs.value}" },
         },
@@ -770,12 +770,12 @@ export default createTheme({
       },
       radio: {
         alignItems: { value: "center" },
-        justifyContent: { value: "flex-start" },
+        justifycontent: { value: "flex-start" },
         gap: { value: "inherit" },
         _disabled: { cursor: { value: "not-allowed" } },
         button: {
           alignItems: { value: "center" },
-          justifyContent: { value: "center" },
+          justifycontent: { value: "center" },
           width: { value: "{fontSizes.medium.value}" },
           height: { value: "{fontSizes.medium.value}" },
           boxSizing: { value: "border-box" },
@@ -1138,7 +1138,7 @@ export default createTheme({
       togglebuttongroup: {
         alignItems: { value: "center" },
         alignContent: { value: "center" },
-        justifyContent: { value: "flex-start" },
+        justifycontent: { value: "flex-start" },
       },
     },
     borderWidths: {

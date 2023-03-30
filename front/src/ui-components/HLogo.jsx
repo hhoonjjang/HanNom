@@ -17,7 +17,7 @@ export default function HLogo(props) {
       direction="row"
       width="unset"
       height="21px"
-      justifyContent="flex-end"
+      justifycontent="flex-end"
       alignItems="flex-end"
       position="relative"
       padding="0px 0px 0px 0px"
@@ -44,7 +44,7 @@ export default function HLogo(props) {
           },
         ]}
         alignItems="unset"
-        justifyContent="unset"
+        justifycontent="unset"
         shrink="0"
         position="relative"
         {...getOverrideProps(overrides, "Ellipse 1")}
@@ -53,7 +53,7 @@ export default function HLogo(props) {
         src={logo}
         width="70px"
         height="30px"
-        justifyContent="flex-end"
+        justifycontent="flex-end"
         // alignItems="flex-end"
         viewBox={{ minX: 0, minY: 0, width: 21, height: 21 }}
         display="block"

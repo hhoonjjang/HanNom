@@ -31,7 +31,7 @@ export default function UserInfoCom3(props) {
       display="block"
       gap="unset"
       alignItems="unset"
-      justifyContent="unset"
+      justifycontent="unset"
       position="relative"
       padding="0px 0px 0px 0px"
       {...getOverrideProps(overrides, "UserInfoCom3")}
@@ -44,7 +44,7 @@ export default function UserInfoCom3(props) {
         display="block"
         gap="unset"
         alignItems="unset"
-        justifyContent="unset"
+        justifycontent="unset"
         position="absolute"
         top="0%"
         bottom="0%"
@@ -61,7 +61,7 @@ export default function UserInfoCom3(props) {
         direction="column"
         width="unset"
         height="unset"
-        justifyContent="center"
+        justifycontent="center"
         alignItems="center"
         position="absolute"
         top="6.58%"
@@ -76,7 +76,7 @@ export default function UserInfoCom3(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="flex-start"
+          justifycontent="flex-start"
           alignItems="flex-start"
           shrink="0"
           position="relative"
@@ -92,7 +92,7 @@ export default function UserInfoCom3(props) {
             display="block"
             gap="unset"
             alignItems="unset"
-            justifyContent="unset"
+            justifycontent="unset"
             shrink="0"
             position="relative"
             border="10px SOLID rgba(255,255,255,0.3)"
@@ -107,7 +107,7 @@ export default function UserInfoCom3(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="flex-start"
+          justifycontent="flex-start"
           alignItems="flex-start"
           shrink="0"
           position="relative"
@@ -119,7 +119,7 @@ export default function UserInfoCom3(props) {
             direction="row"
             width="unset"
             height="unset"
-            justifyContent="flex-start"
+            justifycontent="flex-start"
             alignItems="flex-start"
             shrink="0"
             position="relative"
@@ -137,7 +137,7 @@ export default function UserInfoCom3(props) {
               textAlign="left"
               display="block"
               direction="column"
-              justifyContent="unset"
+              justifycontent="unset"
               width="unset"
               height="unset"
               gap="unset"
@@ -156,7 +156,7 @@ export default function UserInfoCom3(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="flex-start"
+          justifycontent="flex-start"
           alignItems="flex-start"
           shrink="0"
           position="relative"
@@ -172,7 +172,7 @@ export default function UserInfoCom3(props) {
             textAlign="left"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -193,7 +193,7 @@ export default function UserInfoCom3(props) {
             textAlign="left"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -202,7 +202,7 @@ export default function UserInfoCom3(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={"Latest : " + props.addressToken.length + " NFTs"}
+            children={"Latest : " + props.addresstoken.length + " NFTs"}
             {...getOverrideProps(overrides, "3 NFTs")}
           ></Text>
         </Flex>
@@ -213,7 +213,7 @@ export default function UserInfoCom3(props) {
           direction="row"
           width="unset"
           height="unset"
-          justifyContent="flex-start"
+          justifycontent="flex-start"
           alignItems="center"
           shrink="0"
           position="relative"
@@ -229,7 +229,7 @@ export default function UserInfoCom3(props) {
             display="block"
             gap="unset"
             alignItems="unset"
-            justifyContent="unset"
+            justifycontent="unset"
             shrink="0"
             position="relative"
             borderRadius="23px"
@@ -241,12 +241,12 @@ export default function UserInfoCom3(props) {
             fontFamily="Inter"
             fontSize="10px"
             fontWeight="700"
-            color="rgba(255,255,255,0.8)"
+            color="rgba(3,3,3,0.8)"
             lineHeight="15px"
             textAlign="left"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -265,7 +265,7 @@ export default function UserInfoCom3(props) {
         direction="row"
         width="unset"
         height="unset"
-        justifyContent="flex-start"
+        justifycontent="flex-start"
         alignItems="flex-start"
         position="absolute"
         top="6.58%"
@@ -275,21 +275,22 @@ export default function UserInfoCom3(props) {
         padding="0px 0px 0px 0px"
         {...getOverrideProps(overrides, "Frame 34")}
       >
-        {props.addressToken ? (
-          props.addressToken.map((item, index) => {
+        {props.addresstoken ? (
+          props.addresstoken.map((item, index) => {
             return (
               <UserInfoCompo3
+                key={`address-${index}`}
                 width="197px"
                 height="331px"
                 display="block"
                 gap="unset"
                 alignItems="unset"
-                justifyContent="unset"
+                justifycontent="unset"
                 shrink="0"
                 position="relative"
                 boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
                 padding="0px 0px 0px 0px"
-                tokenList={item}
+                tokenlist={item}
                 address={props.address}
                 {...getOverrideProps(overrides, "UserInfoCompo3")}
               ></UserInfoCompo3>

@@ -23,14 +23,14 @@ export default function UserInfoCompo3(props) {
   const { overrides, ...rest } = props;
   return (
     <>
-      {props.tokenList ? (
+      {props.tokenlist ? (
         <View
           width="197px"
           height="331px"
           display="block"
           gap="unset"
           alignItems="unset"
-          justifyContent="unset"
+          justifycontent="unset"
           position="relative"
           padding="0px 0px 0px 0px"
           onMouseEnter={onEnter}
@@ -39,13 +39,13 @@ export default function UserInfoCompo3(props) {
           {...rest}
         >
           <Image
-            src={`http://localhost:8080${props.tokenList.nftImg}`}
+            src={`http://localhost:8080${props.tokenlist.nftImg}`}
             width="100%"
             height="71.6%"
             display="block"
             gap="unset"
             alignItems="unset"
-            justifyContent="unset"
+            justifycontent="unset"
             position="absolute"
             top="0%"
             bottom="28.4%"
@@ -62,7 +62,7 @@ export default function UserInfoCompo3(props) {
             display="block"
             gap="unset"
             alignItems="unset"
-            justifyContent="unset"
+            justifycontent="unset"
             position="absolute"
             top="71.6%"
             bottom="0%"
@@ -78,7 +78,7 @@ export default function UserInfoCompo3(props) {
             direction="row"
             width="unset"
             height="unset"
-            justifyContent="flex-start"
+            justifycontent="flex-start"
             alignItems="center"
             position="absolute"
             top="82.18%"
@@ -95,7 +95,7 @@ export default function UserInfoCompo3(props) {
               display="block"
               gap="unset"
               alignItems="unset"
-              justifyContent="unset"
+              justifycontent="unset"
               shrink="0"
               position="relative"
               borderRadius="23px"
@@ -112,7 +112,7 @@ export default function UserInfoCompo3(props) {
               textAlign="left"
               display="block"
               direction="column"
-              justifyContent="unset"
+              justifycontent="unset"
               width="unset"
               height="unset"
               gap="unset"
@@ -121,7 +121,7 @@ export default function UserInfoCompo3(props) {
               position="relative"
               padding="0px 0px 0px 0px"
               whiteSpace="pre-wrap"
-              children={`@${props.tokenList.nftName}`}
+              children={`@${props.tokenlist.nftName}`}
               {...getOverrideProps(overrides, "@UserName")}
             ></Text>
           </Flex>
