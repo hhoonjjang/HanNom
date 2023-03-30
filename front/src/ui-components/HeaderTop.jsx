@@ -26,6 +26,8 @@ import { useSelector } from "react-redux";
 import { useWeb3 } from "../modules/useWeb3";
 import axios from "axios";
 import UserCreate from "./UserCreate";
+import { useDispatch } from "react-redux";
+import { isLoadingThunk } from "../modules/isLoading.js";
 
 export default function HearderTop(props) {
   const { overrides, ...rest } = props;
@@ -49,8 +51,36 @@ export default function HearderTop(props) {
   const [count, setCount] = React.useState(0);
   const [registBool, setRegistBool] = React.useState(true);
   const [user, setUser] = React.useState();
-  const navigateToSearch = () => {
-    navigate(`/search?searchData=${searchData}`);
+  const dispatch = useDispatch();
+
+  const navigateToSearch = async () => {
+    try {
+      if (searchData.length == 0) {
+        alert("검색어를 입력해주세요.");
+        return;
+      }
+      dispatch(isLoadingThunk({ isLoading: true }));
+      const data = await axios.post("http://localhost:8080/api/mint/search", {
+        searchData: searchData,
+      });
+      console.log(
+        "검색 결과 data : ",
+        data.data.tokenName.userAddress,
+        data.data.tokenName.tokenId
+      );
+      if (data) {
+        dispatch(isLoadingThunk({ isLoading: false }));
+        navigate(
+          `/nft/${data.data.tokenName.userAddress}/${data.data.tokenName.tokenId}`
+        );
+      } else {
+        alert("일치하는 NFT 토큰이 없습니다.");
+        dispatch(isLoadingThunk({ isLoading: false }));
+      }
+    } catch (error) {
+      dispatch(isLoadingThunk({ isLoading: false }));
+      console.error(error);
+    }
   };
   const dropDownOn = () => {
     setDropDownHidden(true);
