@@ -7,7 +7,7 @@ export const SaleList = ({ list }) => {
       <div>마이페이지 팔기한 후 토큰들</div>
       <ul>
         {list.map((item, idx) => (
-          <Item item={item} key={`item-${idx}`} />
+          <Item item={item} key={`item은${idx}`} />
         ))}
       </ul>
     </>

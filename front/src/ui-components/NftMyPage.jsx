@@ -503,6 +503,7 @@ export default function NftMyPage(props) {
                   {ownedImg ? (
                     ownedImg.map((item, index) => (
                       <Image
+                        key={`item은${index}`}
                         src={`http://localhost:8080${item}`}
                         width="15px"
                         height="15px"

@@ -279,6 +279,7 @@ export default function UserInfoCom3(props) {
           props.addressToken.map((item, index) => {
             return (
               <UserInfoCompo3
+                key={`item은${index}`}
                 width="197px"
                 height="331px"
                 display="block"

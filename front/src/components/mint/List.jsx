@@ -11,7 +11,12 @@ export const List = ({ list, account, web3 }) => {
       <div>마이페이지 팔기전 내가 민트(등록)한 토큰들</div>
       <ul>
         {list.map((item, idx) => (
-          <Item item={item} account={account} web3={web3} key={`item-${idx}`} />
+          <Item
+            item={item}
+            account={account}
+            web3={web3}
+            key={`item은${idx}`}
+          />
         ))}
       </ul>
     </>

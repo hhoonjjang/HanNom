@@ -44,7 +44,7 @@ const HomeComponent = ({}) => {
 
         <div className="Home_innerBox_part2">
           {saleList?.map((item, idx) => (
-            <UserInfoCom2 item={item} key={`item-${idx}`}></UserInfoCom2>
+            <UserInfoCom2 item={item} key={`item은${idx}`}></UserInfoCom2>
           ))}
           {/* <UserInfoCom2></UserInfoCom2> */}
           {/* <UserInfoCom2></UserInfoCom2> */}
@@ -57,10 +57,11 @@ const HomeComponent = ({}) => {
               <>
                 {" "}
                 <UserInfoCom3
+                  key={`item은${index}`}
                   address={item}
                   addressToken={latestUserTokenData[index]}
                 ></UserInfoCom3>
-                <MarginStyle1 />
+                <MarginStyle1 key={`item은${index}`} />
               </>
             );
           })

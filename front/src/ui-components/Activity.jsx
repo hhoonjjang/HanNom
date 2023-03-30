@@ -394,6 +394,7 @@ export default function Activity(props) {
 
         {history?.list?.map((item, index) => (
           <Flex
+            key={`item은${index}`}
             gap="33px"
             direction="column"
             width="unset"
