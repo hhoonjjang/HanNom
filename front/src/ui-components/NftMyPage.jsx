@@ -766,7 +766,7 @@ export default function NftMyPage(props) {
           direction="row"
           width="unset"
           height="unset"
-          justifyContent="flex-start"
+          justifyContent="center"
           alignItems="flex-start"
           // position="absolute"
           top="509px"
@@ -1114,7 +1114,7 @@ export default function NftMyPage(props) {
             ) : (
               <></>
             )}
-            <div>거래기록</div>
+            {/* <div>거래기록</div> */}
           </ListCover>
         </Flex>
       )}
@@ -1143,7 +1143,9 @@ const NoNft = styled.div`
 const ListCover = styled.div`
   flex-wrap: wrap;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
+  width: 1100px;
+
   & > div {
     margin-right: 30px;
     margin-bottom: 50px;
