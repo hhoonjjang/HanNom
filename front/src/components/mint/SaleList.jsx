@@ -19,7 +19,7 @@ const Item = ({
 }) => {
   //   const nftDetail = async (tokenId) => {
   //     console.log(tokenId);
-  //     await axios.get("http://localhost:8080/api/mint/nftDetail", {
+  //     await axios.get("/api/mint/nftDetail", {
   //       tokenId,
   //     });
   //   };

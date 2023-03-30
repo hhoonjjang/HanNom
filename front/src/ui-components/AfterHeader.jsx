@@ -31,7 +31,7 @@ export default function AfterHeader(props) {
 
   const logoutMethod = () => {
     document.cookie = account + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT";
-    props?.setconnect(false);
+    props?.setconnect(0);
     navigate("/");
   };
   const logout = () => {
@@ -52,14 +52,14 @@ export default function AfterHeader(props) {
     (async () => {
       if (!account) return;
       const data = (
-        await axios.post("http://localhost:8080/api/user/getUser", {
+        await axios.post("/api/user/getUser", {
           from: account,
         })
       ).data;
       console.log("data.profileImg : ", data.profileImg);
       document.querySelector(
         ".afterHeader_userIcon"
-      ).src = `http://localhost:8080${data.profileImg}`;
+      ).src = `${data.profileImg}`;
       setUser(data);
     })();
   }, [account]);
@@ -69,7 +69,7 @@ export default function AfterHeader(props) {
   //   (async () => {
   //     if (!account) return;
   //     const data = (
-  //       await axios.post("http://localhost:8080/api/user/getUser", {
+  //       await axios.post("/api/user/getUser", {
   //         from: account,
   //       })
   //     ).data;
@@ -85,7 +85,7 @@ export default function AfterHeader(props) {
       display="block"
       gap="unset"
       alignItems="unset"
-      justifyContent="unset"
+      justifycontent="unset"
       position="relative"
       padding="0px 0px 0px 0px"
       {...getOverrideProps(overrides, "AfterHeader")}
@@ -105,7 +105,7 @@ export default function AfterHeader(props) {
         display="block"
         gap="unset"
         alignItems="unset"
-        justifyContent="unset"
+        justifycontent="unset"
         position="absolute"
         top="0%"
         bottom="0%"
@@ -119,7 +119,7 @@ export default function AfterHeader(props) {
           direction="row"
           width="222px"
           height="25px"
-          justifyContent="flex-start"
+          justifycontent="flex-start"
           alignItems="flex-start"
           position="absolute"
           top="27.03%"
@@ -135,7 +135,7 @@ export default function AfterHeader(props) {
             direction="row"
             width="74px"
             height="21px"
-            justifyContent="flex-start"
+            justifycontent="flex-start"
             alignItems="flex-start"
             shrink="0"
             position="relative"
@@ -151,7 +151,7 @@ export default function AfterHeader(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -160,29 +160,8 @@ export default function AfterHeader(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Feed"
+            children="HanNom NFT"
             {...getOverrideProps(overrides, "Feed")}
-          ></Text>
-          <Text
-            fontFamily="Inter"
-            fontSize="21px"
-            fontWeight="800"
-            color="rgba(0,0,0,1)"
-            lineHeight="25.414772033691406px"
-            textAlign="center"
-            display="block"
-            direction="column"
-            justifyContent="unset"
-            width="unset"
-            height="unset"
-            gap="unset"
-            alignItems="unset"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            whiteSpace="pre-wrap"
-            children="Explore"
-            {...getOverrideProps(overrides, "Explore")}
           ></Text>
         </Flex>
       </Link>
@@ -191,7 +170,7 @@ export default function AfterHeader(props) {
         direction="row"
         width="229px"
         height="33px"
-        justifyContent="flex-start"
+        justifycontent="flex-start"
         alignItems="center"
         position="absolute"
         top="27.03%"
@@ -202,15 +181,11 @@ export default function AfterHeader(props) {
         {...getOverrideProps(overrides, "Frame 36")}
       >
         <UserIcon
-          src={
-            props?.user?.profileImg
-              ? `http://localhost:8080${props?.user?.profileImg}`
-              : "#"
-          }
+          src={props?.user?.profileImg ? `${props?.user?.profileImg}` : "#"}
           display="block"
           gap="unset"
           alignItems="unset"
-          justifyContent="unset"
+          justifycontent="unset"
           shrink="0"
           position="relative"
           className="afterHeader_userIcon"

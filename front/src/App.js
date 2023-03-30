@@ -18,7 +18,7 @@ import { accountThunk } from "./modules/account";
 import axios from "axios";
 import styled from "styled-components";
 import { UserLoading } from "./ui-components";
-
+import UserCollectionContainer from "./components/userCollection/Container";
 function App() {
   const { web3, account, chainId, login } = useWeb3();
   const location = useLocation();
@@ -36,9 +36,7 @@ function App() {
   useEffect(() => {
     (async () => {
       console.log("시작");
-      const result = (
-        await axios.post("http://localhost:8080/api/mint/comparedb")
-      ).data;
+      const result = (await axios.post("/api/mint/comparedb")).data;
       console.log(result);
     })();
   }, []);
@@ -70,6 +68,10 @@ function App() {
             <Route
               path="/activity/:account"
               element={<ActivityContainer></ActivityContainer>}
+            ></Route>
+            <Route
+              path="/:userAddress"
+              element={<UserCollectionContainer c={account} web3={web3} />}
             ></Route>
             <Route
               path="/nft/*"

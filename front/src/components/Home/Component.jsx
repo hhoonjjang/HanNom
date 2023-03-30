@@ -7,24 +7,39 @@ import {
 } from "../../ui-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const HomeComponent = ({}) => {
   const [saleList, setSaleList] = useState([]);
+  const [lastTokenData, setLastToken] = useState();
+  const [latestUserData, setLatestUser] = useState();
+  const [latestUserTokenData, setLatestUserToken] = useState();
   useEffect(() => {
     (async () => {
       console.log("시작");
-      const result = (
-        await axios.post("http://localhost:8080/api/mint/sellList")
-      ).data;
+      const result = (await axios.post("/api/mint/sellList")).data;
       console.log(result);
       setSaleList(result);
+      const lastToken = (await axios.post("/api/mint/lastToken")).data;
+      // console.log("웨헤헤헤", lastToken);
+      setLastToken(lastToken);
+
+      const latestUser = (await axios.post("/api/user/latestUser")).data;
+      console.log("웨헤헤헤", latestUser);
+      setLatestUser(latestUser.userArr);
+      setLatestUserToken(latestUser.nftArr);
     })();
   }, []);
-  console.log(saleList);
+  console.log(lastTokenData);
   return (
     <Home>
       <div className="Home_innerBox">
-        <UserInfoCom1></UserInfoCom1>
+        {lastTokenData ? (
+          <UserInfoCom1 token={lastTokenData}></UserInfoCom1>
+        ) : (
+          <></>
+        )}
+
         <MarginStyle1 />
 
         <div className="Home_innerBox_part2">
@@ -35,13 +50,24 @@ const HomeComponent = ({}) => {
           {/* <UserInfoCom2></UserInfoCom2> */}
         </div>
         <MarginStyle2 />
-        <UserInfoCom3></UserInfoCom3>
-        <MarginStyle1 />
-        <UserInfoCom3></UserInfoCom3>
-        <MarginStyle1 />
-        <UserInfoCom3></UserInfoCom3>
-        <MarginStyle1 />
-        <YellowButton />
+        {latestUserData ? (
+          latestUserData.map((item, index) => {
+            return (
+              <Link to={`${item.userAddress}`}>
+                <Blank key={`blank-${index}`}>
+                  <UserInfoCom3
+                    key={`latestkeyassds-${index}`}
+                    address={item}
+                    addresstoken={latestUserTokenData[index]}
+                  ></UserInfoCom3>
+                  <MarginStyle1 key={`latestkey1-${index}`} />
+                </Blank>
+              </Link>
+            );
+          })
+        ) : (
+          <Blank></Blank>
+        )}
       </div>
     </Home>
   );
@@ -72,3 +98,4 @@ const MarginStyle1 = styled.div`
 const MarginStyle2 = styled.div`
   margin-top: 50px;
 `;
+const Blank = styled.div``;

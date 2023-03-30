@@ -16,7 +16,7 @@ const NftDetailContainer = ({ web3, account }) => {
     (async () => {
       dispatch(isLoadingThunk({ isLoading: true }));
       const result = (
-        await axios.post("http://localhost:8080/api/mint/detail", {
+        await axios.post("/api/mint/nftDetail", {
           seller,
           tokenId,
         })
@@ -31,7 +31,7 @@ const NftDetailContainer = ({ web3, account }) => {
   const buyNft = async (tokenId, account, price) => {
     dispatch(isLoadingThunk({ isLoading: true }));
     const result = (
-      await axios.post("http://localhost:8080/api/mint/buy", {
+      await axios.post("/api/mint/buy", {
         tokenId,
         account,
         price,

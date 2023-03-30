@@ -328,7 +328,7 @@ export default function MyIcon(props) {
       display="block"
       gap="unset"
       alignItems="unset"
-      justifyContent="unset"
+      justifycontent="unset"
       overflow="hidden"
       position="relative"
       padding="0px 0px 0px 0px"

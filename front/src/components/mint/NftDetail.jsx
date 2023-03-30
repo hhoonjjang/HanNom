@@ -10,7 +10,7 @@ export const NftDetail = () => {
   useEffect(() => {
     (async () => {
       const result = (
-        await axios.post("http://localhost:8080/api/mint/detail", {
+        await axios.post("/api/mint/detail", {
           account,
           tokenId,
         })

@@ -38,7 +38,8 @@ export default function UserCreate(props) {
   const [bgImg, setBgImg] = React.useState("");
   const [profilefile, setProfileFile] = React.useState();
   const [profileImg, setProfileImg] = React.useState("");
-  const [connect, setConnect] = React.useState(false);
+  const [count, setCount] = React.useState("");
+  const [connect, setConnect] = React.useState(0);
   const dispatch = useDispatch();
 
   const inputName = (e) => {
@@ -63,13 +64,13 @@ export default function UserCreate(props) {
   const userCheck = async (account) => {
     let userInfo;
     if (document.cookie) {
-      userInfo = await axios.post("http://localhost:8080/api/user/login", {
+      userInfo = await axios.post("/api/user/login", {
         cookie: document.cookie,
         count: 1,
       });
       console.log("userInfo%%%%%%%%%%%%%%%%%%%", userInfo);
     } else {
-      userInfo = await axios.post("http://localhost:8080/api/user/login", {
+      userInfo = await axios.post("/api/user/login", {
         account: account,
         count: 0,
         // cookie: document.cookie,
@@ -88,13 +89,13 @@ export default function UserCreate(props) {
       setRegistBool(true);
       console.log("hi");
       // const data = (
-      //   await axios.post("http://localhost:8080/api/user/regist", formData)
+      //   await axios.post("/api/user/regist", formData)
       // ).data;
     } else {
       setRegistBool(false);
       setUser(userInfo.data.user);
       // console.log(user.profileImg);
-      // setImg(`http://localhost:8080${user.profileImg}`);
+      // setImg(`${user.profileImg}`);
     }
     console.log(user);
   };
@@ -110,9 +111,7 @@ export default function UserCreate(props) {
     formData.append("nickName", newNickName);
     formData.append("account", account);
     dispatch(isLoadingThunk({ isLoading: true }));
-    const data = (
-      await axios.post("http://localhost:8080/api/user/regist", formData)
-    ).data;
+    const data = (await axios.post("/api/user/regist", formData)).data;
 
     console.log("data : ", data);
 
@@ -120,7 +119,7 @@ export default function UserCreate(props) {
       alert("사용 불가능한 데이터가 있습니다.");
       return;
     }
-    await axios.post("http://localhost:8080/api/user/login", {
+    await axios.post("/api/user/login", {
       account: account,
       count: 0,
     });
@@ -181,21 +180,18 @@ export default function UserCreate(props) {
       console.log("accountRasdasd", props.accountR);
       (async () => {
         console.log(props.accountR);
-        const user = await axios.post(
-          "http://localhost:8080/api/user/userDisplay",
-          {
-            account: props.accountR,
-          }
-        );
+        const user = await axios.post("/api/user/userDisplay", {
+          account: props.accountR,
+        });
         console.log(user);
         setUser(user);
         console.log("user223");
       })();
       // userDisplay();
-      setConnect(true);
+      setConnect(1);
       userCheck(account);
     } else {
-      setConnect(false);
+      setConnect(0);
     }
   }, []);
 
@@ -207,7 +203,7 @@ export default function UserCreate(props) {
         display="block"
         gap="unset"
         alignItems="unset"
-        justifyContent="unset"
+        justifycontent="unset"
         position="relative"
         top="80px"
         padding="0px 0px 0px 0px"
@@ -224,7 +220,7 @@ export default function UserCreate(props) {
           display="block"
           gap="unset"
           alignItems="unset"
-          justifyContent="unset"
+          justifycontent="unset"
           position="absolute"
           top="0%"
           bottom="-4.73%"
@@ -241,7 +237,7 @@ export default function UserCreate(props) {
             direction="column"
             width="unset"
             height="unset"
-            justifyContent="flex-start"
+            justifycontent="flex-start"
             alignItems="center"
             position="absolute"
             top="calc(50% - 492px - 0px)"
@@ -255,7 +251,7 @@ export default function UserCreate(props) {
               direction="column"
               width="unset"
               height="unset"
-              justifyContent="flex-start"
+              justifycontent="flex-start"
               alignItems="center"
               shrink="0"
               position="relative"
@@ -267,7 +263,7 @@ export default function UserCreate(props) {
                 direction="column"
                 width="unset"
                 height="unset"
-                justifyContent="flex-start"
+                justifycontent="flex-start"
                 alignItems="center"
                 shrink="0"
                 position="relative"
@@ -279,7 +275,7 @@ export default function UserCreate(props) {
                   direction="column"
                   width="unset"
                   height="unset"
-                  justifyContent="flex-start"
+                  justifycontent="flex-start"
                   alignItems="flex-start"
                   shrink="0"
                   position="relative"
@@ -293,7 +289,7 @@ export default function UserCreate(props) {
                     direction="column"
                     width="300px"
                     height="200px"
-                    justifyContent="center"
+                    justifycontent="center"
                     alignItems="center"
                     overflow="hidden"
                     shrink="0"
@@ -316,7 +312,7 @@ export default function UserCreate(props) {
                       direction="column"
                       width="unset"
                       height="unset"
-                      justifyContent="flex-start"
+                      justifycontent="flex-start"
                       alignItems="center"
                       shrink="0"
                       position="relative"
@@ -337,7 +333,7 @@ export default function UserCreate(props) {
                         display="block"
                         gap="unset"
                         alignItems="unset"
-                        justifyContent="unset"
+                        justifycontent="unset"
                         shrink="0"
                         position="relative"
                         {...getOverrideProps(overrides, "Vector38473039")}
@@ -347,7 +343,7 @@ export default function UserCreate(props) {
                         direction="column"
                         width="unset"
                         height="46px"
-                        justifyContent="center"
+                        justifycontent="center"
                         alignItems="center"
                         shrink="0"
                         position="relative"
@@ -363,7 +359,7 @@ export default function UserCreate(props) {
                           textAlign="center"
                           display="block"
                           direction="column"
-                          justifyContent="unset"
+                          justifycontent="unset"
                           width="172px"
                           height="unset"
                           gap="unset"
@@ -399,7 +395,7 @@ export default function UserCreate(props) {
                     direction="column"
                     width="300px"
                     height="200px"
-                    justifyContent="center"
+                    justifycontent="center"
                     alignItems="center"
                     overflow="hidden"
                     shrink="0"
@@ -422,7 +418,7 @@ export default function UserCreate(props) {
                       direction="column"
                       width="unset"
                       height="unset"
-                      justifyContent="flex-start"
+                      justifycontent="flex-start"
                       alignItems="center"
                       shrink="0"
                       position="relative"
@@ -443,7 +439,7 @@ export default function UserCreate(props) {
                         display="block"
                         gap="unset"
                         alignItems="unset"
-                        justifyContent="unset"
+                        justifycontent="unset"
                         shrink="0"
                         position="relative"
                         {...getOverrideProps(overrides, "Vector38473047")}
@@ -453,7 +449,7 @@ export default function UserCreate(props) {
                         direction="column"
                         width="unset"
                         height="46px"
-                        justifyContent="center"
+                        justifycontent="center"
                         alignItems="center"
                         shrink="0"
                         position="relative"
@@ -469,7 +465,7 @@ export default function UserCreate(props) {
                           textAlign="center"
                           display="block"
                           direction="column"
-                          justifyContent="unset"
+                          justifycontent="unset"
                           width="172px"
                           height="unset"
                           gap="unset"
@@ -504,7 +500,7 @@ export default function UserCreate(props) {
                   direction="column"
                   width="unset"
                   height="unset"
-                  justifyContent="center"
+                  justifycontent="center"
                   alignItems="center"
                   shrink="0"
                   position="relative"

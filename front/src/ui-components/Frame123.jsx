@@ -17,7 +17,7 @@ export default function Frame123(props) {
       display="block"
       gap="unset"
       alignItems="unset"
-      justifyContent="unset"
+      justifycontent="unset"
       position="relative"
       padding="0px 0px 0px 0px"
       {...getOverrideProps(overrides, "Frame123")}
@@ -113,7 +113,7 @@ export default function Frame123(props) {
         display="block"
         gap="unset"
         alignItems="unset"
-        justifyContent="unset"
+        justifycontent="unset"
         position="absolute"
         top="72px"
         bottom="436px"

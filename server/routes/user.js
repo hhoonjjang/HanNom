@@ -183,49 +183,50 @@ router.post("/ownedBy", async (req, res) => {
 });
 
 router.post("/latestUser", async (req, res) => {
-  // const address = req.body.cookie
-  console.log("광광우럭따", req.body.address);
-
   const Op = Sequelize.Op;
+  console.log("여긴지나");
+  const tradeList = await User.findAll({
+    order: [["createdAt", "DESC"]],
+  });
+  console.log("여긴지날까", tradeList);
 
-  console.log("광광우럭따", req.body.address);
-
-  const ownedBy = [];
-  const tempArr = [];
-  if (!req.body.address) {
-    res.end();
-  } else {
-    console.log("나도 일단 받았음");
-    const saleList = await TradeHistory.findAll({
-      where: {
-        [Op.and]: [
-          { currency: "거래완료" },
-          { sellerAddress: req.body.address },
-        ],
-        // sellerAddress: req.body.address,
-      },
-    });
-
-    for (let i = 0; i < saleList.length; i++) {
-      const buyer = saleList[i].buyerAddress;
-      if (!tempArr.includes(saleList[i].buyerAddress)) {
-        tempArr.push(buyer);
+  const tempTrade = [];
+  const tempUser = [];
+  for (let i = 0; i < tradeList.length; i++) {
+    if (!tempTrade.includes(tradeList[i].sellerAddress)) {
+      if (tempTrade.length < 3) {
+        tempTrade.push(tradeList[i].userAddress);
+        tempUser.push(
+          await User.findOne({
+            where: { userAddress: tradeList[i].userAddress },
+          })
+        );
+      } else {
+        break;
       }
     }
-    console.log("asdawdasda응ㄴㅁ아ㅓ마ㅓㅇ", tempArr);
-    // res.send(totalPrice);
-    const tempUserNum = tempArr.length > 3 ? 3 : tempArr.length;
-    for (let i = 1; i <= tempUserNum; i++) {
-      const tempUser = await User.findOne({
-        where: { userAddress: tempArr[i] },
-      });
-      ownedBy.push(tempUser.profileImg);
-    }
-    console.log("asad아ㅓ마ㅓㅇ", ownedBy);
   }
-  res.send({ length: tempArr.length, ownedBy: ownedBy });
-});
 
+  console.log("tempUser", tempUser);
+  const tempNft = [];
+  for (let i = 0; i < tempTrade.length; i++) {
+    const list = await Nft.findAll({
+      limit: 3,
+      where: { userAddress: tempTrade[i], state: "selling" },
+      order: [["createdAt", "DESC"]],
+    });
+    tempNft.push(list);
+  }
+  console.log("tempNft", tempNft);
+  // const list = await User.findAll({
+  //   limit:3,
+  //   order
+  // })
+  // const nftList = await Nft.findAll({
+  //   limit:
+  // })
+  res.send({ userArr: tempUser, nftArr: tempNft });
+});
 router.post("/login", async (req, res) => {
   // db에서 nickname 있는지 없는지 판별
   // 쿠키 발급.

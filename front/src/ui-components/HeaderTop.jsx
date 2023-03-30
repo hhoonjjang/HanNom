@@ -26,6 +26,8 @@ import { useSelector } from "react-redux";
 import { useWeb3 } from "../modules/useWeb3";
 import axios from "axios";
 import UserCreate from "./UserCreate";
+import { useDispatch } from "react-redux";
+import { isLoadingThunk } from "../modules/isLoading.js";
 
 export default function HearderTop(props) {
   const { overrides, ...rest } = props;
@@ -45,12 +47,40 @@ export default function HearderTop(props) {
   const [bgImg, setBgImg] = React.useState("");
   const [profilefile, setProfileFile] = React.useState();
   const [profileImg, setProfileImg] = React.useState("");
-  const [connect, setConnect] = React.useState(false);
+  const [connect, setConnect] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [registBool, setRegistBool] = React.useState(true);
   const [user, setUser] = React.useState();
-  const navigateToSearch = () => {
-    navigate(`/search?searchData=${searchData}`);
+  const dispatch = useDispatch();
+
+  const navigateToSearch = async () => {
+    try {
+      if (searchData.length == 0) {
+        alert("검색어를 입력해주세요.");
+        return;
+      }
+      dispatch(isLoadingThunk({ isLoading: true }));
+      const data = await axios.post("/api/mint/search", {
+        searchData: searchData,
+      });
+      console.log(
+        "검색 결과 data : ",
+        data.data.tokenName.userAddress,
+        data.data.tokenName.tokenId
+      );
+      if (data) {
+        dispatch(isLoadingThunk({ isLoading: false }));
+        navigate(
+          `/nft/${data.data.tokenName.userAddress}/${data.data.tokenName.tokenId}`
+        );
+      } else {
+        alert("일치하는 NFT 토큰이 없습니다.");
+        dispatch(isLoadingThunk({ isLoading: false }));
+      }
+    } catch (error) {
+      dispatch(isLoadingThunk({ isLoading: false }));
+      console.error(error);
+    }
   };
   const dropDownOn = () => {
     setDropDownHidden(true);
@@ -89,9 +119,7 @@ export default function HearderTop(props) {
     formData.append("nickName", newNickName);
     formData.append("account", account);
 
-    const data = (
-      await axios.post("http://localhost:8080/api/user/regist", formData)
-    ).data;
+    const data = (await axios.post("/api/user/regist", formData)).data;
 
     console.log("data : ", data);
 
@@ -154,13 +182,13 @@ export default function HearderTop(props) {
   const userCheck = async (account) => {
     let userInfo;
     if (document.cookie) {
-      userInfo = await axios.post("http://localhost:8080/api/user/login", {
+      userInfo = await axios.post("/api/user/login", {
         cookie: document.cookie,
         count: 1,
       });
       console.log("userInfo%%%%%%%%%%%%%%%%%%%", userInfo);
     } else {
-      userInfo = await axios.post("http://localhost:8080/api/user/login", {
+      userInfo = await axios.post("/api/user/login", {
         account: account,
         count: 0,
         // cookie: document.cookie,
@@ -179,13 +207,13 @@ export default function HearderTop(props) {
       setRegistBool(true);
       console.log("hi");
       // const data = (
-      //   await axios.post("http://localhost:8080/api/user/regist", formData)
+      //   await axios.post("/api/user/regist", formData)
       // ).data;
     } else {
       setRegistBool(false);
       setUser(userInfo.data.user);
       // console.log(user.profileImg);
-      // setImg(`http://localhost:8080${user.profileImg}`);
+      // setImg(`${user.profileImg}`);
     }
     console.log(user);
   };
@@ -204,21 +232,18 @@ export default function HearderTop(props) {
       console.log("accountRasdasd", props.accountR);
       (async () => {
         console.log(props.accountR);
-        const user = await axios.post(
-          "http://localhost:8080/api/user/userDisplay",
-          {
-            account: props.accountR,
-          }
-        );
+        const user = await axios.post("/api/user/userDisplay", {
+          account: props.accountR,
+        });
         console.log(user);
         setUser(user);
         console.log("user223");
       })();
       // userDisplay();
-      setConnect(true);
+      setConnect(1);
       userCheck(account);
     } else {
-      setConnect(false);
+      setConnect(0);
     }
   }, []);
   React.useEffect(() => {
@@ -227,7 +252,7 @@ export default function HearderTop(props) {
       console.log(cookieAccount);
       if (account != undefined && account != cookieAccount) {
         deleteCookie(cookieAccount);
-        setConnect(false);
+        setConnect(0);
       }
       userCheck();
     }
@@ -240,7 +265,7 @@ export default function HearderTop(props) {
         display="block"
         gap="unset"
         alignItems="unset"
-        justifyContent="unset"
+        justifycontent="unset"
         position="relative"
         padding="0px 0px 0px 0px"
         {...getOverrideProps(overrides, "HearderTop")}
@@ -260,7 +285,7 @@ export default function HearderTop(props) {
           display="block"
           gap="unset"
           alignItems="unset"
-          justifyContent="unset"
+          justifycontent="unset"
           position="absolute"
           top="0%"
           bottom="0%"
@@ -278,7 +303,7 @@ export default function HearderTop(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -290,40 +315,17 @@ export default function HearderTop(props) {
             right="76.81%"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Feed"
+            children="HanNom"
             {...getOverrideProps(overrides, "Feed")}
           ></Text>
-          <Text
-            fontFamily="Inter"
-            fontSize="21px"
-            fontWeight="800"
-            color="rgba(0,0,0,1)"
-            lineHeight="25.414772033691406px"
-            textAlign="center"
-            display="block"
-            direction="column"
-            justifyContent="unset"
-            width="unset"
-            height="unset"
-            gap="unset"
-            alignItems="unset"
-            position="absolute"
-            top="27.03%"
-            bottom="39.19%"
-            left="23.82%"
-            right="70.69%"
-            padding="0px 0px 0px 0px"
-            whiteSpace="pre-wrap"
-            children="Explore"
-            {...getOverrideProps(overrides, "Explore")}
-          ></Text>
+
           <HLogo
             display="flex"
             gap="2px"
             direction="row"
             width="unset"
             height="21px"
-            justifyContent="flex-start"
+            justifycontent="flex-start"
             alignItems="flex-start"
             position="absolute"
             top="27.03%"
@@ -364,7 +366,7 @@ export default function HearderTop(props) {
             children="Connect"
             {...getOverrideProps(overrides, "Button")}
             onClick={() => {
-              setConnect(true);
+              setConnect(1);
               userCheck(account);
             }}
           ></Button>

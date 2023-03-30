@@ -101,9 +101,7 @@ export default function NftMint(props) {
     formData.append("description", NFTDescription);
     formData.append("from", account);
     dispatch(isLoadingThunk({ isLoading: true }));
-    const result = (
-      await axios.post("http://localhost:8080/api/mint/mint", formData)
-    ).data;
+    const result = (await axios.post("/api/mint/mint", formData)).data;
     console.log(result);
     try {
       // console.log("jaksfdlksedhfklashfkljshaf", formData);
@@ -111,7 +109,7 @@ export default function NftMint(props) {
       // console.log(test);
       result.account = account;
 
-      await axios.post("http://localhost:8080/api/mint/mintComplete", result);
+      await axios.post("/api/mint/mintComplete", result);
       dispatch(isLoadingThunk({ isLoading: false }));
       navigate(`/`);
     } catch (error) {
@@ -126,7 +124,7 @@ export default function NftMint(props) {
       display="block"
       gap="unset"
       alignItems="unset"
-      justifyContent="unset"
+      justifycontent="unset"
       position="relative"
       padding="0px 0px 0px 0px"
       {...getOverrideProps(overrides, "NftMint")}
@@ -139,7 +137,7 @@ export default function NftMint(props) {
         display="block"
         gap="unset"
         alignItems="unset"
-        justifyContent="unset"
+        justifycontent="unset"
         position="absolute"
         top="0%"
         bottom="0%"
@@ -155,7 +153,7 @@ export default function NftMint(props) {
         direction="column"
         width="464px"
         height="841px"
-        justifyContent="center"
+        justifycontent="center"
         alignItems="center"
         position="absolute"
         top="0%"
@@ -170,7 +168,7 @@ export default function NftMint(props) {
           direction="row"
           width="unset"
           height="unset"
-          justifyContent="flex-start"
+          justifycontent="flex-start"
           alignItems="flex-start"
           shrink="0"
           position="relative"
@@ -186,7 +184,7 @@ export default function NftMint(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -204,7 +202,7 @@ export default function NftMint(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="center"
+          justifycontent="center"
           alignItems="center"
           shrink="0"
           position="relative"
@@ -220,7 +218,7 @@ export default function NftMint(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -241,7 +239,7 @@ export default function NftMint(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -262,7 +260,7 @@ export default function NftMint(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -283,7 +281,7 @@ export default function NftMint(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="flex-start"
+          justifycontent="flex-start"
           alignItems="flex-start"
           overflow="hidden"
           shrink="0"
@@ -308,7 +306,7 @@ export default function NftMint(props) {
             direction="column"
             width="300px"
             height="200px"
-            justifyContent="center"
+            justifycontent="center"
             alignItems="center"
             overflow="hidden"
             shrink="0"
@@ -337,7 +335,7 @@ export default function NftMint(props) {
               display="block"
               gap="unset"
               alignItems="unset"
-              justifyContent="unset"
+              justifycontent="unset"
               shrink="0"
               position="relative"
               {...getOverrideProps(overrides, "Vector")}
@@ -349,7 +347,7 @@ export default function NftMint(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="center"
+          justifycontent="center"
           alignItems="flex-start"
           shrink="0"
           position="relative"
@@ -365,7 +363,7 @@ export default function NftMint(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -398,7 +396,7 @@ export default function NftMint(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="center"
+          justifycontent="center"
           alignItems="flex-start"
           shrink="0"
           position="relative"
@@ -414,7 +412,7 @@ export default function NftMint(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -443,7 +441,7 @@ export default function NftMint(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="center"
+          justifycontent="center"
           alignItems="flex-start"
           shrink="0"
           position="relative"
@@ -459,7 +457,7 @@ export default function NftMint(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -492,7 +490,7 @@ export default function NftMint(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="center"
+          justifycontent="center"
           alignItems="flex-start"
           shrink="0"
           position="relative"
@@ -508,7 +506,7 @@ export default function NftMint(props) {
             textAlign="center"
             display="block"
             direction="column"
-            justifyContent="unset"
+            justifycontent="unset"
             width="unset"
             height="unset"
             gap="unset"
@@ -537,7 +535,7 @@ export default function NftMint(props) {
           direction="column"
           width="unset"
           height="unset"
-          justifyContent="flex-start"
+          justifycontent="flex-start"
           alignItems="flex-start"
           shrink="0"
           position="relative"

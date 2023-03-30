@@ -13,19 +13,19 @@ const MypageComponent = ({ web3 }) => {
     console.log("from", from);
     (async () => {
       // const cookie = (
-      //   await axios.post("http://localhost:8080/api/user/cookieInfo", {
+      //   await axios.post("/api/user/cookieInfo", {
       //     from: from,
       //   })
       // ).data;
       // console.log(cookie);
       const data = (
-        await axios.post("http://localhost:8080/api/mint/mylist", {
+        await axios.post("/api/mint/mylist", {
           from: from,
           cookie: document.cookie,
         })
       ).data;
       const name = (
-        await axios.post("http://localhost:8080/api/user/getUser", {
+        await axios.post("/api/user/getUser", {
           from: from,
         })
       ).data;

@@ -12,6 +12,7 @@ import fs from "fs";
 import { Sequelize } from "sequelize";
 const router = Router();
 const web3 = new Web3("http://ganache.test.errorcode.help:8545");
+import { Sequelize } from "sequelize";
 // const web3 = new Web3(
 //   "wss://goerli.infura.io/ws/v3/2370d723f2b24ee69ca1d052c7a0e099"
 // );
@@ -414,7 +415,7 @@ router.post("/sellList", async (req, res) => {
   //         name,
   //         description,
   //         price: price,
-  //         image: `http://localhost:8080${imageRoute.nftImg}`,
+  //         image: `${imageRoute.nftImg}`,
   //       });
   //     }
   //   }
@@ -571,6 +572,25 @@ router.post("/cancelComplete", async (req, res) => {
   }
 });
 
+router.post("/lastToken", async (req, res) => {
+  try {
+    console.log("아오");
+    const data = await Nft.findOne({
+      order: [["tokenId", "DESC"]],
+      where: { state: "selling" },
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
+    console.log("최근 데이터는?", data);
+    res.send(data);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 router.post("/saleCancel", async (req, res) => {
   const deployed = new web3.eth.Contract(SaleAbi.abi, process.env.SALE_CA);
   try {
@@ -597,6 +617,7 @@ router.post("/mintComplete", async (req, res) => {
   console.log("여기는 지나버립니다.", req.body);
 
   try {
+    console.log("시험", "10");
     const tempUser = await User.findOne({
       where: { userAddress: req.body.account },
     });
@@ -614,7 +635,9 @@ router.post("/mintComplete", async (req, res) => {
         )
       )
     ).data;
+    console.log("============================");
     console.log("name, description, image", name, description, image);
+    console.log("============================");
 
     if (tempArr.length > 0) {
       tokenIdx = tempArr.length - 1;
@@ -635,6 +658,50 @@ router.post("/mintComplete", async (req, res) => {
     res.end();
   }
 });
+
+// router.post("/mintComplete", async (req, res) => {
+//   const deployed = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
+//   console.log("여기는 지나버립니다.", req.body);
+
+//   try {
+//     const tempUser = await User.findOne({
+//       where: { userAddress: req.body.account },
+//     });
+//     console.log("시험", "11");
+//     const tempArr = await deployed.methods.getTokenList().call();
+//     console.log("시험", "12");
+//     console.log("tempArr 화기이이이이인", tempArr);
+
+//     let tokenIdx;
+//     const { name, description, image, upload } = (
+//       await axios.get(
+//         tempArr[tempArr.length - 1].tokenURI.replace(
+//           "gateway.pinata.cloud",
+//           "block7.mypinata.cloud"
+//         )
+//       )
+//     ).data;
+//     console.log("name, description, image", name, description, image);
+
+//     if (tempArr.length > 0) {
+//       tokenIdx = tempArr.length - 1;
+//     } else tokenIdx = 0;
+//     const tempToken = await Nft.create({
+//       tokenId: tokenIdx,
+//       nftImg: `/upload/${upload}`,
+//       nftName: name,
+//       nftDescription: description,
+//       state: "mint",
+//       // userName: req.body.from,
+//     });
+
+//     tempUser.addNfts(tempToken);
+
+//     res.send({ data: data, msg: "mint완료" });
+//   } catch (error) {
+//     res.end();
+//   }
+// });
 
 router.post("/tradeList", async (req, res) => {
   const Op = Sequelize.Op;
@@ -681,6 +748,22 @@ router.post("/tradeList", async (req, res) => {
     // console.log("리스트를 무너뜨려라", buyerArr);
     res.send({ list: list, msg: "전송완료", user: tempArr });
   } catch (error) {
+    res.end();
+  }
+});
+
+router.post("/search", async (req, res) => {
+  const searchData = req.body.searchData;
+  try {
+    const tokenName = await Nft.findOne({
+      where: { nftName: searchData, state: "selling" },
+      order: [["createdAt", "DESC"]],
+    });
+    console.log("searchData : ", searchData);
+    console.log("tokenName : ", tokenName);
+    res.send({ tokenName: tokenName });
+  } catch (error) {
+    console.error(error);
     res.end();
   }
 });

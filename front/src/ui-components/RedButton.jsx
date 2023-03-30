@@ -16,7 +16,7 @@ export default function RedButton(props) {
       direction="row"
       width="unset"
       height="unset"
-      justifyContent="flex-start"
+      justifycontent="flex-start"
       alignItems="flex-start"
       position="relative"
       padding="0px 0px 0px 0px"
