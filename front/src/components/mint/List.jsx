@@ -30,7 +30,7 @@ const Item = ({
   const sellNft = async (tokenId, price, account) => {
     dispatch(isLoadingThunk({ isLoading: true }));
     const result = (
-      await axios.post("http://localhost:8080/api/mint/sell", {
+      await axios.post("/api/mint/sell", {
         tokenId,
         price,
         account,

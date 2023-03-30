@@ -7,7 +7,7 @@ import axios from "axios";
 const HeaderContainer = () => {
   // useEffect(() => {
   //   (async () => {
-  //     const data = (await axios.post("http://localhost:8080/account", account))
+  //     const data = (await axios.post("/account", account))
   //       .data.accountId;
   //   })();
   // }, [account]);

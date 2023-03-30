@@ -161,11 +161,7 @@ export default function UserInfoCompo1(props) {
             {...getOverrideProps(overrides, "Frame 8")}
           >
             <Image
-              src={
-                props.token
-                  ? `http://localhost:8080${props.token.User.profileImg}`
-                  : ""
-              }
+              src={props.token ? `${props.token.User.profileImg}` : ""}
               width="25px"
               height="25px"
               display="block"
@@ -252,11 +248,7 @@ export default function UserInfoCompo1(props) {
             {...getOverrideProps(overrides, "Frame 9")}
           >
             <Image
-              src={
-                props.token
-                  ? `http://localhost:8080${props.token.User.backgroundImg}`
-                  : ""
-              }
+              src={props.token ? `${props.token.User.backgroundImg}` : ""}
               width="25px"
               height="25px"
               display="block"

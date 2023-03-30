@@ -33,7 +33,7 @@ export default function UserInfoCom2(props) {
       >
         <div>
           <Image
-            src={`http://localhost:8080${item.Nft.nftImg}`}
+            src={`${item.Nft.nftImg}`}
             width="100%"
             height="100%"
             display="block"
@@ -91,7 +91,7 @@ export default function UserInfoCom2(props) {
                 {...getOverrideProps(overrides, "Frame 18")}
               >
                 <Image
-                  src={`http://localhost:8080${item.Nft.User.profileImg}`}
+                  src={`${item.Nft.User.profileImg}`}
                   width="79px"
                   height="79px"
                   display="block"
@@ -195,7 +195,7 @@ export default function UserInfoCom2(props) {
               {...getOverrideProps(overrides, "Frame 8")}
             >
               <Image
-                src={`http://localhost:8080${item.Nft.User.profileImg}`}
+                src={`${item.Nft.User.profileImg}`}
                 width="25px"
                 height="25px"
                 display="block"

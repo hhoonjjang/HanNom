@@ -38,7 +38,7 @@ export default function NftMyPage(props) {
   const dispatch = useDispatch();
   const totalSale = async (address) => {
     const data = (
-      await axios.post("http://localhost:8080/api/user/totalPrice", {
+      await axios.post("/api/user/totalPrice", {
         address: document.cookie.split("=")[0],
       })
     ).data;
@@ -50,7 +50,7 @@ export default function NftMyPage(props) {
   };
   const ownedBy = async (address) => {
     const data = (
-      await axios.post("http://localhost:8080/api/user/ownedBy", {
+      await axios.post("/api/user/ownedBy", {
         address: document.cookie.split("=")[0],
       })
     ).data;
@@ -71,7 +71,7 @@ export default function NftMyPage(props) {
     console.log(tempAddress);
     dispatch(isLoadingThunk({ isLoading: true }));
     const result = (
-      await axios.post("http://localhost:8080/api/mint/sell", {
+      await axios.post("/api/mint/sell", {
         tokenId: tokenId,
         price: price,
         account: tempAddress,
@@ -87,27 +87,21 @@ export default function NftMyPage(props) {
 
   const sellComplete = async (tokenId) => {
     const tempAddress = document.cookie.split("=")[0];
-    const data = await axios.post(
-      "http://localhost:8080/api/mint/sellComplete",
-      {
-        tokenId: tokenId,
-        price: price,
-        account: tempAddress,
-      }
-    );
+    const data = await axios.post("/api/mint/sellComplete", {
+      tokenId: tokenId,
+      price: price,
+      account: tempAddress,
+    });
     console.log(data);
     props.setStateMethod();
   };
   const mintCancel = async (tokenId) => {
     const tempAddress = document.cookie.split("=")[0];
     dispatch(isLoadingThunk({ isLoading: true }));
-    const result = await axios.post(
-      "http://localhost:8080/api/mint/saleCancel",
-      {
-        tokenId: tokenId,
-        account: tempAddress,
-      }
-    );
+    const result = await axios.post("/api/mint/saleCancel", {
+      tokenId: tokenId,
+      account: tempAddress,
+    });
     console.log(result.data);
     await props.web3.eth.sendTransaction(result.data);
     cancelComplete(tokenId);
@@ -116,12 +110,9 @@ export default function NftMyPage(props) {
   const { overrides, ...rest } = props;
 
   const cancelComplete = async (tokenId) => {
-    const data = await axios.post(
-      "http://localhost:8080/api/mint/cancelComplete",
-      {
-        tokenId: tokenId,
-      }
-    );
+    const data = await axios.post("/api/mint/cancelComplete", {
+      tokenId: tokenId,
+    });
     console.log(data);
   };
   return (
@@ -140,7 +131,7 @@ export default function NftMyPage(props) {
       <Image
         src={
           props?.userdata?.backgroundImg
-            ? `http://localhost:8080${props.userdata.backgroundImg}`
+            ? `${props.userdata.backgroundImg}`
             : "#"
         }
         width="100%"
@@ -187,9 +178,7 @@ export default function NftMyPage(props) {
         >
           <Image
             src={
-              props?.userdata?.profileImg
-                ? `http://localhost:8080${props.userdata.profileImg}`
-                : "#"
+              props?.userdata?.profileImg ? `${props.userdata.profileImg}` : "#"
             }
             width="100px"
             height="100px"
@@ -282,9 +271,7 @@ export default function NftMyPage(props) {
         >
           <Image
             src={
-              props?.userdata?.profileImg
-                ? `http://localhost:8080${props.userdata.profileImg}`
-                : "#"
+              props?.userdata?.profileImg ? `${props.userdata.profileImg}` : "#"
             }
             width="23px"
             height="23px"
@@ -503,7 +490,7 @@ export default function NftMyPage(props) {
                   {ownedImg ? (
                     ownedImg.map((item, index) => (
                       <Image
-                        src={`http://localhost:8080${item}`}
+                        src={`${item}`}
                         width="15px"
                         height="15px"
                         display="block"
@@ -814,7 +801,7 @@ export default function NftMyPage(props) {
                       {...getOverrideProps(overrides, "Frame 11838403566")}
                     >
                       <Image
-                        src={`http://localhost:8080${item.nftImg}`}
+                        src={`${item.nftImg}`}
                         width="325px"
                         height="300px"
                         display="block"

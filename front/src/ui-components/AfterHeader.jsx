@@ -52,14 +52,14 @@ export default function AfterHeader(props) {
     (async () => {
       if (!account) return;
       const data = (
-        await axios.post("http://localhost:8080/api/user/getUser", {
+        await axios.post("/api/user/getUser", {
           from: account,
         })
       ).data;
       console.log("data.profileImg : ", data.profileImg);
       document.querySelector(
         ".afterHeader_userIcon"
-      ).src = `http://localhost:8080${data.profileImg}`;
+      ).src = `${data.profileImg}`;
       setUser(data);
     })();
   }, [account]);
@@ -69,7 +69,7 @@ export default function AfterHeader(props) {
   //   (async () => {
   //     if (!account) return;
   //     const data = (
-  //       await axios.post("http://localhost:8080/api/user/getUser", {
+  //       await axios.post("/api/user/getUser", {
   //         from: account,
   //       })
   //     ).data;
@@ -181,11 +181,7 @@ export default function AfterHeader(props) {
         {...getOverrideProps(overrides, "Frame 36")}
       >
         <UserIcon
-          src={
-            props?.user?.profileImg
-              ? `http://localhost:8080${props?.user?.profileImg}`
-              : "#"
-          }
+          src={props?.user?.profileImg ? `${props?.user?.profileImg}` : "#"}
           display="block"
           gap="unset"
           alignItems="unset"

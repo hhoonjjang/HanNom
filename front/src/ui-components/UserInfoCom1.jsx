@@ -30,7 +30,7 @@ export default function UserInfoCom1(props) {
       direction="row"
       width="unset"
       height="unset"
-      justifycontent="flex-start"
+      justifyContent="flex-start"
       alignItems="center"
       position="relative"
       padding="0px 0px 0px 0px"
@@ -38,13 +38,13 @@ export default function UserInfoCom1(props) {
       {...rest}
     >
       <Image
-        src={props.token ? `http://localhost:8080${props.token.nftImg}` : ""}
+        src={props.token ? `${props?.token?.nftImg}` : ""}
         width="274.32px"
         height="360px"
         display="block"
         gap="unset"
         alignItems="unset"
-        justifycontent="unset"
+        justifyContent="unset"
         shrink="0"
         position="relative"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
@@ -62,7 +62,7 @@ export default function UserInfoCom1(props) {
         direction="row"
         width="402px"
         height="unset"
-        justifycontent="flex-start"
+        justifyContent="flex-start"
         alignItems="flex-start"
         shrink="0"
         position="relative"

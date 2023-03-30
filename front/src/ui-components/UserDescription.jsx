@@ -18,7 +18,7 @@ export default function UserDescription(props) {
   const [user, setUser] = React.useState(document.cookie.split("=")[0]);
   console.log("dasdasdawd", user);
   const navigate = useNavigate();
-  console.log("props.nft화긴", props.nft);
+
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -33,11 +33,11 @@ export default function UserDescription(props) {
       dispatch(isLoadingThunk({ isLoading: true }));
       console.log(user);
       const data = (
-        await axios.post("http://localhost:8080/api/mint/buy", {
-          tokenId: props.nft.tokenId,
+        await axios.post("/api/mint/buy", {
+          tokenId: props.nft?.tokenId,
           account: user,
-          price: props.nft.price.toString(),
-          owner: props.nft.buyerAddress ? props.nft.buyerAddress : null,
+          price: props.nft?.price.toString(),
+          owner: props.nft?.buyerAddress ? props.nft?.buyerAddress : null,
         })
       ).data;
       console.log(data);
@@ -47,8 +47,8 @@ export default function UserDescription(props) {
       // console.log(test);
       // result.account = account;
       console.log("넌 못지나간다");
-      await axios.post("http://localhost:8080/api/mint/buyComplete", {
-        tokenId: props.nft.tokenId,
+      await axios.post("/api/mint/buyComplete", {
+        tokenId: props.nft?.tokenId,
         account: user,
       });
       dispatch(isLoadingThunk({ isLoading: false }));
@@ -60,7 +60,7 @@ export default function UserDescription(props) {
   };
 
   const { overrides, ...rest } = props;
-  return props.nft.length != 0 ? (
+  return props.nft?.length != 0 ? (
     <Flex
       gap="32px"
       direction="column"
@@ -86,7 +86,7 @@ export default function UserDescription(props) {
         {...getOverrideProps(overrides, "Frame 131")}
       >
         <Image
-          src={`http://localhost:8080${props.nft.Nft.nftImg}`}
+          src={`${props.nft?.Nft.nftImg}`}
           // "https://f8n-production-collection-assets.imgix.net/0x50dC15DcA7B2c2f273ea5269F8FBeF8B291695a4/2/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
           width="450px"
           height="600px"
@@ -144,7 +144,7 @@ export default function UserDescription(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={`${props.nft.Nft.nftName} #${props.nft.tokenId}`}
+            children={`${props.nft?.Nft.nftName} #${props.nft?.tokenId}`}
             // "Celestial Portals #6"
             {...getOverrideProps(overrides, "Celestial Portals #6")}
           ></Text>
@@ -221,7 +221,7 @@ export default function UserDescription(props) {
                   {...getOverrideProps(overrides, "Frame 8")}
                 >
                   <Image
-                    src={`http://localhost:8080${props.nft.Nft.User.profileImg}`}
+                    src={`${props.nft?.Nft.User.profileImg}`}
                     width="25px"
                     height="25px"
                     display="block"
@@ -253,7 +253,7 @@ export default function UserDescription(props) {
                     position="relative"
                     padding="0px 0px 0px 0px"
                     whiteSpace="pre-wrap"
-                    children={props.nft.Nft.User.userName}
+                    children={props.nft?.Nft.User.userName}
                     {...getOverrideProps(overrides, "@Sanha38")}
                   ></Text>
                 </Flex>
@@ -320,7 +320,7 @@ export default function UserDescription(props) {
                   {...getOverrideProps(overrides, "Frame 938242969")}
                 >
                   <Image
-                    src={`http://localhost:8080${props.nft.Nft.User.backgroundImg}`}
+                    src={`${props.nft?.Nft.User.backgroundImg}`}
                     width="25px"
                     height="25px"
                     display="block"
@@ -353,7 +353,7 @@ export default function UserDescription(props) {
                     padding="0px 0px 0px 0px"
                     whiteSpace="pre-wrap"
                     children={
-                      props.nft.Nft.User.userAddress.slice(0, 15) + "..."
+                      props.nft?.Nft.User.userAddress.slice(0, 15) + "..."
                     }
                     {...getOverrideProps(overrides, "@Colorful Imagination")}
                   ></Text>
@@ -450,12 +450,12 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children={`${props.nft.price} ETH`}
+                children={`${props.nft?.price} ETH`}
                 {...getOverrideProps(overrides, "0.25ETH")}
               ></Text>
             </Flex>
           </Flex>
-          {props.nft.Nft.userAddress != user ? (
+          {props.nft?.Nft.userAddress != user ? (
             <Button
               width="191px"
               height="33px"
@@ -553,7 +553,7 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children={timeStamp(props.nft.Nft.createdAt)}
+                children={timeStamp(props.nft?.Nft.createdAt)}
                 {...getOverrideProps(overrides, "12h 53m 56s")}
               ></Text>
             </Flex>
@@ -637,7 +637,7 @@ export default function UserDescription(props) {
             position="relative"
             padding="0px 0px 0px 10px"
             whiteSpace="pre-wrap"
-            children={props.nft.Nft.nftDescription}
+            children={props.nft?.Nft.nftDescription}
             {...getOverrideProps(
               overrides,
               "Rainbow Body ~ Celestial Portals is a visual journey through the spiritual space that exists within us, around us, and beyond us, as we move through one world and into another. -- AI assisted imagery 1546 x 2048"
@@ -733,7 +733,7 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children={`By @${props.nft.Nft.User.userName}`}
+                children={`By @${props.nft?.Nft.User.userName}`}
                 {...getOverrideProps(overrides, "By @sanha38")}
               ></Text>
               <Flex
@@ -752,7 +752,7 @@ export default function UserDescription(props) {
                 {...getOverrideProps(overrides, "Frame 938243011")}
               >
                 <Image
-                  src={`http://localhost:8080${props.nft.Nft.User.backgroundImg}`}
+                  src={`${props.nft?.Nft.User.backgroundImg}`}
                   width="25px"
                   height="25px"
                   display="block"
@@ -785,7 +785,7 @@ export default function UserDescription(props) {
                   padding="0px 0px 0px 0px"
                   whiteSpace="pre-wrap"
                   children={`@${
-                    props.nft.Nft.User.userAddress.slice(0, 16) + "..."
+                    props.nft?.Nft.User.userAddress.slice(0, 16) + "..."
                   }`}
                   {...getOverrideProps(overrides, "@sanha38")}
                 ></Text>
@@ -821,7 +821,7 @@ export default function UserDescription(props) {
                 position="relative"
                 padding="0px 0px 0px 0px"
                 whiteSpace="pre-wrap"
-                children={timeStamp(props.nft.Nft.createdAt)}
+                children={timeStamp(props.nft?.Nft.createdAt)}
                 {...getOverrideProps(overrides, "Mar 26, 2023 at 10:10am")}
               ></Text>
             </Flex>

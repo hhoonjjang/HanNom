@@ -11,7 +11,6 @@ import { Flex, Image, Text, View } from "@aws-amplify/ui-react";
 import { gsap } from "gsap";
 const { useEffect, useState } = React;
 export default function UserInfoCompo3(props) {
-  console.log("아이템리스트", props.tokenList);
   const onEnter = ({ currentTarget }) => {
     gsap.to(currentTarget, { scale: 1.03 });
   };
@@ -21,9 +20,10 @@ export default function UserInfoCompo3(props) {
   };
 
   const { overrides, ...rest } = props;
+  console.log("props.tokenlist", props.tokenlist);
   return (
     <>
-      {props.tokenlist ? (
+      {props?.tokenlist ? (
         <View
           width="197px"
           height="331px"
@@ -39,7 +39,7 @@ export default function UserInfoCompo3(props) {
           {...rest}
         >
           <Image
-            src={`http://localhost:8080${props.tokenlist.nftImg}`}
+            src={`${props?.tokenlist?.nftImg}`}
             width="100%"
             height="71.6%"
             display="block"
@@ -89,7 +89,7 @@ export default function UserInfoCompo3(props) {
             {...getOverrideProps(overrides, "Frame 33")}
           >
             <Image
-              src={`http://localhost:8080${props.address.profileImg}`}
+              src={`${props?.address?.profileImg}`}
               width="23px"
               height="23px"
               display="block"
@@ -121,7 +121,7 @@ export default function UserInfoCompo3(props) {
               position="relative"
               padding="0px 0px 0px 0px"
               whiteSpace="pre-wrap"
-              children={`@${props.tokenlist.nftName}`}
+              children={`@${props?.tokenlist?.nftName}`}
               {...getOverrideProps(overrides, "@UserName")}
             ></Text>
           </Flex>

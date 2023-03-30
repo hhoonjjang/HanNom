@@ -16,7 +16,7 @@ export default function Activity(props) {
   console.log(account);
   const loadHistory = async () => {
     const data = (
-      await axios.post("http://localhost:8080/api/mint/tradeList", {
+      await axios.post("/api/mint/tradeList", {
         address: account,
       })
     ).data;
@@ -502,7 +502,7 @@ export default function Activity(props) {
                   {...getOverrideProps(overrides, "Frame 12338382831")}
                 >
                   <Image
-                    src={`http://localhost:8080${history?.list[index]?.Nft?.nftImg}`}
+                    src={`${history?.list[index]?.Nft?.nftImg}`}
                     width="40px"
                     height="40px"
                     display="block"
@@ -564,7 +564,7 @@ export default function Activity(props) {
                   {...getOverrideProps(overrides, "Frame 12538382835")}
                 >
                   <Image
-                    src={`http://localhost:8080${history?.user[index]?.[1].profileImg}`}
+                    src={`${history?.user[index]?.[1].profileImg}`}
                     width="30px"
                     height="30px"
                     display="block"
@@ -626,7 +626,7 @@ export default function Activity(props) {
                   {...getOverrideProps(overrides, "Frame 12838382839")}
                 >
                   <Image
-                    src={`http://localhost:8080${history?.user[index]?.[0].profileImg}`}
+                    src={`${history?.user[index]?.[0].profileImg}`}
                     width="30px"
                     height="30px"
                     display="block"

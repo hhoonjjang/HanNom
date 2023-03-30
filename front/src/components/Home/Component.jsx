@@ -7,6 +7,7 @@ import {
 } from "../../ui-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const HomeComponent = ({}) => {
   const [saleList, setSaleList] = useState([]);
@@ -16,25 +17,20 @@ const HomeComponent = ({}) => {
   useEffect(() => {
     (async () => {
       console.log("시작");
-      const result = (
-        await axios.post("http://localhost:8080/api/mint/sellList")
-      ).data;
+      const result = (await axios.post("/api/mint/sellList")).data;
       console.log(result);
       setSaleList(result);
-      const lastToken = (
-        await axios.post("http://localhost:8080/api/mint/lastToken")
-      ).data;
+      const lastToken = (await axios.post("/api/mint/lastToken")).data;
       // console.log("웨헤헤헤", lastToken);
       setLastToken(lastToken);
 
-      const latestUser = (
-        await axios.post("http://localhost:8080/api/user/latestUser")
-      ).data;
+      const latestUser = (await axios.post("/api/user/latestUser")).data;
       console.log("웨헤헤헤", latestUser);
       setLatestUser(latestUser.userArr);
       setLatestUserToken(latestUser.nftArr);
     })();
   }, []);
+  console.log(lastTokenData);
   return (
     <Home>
       <div className="Home_innerBox">
@@ -57,14 +53,16 @@ const HomeComponent = ({}) => {
         {latestUserData ? (
           latestUserData.map((item, index) => {
             return (
-              <Blank key={`blank-${index}`}>
-                <UserInfoCom3
-                  key={`latestkeyassds-${index}`}
-                  address={item}
-                  addresstoken={latestUserTokenData[index]}
-                ></UserInfoCom3>
-                <MarginStyle1 key={`latestkey1-${index}`} />
-              </Blank>
+              <Link to={`${item.userAddress}`}>
+                <Blank key={`blank-${index}`}>
+                  <UserInfoCom3
+                    key={`latestkeyassds-${index}`}
+                    address={item}
+                    addresstoken={latestUserTokenData[index]}
+                  ></UserInfoCom3>
+                  <MarginStyle1 key={`latestkey1-${index}`} />
+                </Blank>
+              </Link>
             );
           })
         ) : (

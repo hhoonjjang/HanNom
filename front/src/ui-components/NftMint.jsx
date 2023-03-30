@@ -101,9 +101,7 @@ export default function NftMint(props) {
     formData.append("description", NFTDescription);
     formData.append("from", account);
     dispatch(isLoadingThunk({ isLoading: true }));
-    const result = (
-      await axios.post("http://localhost:8080/api/mint/mint", formData)
-    ).data;
+    const result = (await axios.post("/api/mint/mint", formData)).data;
     console.log(result);
     try {
       // console.log("jaksfdlksedhfklashfkljshaf", formData);
@@ -111,7 +109,7 @@ export default function NftMint(props) {
       // console.log(test);
       result.account = account;
 
-      await axios.post("http://localhost:8080/api/mint/mintComplete", result);
+      await axios.post("/api/mint/mintComplete", result);
       dispatch(isLoadingThunk({ isLoading: false }));
       navigate(`/`);
     } catch (error) {

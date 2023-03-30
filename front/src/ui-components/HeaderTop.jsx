@@ -60,7 +60,7 @@ export default function HearderTop(props) {
         return;
       }
       dispatch(isLoadingThunk({ isLoading: true }));
-      const data = await axios.post("http://localhost:8080/api/mint/search", {
+      const data = await axios.post("/api/mint/search", {
         searchData: searchData,
       });
       console.log(
@@ -119,9 +119,7 @@ export default function HearderTop(props) {
     formData.append("nickName", newNickName);
     formData.append("account", account);
 
-    const data = (
-      await axios.post("http://localhost:8080/api/user/regist", formData)
-    ).data;
+    const data = (await axios.post("/api/user/regist", formData)).data;
 
     console.log("data : ", data);
 
@@ -184,13 +182,13 @@ export default function HearderTop(props) {
   const userCheck = async (account) => {
     let userInfo;
     if (document.cookie) {
-      userInfo = await axios.post("http://localhost:8080/api/user/login", {
+      userInfo = await axios.post("/api/user/login", {
         cookie: document.cookie,
         count: 1,
       });
       console.log("userInfo%%%%%%%%%%%%%%%%%%%", userInfo);
     } else {
-      userInfo = await axios.post("http://localhost:8080/api/user/login", {
+      userInfo = await axios.post("/api/user/login", {
         account: account,
         count: 0,
         // cookie: document.cookie,
@@ -209,13 +207,13 @@ export default function HearderTop(props) {
       setRegistBool(true);
       console.log("hi");
       // const data = (
-      //   await axios.post("http://localhost:8080/api/user/regist", formData)
+      //   await axios.post("/api/user/regist", formData)
       // ).data;
     } else {
       setRegistBool(false);
       setUser(userInfo.data.user);
       // console.log(user.profileImg);
-      // setImg(`http://localhost:8080${user.profileImg}`);
+      // setImg(`${user.profileImg}`);
     }
     console.log(user);
   };
@@ -234,12 +232,9 @@ export default function HearderTop(props) {
       console.log("accountRasdasd", props.accountR);
       (async () => {
         console.log(props.accountR);
-        const user = await axios.post(
-          "http://localhost:8080/api/user/userDisplay",
-          {
-            account: props.accountR,
-          }
-        );
+        const user = await axios.post("/api/user/userDisplay", {
+          account: props.accountR,
+        });
         console.log(user);
         setUser(user);
         console.log("user223");

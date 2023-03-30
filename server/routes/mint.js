@@ -414,7 +414,7 @@ router.post("/sellList", async (req, res) => {
   //         name,
   //         description,
   //         price: price,
-  //         image: `http://localhost:8080${imageRoute.nftImg}`,
+  //         image: `${imageRoute.nftImg}`,
   //       });
   //     }
   //   }

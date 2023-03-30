@@ -45,9 +45,7 @@ export const Mint = ({ web3, account }) => {
     formData.append("name", NftName);
     formData.append("description", NftDescription);
     formData.append("from", account);
-    const result = (
-      await axios.post("http://localhost:8080/api/mint/mint", formData)
-    ).data;
+    const result = (await axios.post("/api/mint/mint", formData)).data;
     console.log(result);
     web3.eth.sendTransaction(result);
     dispatch(isLoadingThunk({ isLoading: false }));
