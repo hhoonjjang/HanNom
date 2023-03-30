@@ -38,6 +38,7 @@ export default function UserCreate(props) {
   const [bgImg, setBgImg] = React.useState("");
   const [profilefile, setProfileFile] = React.useState();
   const [profileImg, setProfileImg] = React.useState("");
+  const [count, setCount] = React.useState("");
   const [connect, setConnect] = React.useState(false);
   const dispatch = useDispatch();
 
