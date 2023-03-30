@@ -186,23 +186,29 @@ router.post("/latestUser", async (req, res) => {
   const Op = Sequelize.Op;
   console.log("여긴지나");
   const tradeList = await TradeHistory.findAll({
-    where: { currency: "거래대기" },
+    where: { currency: "거래완료" },
     order: [["createdAt", "DESC"]],
   });
-  console.log("여긴지날까");
+  console.log("여긴지날까", tradeList);
 
   const tempTrade = [];
+  const tempUser = [];
   for (let i = 0; i < tradeList.length; i++) {
     if (!tradeList.includes(tradeList[i].sellerAddress)) {
       if (tempTrade.length < 3) {
         tempTrade.push(tradeList[i].sellerAddress);
+        tempUser.push(
+          await User.findOne({
+            where: { userAddress: tradeList[i].sellerAddress },
+          })
+        );
       } else {
         break;
       }
     }
   }
 
-  console.log("tempTrade", tempTrade);
+  console.log("tempUser", tempUser);
   const tempNft = [];
   for (let i = 0; i < tempTrade.length; i++) {
     const list = await Nft.findAll({
@@ -220,7 +226,7 @@ router.post("/latestUser", async (req, res) => {
   // const nftList = await Nft.findAll({
   //   limit:
   // })
-  res.send({ userArr: tempTrade, nftArr: tempNft });
+  res.send({ userArr: tempUser, nftArr: tempNft });
 });
 
 router.post("/login", async (req, res) => {

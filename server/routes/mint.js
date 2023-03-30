@@ -615,6 +615,7 @@ router.post("/mintComplete", async (req, res) => {
   console.log("여기는 지나버립니다.", req.body);
 
   try {
+    console.log("시험", "10");
     const tempUser = await User.findOne({
       where: { userAddress: req.body.account },
     });
@@ -632,7 +633,9 @@ router.post("/mintComplete", async (req, res) => {
         )
       )
     ).data;
+    console.log("============================");
     console.log("name, description, image", name, description, image);
+    console.log("============================");
 
     if (tempArr.length > 0) {
       tokenIdx = tempArr.length - 1;
@@ -653,6 +656,50 @@ router.post("/mintComplete", async (req, res) => {
     res.end();
   }
 });
+
+// router.post("/mintComplete", async (req, res) => {
+//   const deployed = new web3.eth.Contract(NftAbi.abi, process.env.NFT_CA);
+//   console.log("여기는 지나버립니다.", req.body);
+
+//   try {
+//     const tempUser = await User.findOne({
+//       where: { userAddress: req.body.account },
+//     });
+//     console.log("시험", "11");
+//     const tempArr = await deployed.methods.getTokenList().call();
+//     console.log("시험", "12");
+//     console.log("tempArr 화기이이이이인", tempArr);
+
+//     let tokenIdx;
+//     const { name, description, image, upload } = (
+//       await axios.get(
+//         tempArr[tempArr.length - 1].tokenURI.replace(
+//           "gateway.pinata.cloud",
+//           "block7.mypinata.cloud"
+//         )
+//       )
+//     ).data;
+//     console.log("name, description, image", name, description, image);
+
+//     if (tempArr.length > 0) {
+//       tokenIdx = tempArr.length - 1;
+//     } else tokenIdx = 0;
+//     const tempToken = await Nft.create({
+//       tokenId: tokenIdx,
+//       nftImg: `/upload/${upload}`,
+//       nftName: name,
+//       nftDescription: description,
+//       state: "mint",
+//       // userName: req.body.from,
+//     });
+
+//     tempUser.addNfts(tempToken);
+
+//     res.send({ data: data, msg: "mint완료" });
+//   } catch (error) {
+//     res.end();
+//   }
+// });
 
 router.post("/tradeList", async (req, res) => {
   const Op = Sequelize.Op;

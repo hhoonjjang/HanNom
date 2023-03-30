@@ -10,10 +10,12 @@ import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Flex, Image, Text, View } from "@aws-amplify/ui-react";
 import UserInfoCompo3 from "./UserInfoCompo3";
 import { gsap } from "gsap";
+import { timeStamp } from "../api/time.js";
 const { useEffect, useState } = React;
 
 export default function UserInfoCom3(props) {
   console.log("대망의 마무리", props);
+
   const onEnter = ({ currentTarget }) => {
     gsap.to(currentTarget, { scale: 1.03 });
   };
@@ -36,7 +38,7 @@ export default function UserInfoCom3(props) {
       {...rest}
     >
       <Image
-        src="https://f8n-production-collection-assets.imgix.net/0x875B8Ff3203B4Fce10eFB56Db923a52297672380/133/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+        src={`http://localhost:8080${props.address.backgroundImg}`}
         width="100%"
         height="100%"
         display="block"
@@ -84,7 +86,7 @@ export default function UserInfoCom3(props) {
           <Image
             onMouseEnter={onEnter}
             onMouseLeave={onLeave}
-            src="https://f8n-production-collection-assets.imgix.net/0xE1353314687F7a680d00BE81Db940141f1056d0F/2/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+            src={`http://localhost:8080${props.address.profileImg}`}
             width="140px"
             height="140px"
             display="block"
@@ -144,7 +146,7 @@ export default function UserInfoCom3(props) {
               position="relative"
               padding="0px 0px 0px 0px"
               whiteSpace="pre-wrap"
-              children="UserName"
+              children={props.address.userName}
               {...getOverrideProps(overrides, "UserName37622763")}
             ></Text>
           </Flex>
@@ -179,7 +181,7 @@ export default function UserInfoCom3(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="UserName"
+            children={timeStamp(props.address.createdAt)}
             {...getOverrideProps(overrides, "UserName37622769")}
           ></Text>
           <Text
@@ -200,7 +202,7 @@ export default function UserInfoCom3(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="3 NFTs"
+            children={"Latest : " + props.addressToken.length + " NFTs"}
             {...getOverrideProps(overrides, "3 NFTs")}
           ></Text>
         </Flex>
@@ -221,7 +223,7 @@ export default function UserInfoCom3(props) {
           {...getOverrideProps(overrides, "Frame 27")}
         >
           <Image
-            src="https://f8n-production-collection-assets.imgix.net/0xE1353314687F7a680d00BE81Db940141f1056d0F/2/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&w=3000&h=3000&fit=max"
+            src={`http://localhost:8080${props.address.profileImg}`}
             width="23px"
             height="23px"
             display="block"
@@ -253,7 +255,7 @@ export default function UserInfoCom3(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="@UserName"
+            children={`@${props.address.userAddress.slice(0, 8) + "..."}`}
             {...getOverrideProps(overrides, "@UserName")}
           ></Text>
         </Flex>
@@ -273,45 +275,29 @@ export default function UserInfoCom3(props) {
         padding="0px 0px 0px 0px"
         {...getOverrideProps(overrides, "Frame 34")}
       >
-        <UserInfoCompo3
-          width="197px"
-          height="331px"
-          display="block"
-          gap="unset"
-          alignItems="unset"
-          justifyContent="unset"
-          shrink="0"
-          position="relative"
-          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-          padding="0px 0px 0px 0px"
-          {...getOverrideProps(overrides, "UserInfoCompo3")}
-        ></UserInfoCompo3>
-        <UserInfoCompo3
-          width="197px"
-          height="331px"
-          display="block"
-          gap="unset"
-          alignItems="unset"
-          justifyContent="unset"
-          shrink="0"
-          position="relative"
-          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-          padding="0px 0px 0px 0px"
-          {...getOverrideProps(overrides, "Component 2")}
-        ></UserInfoCompo3>
-        <UserInfoCompo3
-          width="197px"
-          height="331px"
-          display="block"
-          gap="unset"
-          alignItems="unset"
-          justifyContent="unset"
-          shrink="0"
-          position="relative"
-          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-          padding="0px 0px 0px 0px"
-          {...getOverrideProps(overrides, "Component 3")}
-        ></UserInfoCompo3>
+        {props.addressToken ? (
+          props.addressToken.map((item, index) => {
+            return (
+              <UserInfoCompo3
+                width="197px"
+                height="331px"
+                display="block"
+                gap="unset"
+                alignItems="unset"
+                justifyContent="unset"
+                shrink="0"
+                position="relative"
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                padding="0px 0px 0px 0px"
+                tokenList={item}
+                address={props.address}
+                {...getOverrideProps(overrides, "UserInfoCompo3")}
+              ></UserInfoCompo3>
+            );
+          })
+        ) : (
+          <></>
+        )}
       </Flex>
     </View>
   );
