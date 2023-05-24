@@ -9,10 +9,10 @@ import { Readable } from "stream";
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 dotenv.config();
-const web3 = new Web3("http://ganache.test.errorcode.help:8545");
-// const web3 = new Web3(
-//   "wss://goerli.infura.io/ws/v3/2370d723f2b24ee69ca1d052c7a0e099"
-// );
+// const web3 = new Web3("http://ganache.test.errorcode.help:8545");
+const web3 = new Web3(
+  "wss://goerli.infura.io/ws/v3/2370d723f2b24ee69ca1d052c7a0e099"
+);
 const router = Router();
 const storage = multer.diskStorage({
   destination: (req, res, cb) => {
