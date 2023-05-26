@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nftmarket-staging-64051-authRole",
+      "UnauthRoleArn": "arn:aws:iam::377519802318:role/amplify-nftmarket-staging-64051-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::377519802318:role/amplify-nftmarket-staging-64051-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-nftmarket-staging-64051-deployment",
+      "UnauthRoleName": "amplify-nftmarket-staging-64051-unauthRole",
+      "StackName": "amplify-nftmarket-staging-64051",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:377519802318:stack/amplify-nftmarket-staging-64051/52c837c0-c7b3-11ed-a335-0a9573700f02",
+      "AmplifyAppId": "d1gmloeyndheif"
+    }
+  }
+}

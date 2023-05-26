@@ -7,10 +7,17 @@ export default class User extends Sequelize.Model {
         userAddress: {
           type: Sequelize.STRING(255),
           allowNull: false,
+          unique: true,
         },
         userName: {
           type: Sequelize.STRING(255),
           unique: true,
+        },
+        profileImg: {
+          type: Sequelize.STRING(255),
+        },
+        backgroundImg: {
+          type: Sequelize.STRING(255),
         },
       },
       {
@@ -32,8 +39,9 @@ export default class User extends Sequelize.Model {
     //   foreignKey: "userAddress",
     // });
     db.User.hasMany(db.Nft, {
-      foreignKey: "userName",
-      sourceKey: "userName",
+      foreignKey: "userAddress",
+      sourceKey: "userAddress",
+      as: "Nfts",
     });
   }
 }

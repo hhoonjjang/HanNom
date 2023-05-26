@@ -4,17 +4,20 @@ export default class Nft extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        nftHash: {
-          type: Sequelize.STRING(255),
-          allowNull: false,
+        tokenId: {
+          type: Sequelize.INTEGER,
+          unique: true,
         },
-        type: {
+        nftName: {
+          type: Sequelize.STRING(255),
+        },
+        nftDescription: {
           type: Sequelize.STRING(255),
         },
         nftImg: {
           type: Sequelize.STRING(255),
         },
-        nftName: {
+        state: {
           type: Sequelize.STRING(255),
         },
         nftDataRank: {
@@ -39,12 +42,12 @@ export default class Nft extends Sequelize.Model {
 
   static associate(db) {
     db.Nft.belongsTo(db.User, {
-      foreignKey: "userName",
-      targetKey: "userName",
+      foreignKey: "userAddress",
+      targetKey: "userAddress",
     });
-    // db.Nft.belongsTo(db.TradeHistory, {
-    //   foreignKey: "tradeHash",
-    //   targetKey: "nftHash",
-    // });
+    db.Nft.hasMany(db.TradeHistory, {
+      foreignKey: "tokenId",
+      sourceKey: "tokenId",
+    });
   }
 }
